@@ -1,0 +1,416 @@
+A module is bad if efficiency < the avg in layer - 0.2 and has at least 25 nModsMin.
+Loading file: root://cms-xrd-global.cern.ch///eos/cms/store/group/dpg_tracker_strip/comm_tracker/Strip/Calibration/calibrationtree/GR18/calibTree_325310_50.root
+Layer 1 (TIB L1)  module 369125861 efficiency: 0.0069541 , 5/719
+Layer 1 (TIB L1)  module 369125869 efficiency: 0.0114504 , 3/262
+Layer 2 threshold for bad modules: 0.79596
+Layer 2 (TIB L2)  module 369141286 layer 2 is under occupancy at 2
+Layer 3 threshold for bad modules: 0.795167
+Layer 4 threshold for bad modules: 0.797015
+Layer 4 (TIB L4)  module 369175032 layer 4 is under occupancy at 7
+Layer 5 threshold for bad modules: 0.789673
+Layer 6 threshold for bad modules: 0.792677
+Layer 7 threshold for bad modules: 0.796665
+Layer 8 threshold for bad modules: 0.79861
+Layer 8 (TOB L4)  module 436277656 layer 8 is under occupancy at 17
+Layer 9 threshold for bad modules: 0.802028
+Layer 9 (TOB L5)  module 436293720 layer 9 is under occupancy at 21
+Layer 9 (TOB L5)  module 436293752 layer 9 is under occupancy at 24
+Layer 9 (TOB L5)  module 436293784 layer 9 is under occupancy at 11
+Layer 9 (TOB L5)  module 436293816 layer 9 is under occupancy at 14
+Layer 9 (TOB L5)  module 436293848 layer 9 is under occupancy at 24
+Layer 9 (TOB L5)  module 436293880 layer 9 is under occupancy at 20
+Layer 9 (TOB L5)  module 436293912 layer 9 is under occupancy at 17
+Layer 9 (TOB L5)  module 436293944 layer 9 is under occupancy at 17
+Layer 9 (TOB L5)  module 436293976 layer 9 is under occupancy at 20
+Layer 9 (TOB L5)  module 436294008 layer 9 is under occupancy at 21
+Layer 9 (TOB L5)  module 436294040 layer 9 is under occupancy at 16
+Layer 9 (TOB L5)  module 436294104 layer 9 is under occupancy at 22
+Layer 9 (TOB L5)  module 436294136 layer 9 is under occupancy at 16
+Layer 9 (TOB L5)  module 436294168 layer 9 is under occupancy at 19
+Layer 9 (TOB L5)  module 436294232 layer 9 is under occupancy at 17
+Layer 9 (TOB L5)  module 436294264 layer 9 is under occupancy at 23
+Layer 9 (TOB L5)  module 436294328 layer 9 is under occupancy at 22
+Layer 9 (TOB L5)  module 436294360 layer 9 is under occupancy at 20
+Layer 9 (TOB L5)  module 436294456 layer 9 is under occupancy at 16
+Layer 9 (TOB L5)  module 436294488 layer 9 is under occupancy at 24
+Layer 9 (TOB L5)  module 436294520 layer 9 is under occupancy at 15
+Layer 9 (TOB L5)  module 436294552 layer 9 is under occupancy at 24
+Layer 9 (TOB L5)  module 436294584 layer 9 is under occupancy at 16
+Layer 9 (TOB L5)  module 436294616 layer 9 is under occupancy at 20
+Layer 9 (TOB L5)  module 436294744 layer 9 is under occupancy at 16
+Layer 9 (TOB L5)  module 436294776 layer 9 is under occupancy at 20
+Layer 9 (TOB L5)  module 436294840 layer 9 is under occupancy at 20
+Layer 9 (TOB L5)  module 436294872 layer 9 is under occupancy at 22
+Layer 9 (TOB L5)  module 436294936 layer 9 is under occupancy at 22
+Layer 9 (TOB L5)  module 436294968 layer 9 is under occupancy at 16
+Layer 9 (TOB L5)  module 436295000 layer 9 is under occupancy at 21
+Layer 9 (TOB L5)  module 436295032 layer 9 is under occupancy at 15
+Layer 9 (TOB L5)  module 436295096 layer 9 is under occupancy at 14
+Layer 9 (TOB L5)  module 436295128 layer 9 is under occupancy at 16
+Layer 9 (TOB L5)  module 436295160 layer 9 is under occupancy at 23
+Layer 9 (TOB L5)  module 436295192 layer 9 is under occupancy at 24
+Layer 9 (TOB L5)  module 436295224 layer 9 is under occupancy at 22
+Layer 9 (TOB L5)  module 436295256 layer 9 is under occupancy at 20
+Layer 9 (TOB L5)  module 436295288 layer 9 is under occupancy at 22
+Layer 9 (TOB L5)  module 436295352 layer 9 is under occupancy at 22
+Layer 9 (TOB L5)  module 436295416 layer 9 is under occupancy at 24
+Layer 9 (TOB L5)  module 436295448 layer 9 is under occupancy at 16
+Layer 9 (TOB L5)  module 436295480 layer 9 is under occupancy at 15
+Layer 9 (TOB L5)  module 436295512 layer 9 is under occupancy at 21
+Layer 9 (TOB L5)  module 436295576 layer 9 is under occupancy at 16
+Layer 9 (TOB L5)  module 436295672 layer 9 is under occupancy at 21
+Layer 9 (TOB L5)  module 436295704 layer 9 is under occupancy at 18
+Layer 9 (TOB L5)  module 436295736 layer 9 is under occupancy at 21
+Layer 9 (TOB L5)  module 436295768 layer 9 is under occupancy at 13
+Layer 9 (TOB L5)  module 436297784 layer 9 is under occupancy at 23
+Layer 9 (TOB L5)  module 436297816 layer 9 is under occupancy at 12
+Layer 9 (TOB L5)  module 436297848 layer 9 is under occupancy at 20
+Layer 9 (TOB L5)  module 436297880 layer 9 is under occupancy at 13
+Layer 9 (TOB L5)  module 436297912 layer 9 is under occupancy at 21
+Layer 9 (TOB L5)  module 436297944 layer 9 is under occupancy at 17
+Layer 9 (TOB L5)  module 436298008 layer 9 is under occupancy at 15
+Layer 9 (TOB L5)  module 436298040 layer 9 is under occupancy at 22
+Layer 9 (TOB L5)  module 436298072 layer 9 is under occupancy at 13
+Layer 9 (TOB L5)  module 436298104 layer 9 is under occupancy at 11
+Layer 9 (TOB L5)  module 436298136 layer 9 is under occupancy at 15
+Layer 9 (TOB L5)  module 436298168 layer 9 is under occupancy at 15
+Layer 9 (TOB L5)  module 436298200 layer 9 is under occupancy at 22
+Layer 9 (TOB L5)  module 436298232 layer 9 is under occupancy at 14
+Layer 9 (TOB L5)  module 436298264 layer 9 is under occupancy at 15
+Layer 9 (TOB L5)  module 436298328 layer 9 is under occupancy at 22
+Layer 9 (TOB L5)  module 436298360 layer 9 is under occupancy at 23
+Layer 9 (TOB L5)  module 436298392 layer 9 is under occupancy at 13
+Layer 9 (TOB L5)  module 436298424 layer 9 is under occupancy at 20
+Layer 9 (TOB L5)  module 436298456 layer 9 is under occupancy at 17
+Layer 9 (TOB L5)  module 436298488 layer 9 is under occupancy at 16
+Layer 9 (TOB L5)  module 436298520 layer 9 is under occupancy at 12
+Layer 9 (TOB L5)  module 436298552 layer 9 is under occupancy at 21
+Layer 9 (TOB L5)  module 436298584 layer 9 is under occupancy at 23
+Layer 9 (TOB L5)  module 436298616 layer 9 is under occupancy at 17
+Layer 9 (TOB L5)  module 436298648 layer 9 is under occupancy at 21
+Layer 9 (TOB L5)  module 436298680 layer 9 is under occupancy at 21
+Layer 9 (TOB L5)  module 436298712 layer 9 is under occupancy at 15
+Layer 9 (TOB L5)  module 436298744 layer 9 is under occupancy at 19
+Layer 9 (TOB L5)  module 436298808 layer 9 is under occupancy at 16
+Layer 9 (TOB L5)  module 436298840 layer 9 is under occupancy at 14
+Layer 9 (TOB L5)  module 436298872 layer 9 is under occupancy at 11
+Layer 9 (TOB L5)  module 436298904 layer 9 is under occupancy at 19
+Layer 9 (TOB L5)  module 436298936 layer 9 is under occupancy at 20
+Layer 9 (TOB L5)  module 436298968 layer 9 is under occupancy at 19
+Layer 9 (TOB L5)  module 436299032 layer 9 is under occupancy at 17
+Layer 9 (TOB L5)  module 436299064 layer 9 is under occupancy at 18
+Layer 9 (TOB L5)  module 436299096 layer 9 is under occupancy at 23
+Layer 9 (TOB L5)  module 436299128 layer 9 is under occupancy at 18
+Layer 9 (TOB L5)  module 436299160 layer 9 is under occupancy at 21
+Layer 9 (TOB L5)  module 436299192 layer 9 is under occupancy at 23
+Layer 9 (TOB L5)  module 436299224 layer 9 is under occupancy at 17
+Layer 9 (TOB L5)  module 436299256 layer 9 is under occupancy at 15
+Layer 9 (TOB L5)  module 436299288 layer 9 is under occupancy at 13
+Layer 9 (TOB L5)  module 436299320 layer 9 is under occupancy at 17
+Layer 9 (TOB L5)  module 436299352 layer 9 is under occupancy at 22
+Layer 9 (TOB L5)  module 436299384 layer 9 is under occupancy at 16
+Layer 9 (TOB L5)  module 436299416 layer 9 is under occupancy at 18
+Layer 9 (TOB L5)  module 436299480 layer 9 is under occupancy at 11
+Layer 9 (TOB L5)  module 436299512 layer 9 is under occupancy at 23
+Layer 9 (TOB L5)  module 436299544 layer 9 is under occupancy at 11
+Layer 9 (TOB L5)  module 436299576 layer 9 is under occupancy at 20
+Layer 9 (TOB L5)  module 436299608 layer 9 is under occupancy at 14
+Layer 9 (TOB L5)  module 436299672 layer 9 is under occupancy at 15
+Layer 9 (TOB L5)  module 436299704 layer 9 is under occupancy at 23
+Layer 9 (TOB L5)  module 436299736 layer 9 is under occupancy at 18
+Layer 9 (TOB L5)  module 436299768 layer 9 is under occupancy at 21
+Layer 9 (TOB L5)  module 436299800 layer 9 is under occupancy at 22
+Layer 9 (TOB L5)  module 436299832 layer 9 is under occupancy at 11
+Layer 9 (TOB L5)  module 436299864 layer 9 is under occupancy at 10
+Layer 10 threshold for bad modules: -0.2
+Layer 11 threshold for bad modules: 0.795733
+Layer 12 threshold for bad modules: 0.796236
+Layer 13 threshold for bad modules: 0.797668
+Layer 14 threshold for bad modules: 0.795489
+Layer 14 (TEC R1)  module 470045222 efficiency: 0.00364964 , 2/548
+Layer 15 threshold for bad modules: 0.795392
+Layer 16 threshold for bad modules: 0.795982
+Layer 16 (TEC R3)  module 470160228 layer 16 is under occupancy at 11
+Layer 16 (TEC R3)  module 470422628 layer 16 is under occupancy at 7
+Layer 16 (TEC R3)  module 470422632 layer 16 is under occupancy at 2
+Layer 17 threshold for bad modules: 0.797158
+Layer 18 threshold for bad modules: 0.796278
+Layer 18 (TEC R5)  module 470147753 efficiency: 0.00537634 , 1/186
+Layer 19 threshold for bad modules: 0.797159
+Layer 20 threshold for bad modules: 0.7994
+Layer 20 (TEC R7)  module 470046188 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470046700 layer 20 is under occupancy at 13
+Layer 20 (TEC R7)  module 470046704 layer 20 is under occupancy at 20
+Layer 20 (TEC R7)  module 470049264 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470051056 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470062052 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470062060 layer 20 is under occupancy at 20
+Layer 20 (TEC R7)  module 470063084 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470063092 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470066660 layer 20 is under occupancy at 11
+Layer 20 (TEC R7)  module 470066664 layer 20 is under occupancy at 15
+Layer 20 (TEC R7)  module 470066920 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470067428 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470078188 layer 20 is under occupancy at 14
+Layer 20 (TEC R7)  module 470078952 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470079208 layer 20 is under occupancy at 17
+Layer 20 (TEC R7)  module 470079460 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470079472 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470079476 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470082276 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470082280 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470082548 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470083044 layer 20 is under occupancy at 8
+Layer 20 (TEC R7)  module 470083048 layer 20 is under occupancy at 10
+Layer 20 (TEC R7)  module 470083060 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470083304 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470083568 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470094312 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470094324 layer 20 is under occupancy at 18
+Layer 20 (TEC R7)  module 470095080 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470095344 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470095600 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470098668 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470098924 layer 20 is under occupancy at 20
+Layer 20 (TEC R7)  module 470098928 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470099428 layer 20 is under occupancy at 20
+Layer 20 (TEC R7)  module 470099432 layer 20 is under occupancy at 15
+Layer 20 (TEC R7)  module 470099692 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470099944 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470100208 layer 20 is under occupancy at 20
+Layer 20 (TEC R7)  module 470110956 layer 20 is under occupancy at 20
+Layer 20 (TEC R7)  module 470111976 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470114796 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470114800 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470115056 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470115300 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470115308 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470116328 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470116584 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470127080 layer 20 is under occupancy at 12
+Layer 20 (TEC R7)  module 470127084 layer 20 is under occupancy at 9
+Layer 20 (TEC R7)  module 470127088 layer 20 is under occupancy at 6
+Layer 20 (TEC R7)  module 470127092 layer 20 is under occupancy at 8
+Layer 20 (TEC R7)  module 470127340 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470131180 layer 20 is under occupancy at 17
+Layer 20 (TEC R7)  module 470131436 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470131940 layer 20 is under occupancy at 20
+Layer 20 (TEC R7)  module 470132712 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470143468 layer 20 is under occupancy at 15
+Layer 20 (TEC R7)  module 470143472 layer 20 is under occupancy at 10
+Layer 20 (TEC R7)  module 470143476 layer 20 is under occupancy at 7
+Layer 20 (TEC R7)  module 470148080 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470148584 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470165228 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470307300 layer 20 is under occupancy at 20
+Layer 20 (TEC R7)  module 470307304 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470307308 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470307312 layer 20 is under occupancy at 17
+Layer 20 (TEC R7)  module 470307556 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470307564 layer 20 is under occupancy at 16
+Layer 20 (TEC R7)  module 470307572 layer 20 is under occupancy at 12
+Layer 20 (TEC R7)  module 470308068 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470308580 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470308844 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470308848 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470311396 layer 20 is under occupancy at 17
+Layer 20 (TEC R7)  module 470311404 layer 20 is under occupancy at 20
+Layer 20 (TEC R7)  module 470311408 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470311664 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470312164 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470312420 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470312436 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470312676 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470312680 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470312684 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470323684 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470323692 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470323940 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470323944 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470323952 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470324200 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470324204 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470324212 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470324452 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470324968 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470324976 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470325228 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470325484 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470327788 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470327792 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470327796 layer 20 is under occupancy at 16
+Layer 20 (TEC R7)  module 470328040 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470328044 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470328048 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470328052 layer 20 is under occupancy at 18
+Layer 20 (TEC R7)  module 470329316 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470329576 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470340072 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470340076 layer 20 is under occupancy at 18
+Layer 20 (TEC R7)  module 470340080 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470340084 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470340332 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470340336 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470340340 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470340584 layer 20 is under occupancy at 14
+Layer 20 (TEC R7)  module 470341100 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470341348 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470341364 layer 20 is under occupancy at 13
+Layer 20 (TEC R7)  module 470344168 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470344172 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470344176 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470344180 layer 20 is under occupancy at 17
+Layer 20 (TEC R7)  module 470344436 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470344676 layer 20 is under occupancy at 20
+Layer 20 (TEC R7)  module 470344680 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470345192 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470345200 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470345452 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470345460 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470345712 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470345956 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470345960 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470345964 layer 20 is under occupancy at 18
+Layer 20 (TEC R7)  module 470345968 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470345972 layer 20 is under occupancy at 18
+Layer 20 (TEC R7)  module 470356460 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470356708 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470356716 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470356720 layer 20 is under occupancy at 17
+Layer 20 (TEC R7)  module 470356972 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470357476 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470357488 layer 20 is under occupancy at 18
+Layer 20 (TEC R7)  module 470358252 layer 20 is under occupancy at 16
+Layer 20 (TEC R7)  module 470358256 layer 20 is under occupancy at 17
+Layer 20 (TEC R7)  module 470360820 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470361060 layer 20 is under occupancy at 18
+Layer 20 (TEC R7)  module 470361076 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470361320 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470361580 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470361588 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470361836 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470362348 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470362352 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470372844 layer 20 is under occupancy at 20
+Layer 20 (TEC R7)  module 470373092 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470374124 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470374632 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470374636 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470376936 layer 20 is under occupancy at 10
+Layer 20 (TEC R7)  module 470376940 layer 20 is under occupancy at 10
+Layer 20 (TEC R7)  module 470376944 layer 20 is under occupancy at 8
+Layer 20 (TEC R7)  module 470376948 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470377196 layer 20 is under occupancy at 20
+Layer 20 (TEC R7)  module 470377456 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470377700 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470377712 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470378224 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470378468 layer 20 is under occupancy at 21
+Layer 20 (TEC R7)  module 470378480 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470378724 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470378728 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470378736 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470394348 layer 20 is under occupancy at 20
+Layer 20 (TEC R7)  module 470394352 layer 20 is under occupancy at 19
+Layer 20 (TEC R7)  module 470394356 layer 20 is under occupancy at 18
+Layer 20 (TEC R7)  module 470422260 layer 20 is under occupancy at 23
+Layer 20 (TEC R7)  module 470423028 layer 20 is under occupancy at 22
+Layer 20 (TEC R7)  module 470426088 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470426596 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470426600 layer 20 is under occupancy at 24
+Layer 20 (TEC R7)  module 470427372 layer 20 is under occupancy at 24
+Layer 21 threshold for bad modules: -0.2
+Layer 22 threshold for bad modules: -0.2
+preparing the palette
+Layer 1 (TIB L1) has total efficiency 0.989025 312346/315812
+Layer 2 (TIB L2) has total efficiency 0.99466 264694/266115
+Layer 3 (TIB L3) has total efficiency 0.994031 114084/114769
+Layer 4 (TIB L4) has total efficiency 0.995811 94127/94523
+Layer 5 (TOB L1) has total efficiency 0.989171 225980/228454
+Layer 6 (TOB L2) has total efficiency 0.991938 194534/196115
+Layer 7 (TOB L3) has total efficiency 0.995337 75990/76346
+Layer 8 (TOB L4) has total efficiency 0.996381 63598/63829
+Layer 9 (TOB L5) has total efficiency 0.999571 46576/46596
+Layer 10 (TOB L6) has total efficiency -nan 0/0
+Layer 11 (TID R1) has total efficiency 0.995506 179880/180692
+Layer 12 (TID R2) has total efficiency 0.995562 109921/110411
+Layer 13 (TID R3) has total efficiency 0.996097 47213/47398
+Layer 14 (TEC R1) has total efficiency 0.991834 149878/151112
+Layer 15 (TEC R2) has total efficiency 0.994795 235865/237099
+Layer 16 (TEC R3) has total efficiency 0.994485 148942/149768
+Layer 17 (TEC R4) has total efficiency 0.99584 122804/123317
+Layer 18 (TEC R5) has total efficiency 0.994492 218819/220031
+Layer 19 (TEC R6) has total efficiency 0.995644 103073/103524
+Layer 20 (TEC R7) has total efficiency 0.996125 40614/40772
+Layer 21 () has total efficiency -nan 0/0
+Layer 22 () has total efficiency -nan 0/0
+The total efficiency is 0.993586
+      TIB: 0.992457 785251/791219
+      TOB: 0.992374 606678/611340
+      TID: 0.995607 337014/338501
+      TEC: 0.994513 1019995/1025623
+Fill only good modules layer 1:  S = 312346    B = 315812
+Filling all modules layer 1:  S = 312391    B = 342174
+Fill only good modules layer 2:  S = 264694    B = 266115
+Filling all modules layer 2:  S = 265148    B = 284066
+Fill only good modules layer 3:  S = 114084    B = 114769
+Filling all modules layer 3:  S = 114140    B = 125321
+Fill only good modules layer 4:  S = 94127    B = 94523
+Filling all modules layer 4:  S = 94212    B = 106602
+Fill only good modules layer 5:  S = 225980    B = 228454
+Filling all modules layer 5:  S = 226149    B = 231015
+Fill only good modules layer 6:  S = 194534    B = 196115
+Filling all modules layer 6:  S = 194880    B = 199406
+Fill only good modules layer 7:  S = 75990    B = 76346
+Filling all modules layer 7:  S = 76517    B = 85267
+Fill only good modules layer 8:  S = 63598    B = 63829
+Filling all modules layer 8:  S = 63641    B = 68624
+Fill only good modules layer 9:  S = 46576    B = 46596
+Filling all modules layer 9:  S = 46704    B = 47454
+Fill only good modules layer 10:  S = 0    B = 0
+Filling all modules layer 10:  S = 0    B = 0
+Fill only good modules layer 11:  S = 86315    B = 86757
+Filling all modules layer 11:  S = 86315    B = 96306
+Fill only good modules layer 12:  S = 52254    B = 52499
+Filling all modules layer 12:  S = 52475    B = 56815
+Fill only good modules layer 13:  S = 24190    B = 24290
+Filling all modules layer 13:  S = 24190    B = 24290
+Fill only good modules layer 14:  S = 93565    B = 93935
+Filling all modules layer 14:  S = 93577    B = 98511
+Fill only good modules layer 15:  S = 57667    B = 57912
+Filling all modules layer 15:  S = 57667    B = 58938
+Fill only good modules layer 16:  S = 23023    B = 23108
+Filling all modules layer 16:  S = 23023    B = 23495
+Fill only good modules layer 17:  S = 74043    B = 74928
+Filling all modules layer 17:  S = 74975    B = 77390
+Fill only good modules layer 18:  S = 116065    B = 116666
+Filling all modules layer 18:  S = 117234    B = 121915
+Fill only good modules layer 19:  S = 73470    B = 73894
+Filling all modules layer 19:  S = 74066    B = 75750
+Fill only good modules layer 20:  S = 61192    B = 61440
+Filling all modules layer 20:  S = 61557    B = 62752
+Fill only good modules layer 21:  S = 110828    B = 111530
+Filling all modules layer 21:  S = 111338    B = 113167
+Fill only good modules layer 22:  S = 52169    B = 52422
+Filling all modules layer 22:  S = 52554    B = 53333
+Fill only good modules layer 23:  S = 21022    B = 21125
+Filling all modules layer 23:  S = 21092    B = 21474
+Fill only good modules layer 24:  S = 75835    B = 76184
+Filling all modules layer 24:  S = 76399    B = 77483
+Fill only good modules layer 25:  S = 119800    B = 120433
+Filling all modules layer 25:  S = 120289    B = 124032
+Fill only good modules layer 26:  S = 75472    B = 75874
+Filling all modules layer 26:  S = 75559    B = 77030
+Fill only good modules layer 27:  S = 61612    B = 61877
+Filling all modules layer 27:  S = 61708    B = 63496
+Fill only good modules layer 28:  S = 107991    B = 108501
+Filling all modules layer 28:  S = 108700    B = 111707
+Fill only good modules layer 29:  S = 50904    B = 51102
+Filling all modules layer 29:  S = 50949    B = 52000
+Fill only good modules layer 30:  S = 19592    B = 19647
+Filling all modules layer 30:  S = 19669    B = 20256
+Computing efficiency vs bx
+Computing efficiency vs lumi
+Avg conditions (avg+/-rms):   lumi :342.314+/-50.6675   pu: 93.6608+/-13.8632
+
+-----------------

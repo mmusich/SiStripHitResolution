@@ -1,0 +1,100 @@
+New IOV starting from run 325310 event 1 lumiBlock 1 time 1
+-----------------
+
+-----------------
+Global Info
+-----------------
+BadComponent 		Modules 	Fibers 	Apvs	Strips
+----------------------------------------------------------------
+Tracker:		4	12	24	3072
+
+TIB:			2	6	12	1536
+TID:			0	0	0	0
+TOB:			0	0	0	0
+TEC:			2	6	12	1536
+
+TIB Layer 1 :		2	6	12	1536
+TIB Layer 2 :		0	0	0	0
+TIB Layer 3 :		0	0	0	0
+TIB Layer 4 :		0	0	0	0
+
+TID+ Disk 1 :		0	0	0	0
+TID+ Disk 2 :		0	0	0	0
+TID+ Disk 3 :		0	0	0	0
+TID- Disk 1 :		0	0	0	0
+TID- Disk 2 :		0	0	0	0
+TID- Disk 3 :		0	0	0	0
+
+TOB Layer 1 :		0	0	0	0
+TOB Layer 2 :		0	0	0	0
+TOB Layer 3 :		0	0	0	0
+TOB Layer 4 :		0	0	0	0
+TOB Layer 5 :		0	0	0	0
+TOB Layer 6 :		0	0	0	0
+
+TEC+ Disk 1 :		0	0	0	0
+TEC+ Disk 2 :		0	0	0	0
+TEC+ Disk 3 :		0	0	0	0
+TEC+ Disk 4 :		0	0	0	0
+TEC+ Disk 5 :		0	0	0	0
+TEC+ Disk 6 :		0	0	0	0
+TEC+ Disk 7 :		0	0	0	0
+TEC+ Disk 8 :		0	0	0	0
+TEC+ Disk 9 :		0	0	0	0
+TEC- Disk 1 :		1	3	6	768
+TEC- Disk 2 :		0	0	0	0
+TEC- Disk 3 :		0	0	0	0
+TEC- Disk 4 :		0	0	0	0
+TEC- Disk 5 :		0	0	0	0
+TEC- Disk 6 :		0	0	0	0
+TEC- Disk 7 :		1	3	6	768
+TEC- Disk 8 :		0	0	0	0
+TEC- Disk 9 :		0	0	0	0
+
+----------------------------------------------------------------
+		   Detid  	Modules Fibers Apvs
+----------------------------------------------------------------
+TIB Layer 1 :
+		 369125861 	 1 	 1 1 1 	 1 1 1 1 1 1 
+		 369125869 	 1 	 1 1 1 	 1 1 1 1 1 1 
+TIB Layer 2 :
+TIB Layer 3 :
+TIB Layer 4 :
+
+TID+ Disk 1 :
+TID+ Disk 2 :
+TID+ Disk 3 :
+TID- Disk 1 :
+TID- Disk 2 :
+TID- Disk 3 :
+
+TOB Layer 1 :
+TOB Layer 2 :
+TOB Layer 3 :
+TOB Layer 4 :
+TOB Layer 5 :
+TOB Layer 6 :
+
+TEC+ Disk 1 :
+TEC+ Disk 2 :
+TEC+ Disk 3 :
+TEC+ Disk 4 :
+TEC+ Disk 5 :
+TEC+ Disk 6 :
+TEC+ Disk 7 :
+TEC+ Disk 8 :
+TEC+ Disk 9 :
+TEC- Disk 1 :
+		 470045222 	 1 	 1 1 1 	 1 1 1 1 1 1 
+TEC- Disk 2 :
+TEC- Disk 3 :
+TEC- Disk 4 :
+TEC- Disk 5 :
+TEC- Disk 6 :
+TEC- Disk 7 :
+		 470147753 	 1 	 1 1 1 	 1 1 1 1 1 1 
+TEC- Disk 8 :
+TEC- Disk 9 :----- Begin Fatal Exception 30-Jan-2020 16:56:40 CET-----------------------
+An exception of category 'ConditionDatabase' occurred while
+   [0] Processing global end Run run: 325310
+   [1] Calling method for module SiStripHitEffFromCalibTree/'SiStripHitEff'
