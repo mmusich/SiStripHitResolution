@@ -16,7 +16,7 @@ process.source = cms.Source("EmptyIOVSource",
 
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1))
 
-process.SiStripHitEff = cms.EDAnalyzer("SiStripHitEffFromCalibTree",
+process.SiStripHitEff = cms.EDAnalyzer("SiStripHitResolFromCalibTree",
     CalibTreeFilenames = cms.untracked.vstring('root://cms-xrd-global.cern.ch///eos/cms/store/group/dpg_tracker_strip/comm_tracker/Strip/Calibration/calibrationtree/GR18/calibTree_325310_50.root'),
     Threshold         = cms.double(0.2),
     nModsMin          = cms.int32(25),

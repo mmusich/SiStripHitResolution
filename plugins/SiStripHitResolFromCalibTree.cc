@@ -15,7 +15,7 @@
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "FWCore/ParameterSet/interface/FileInPath.h"
 
-#include "/afs/cern.ch/user/c/coldham/private/CMSSW_10_2_3/src/hitresolutionproject/StripHitResolution/SiStripHitResolution/interface/HitResol.h"
+#include "UserCode/SiStripHitResolution/interface/HitResol.h"
 #include "DataFormats/SiStripDetId/interface/StripSubdetector.h"
 #include "DataFormats/Common/interface/Handle.h"
 #include "DataFormats/GeometryVector/interface/GlobalPoint.h"
@@ -31,7 +31,7 @@
 #include "Geometry/CommonDetUnit/interface/GeomDet.h"
 #include "TrackingTools/Records/interface/TransientRecHitRecord.h" 
 #include "DataFormats/TrackingRecHit/interface/TrackingRecHit.h"
-#include "/afs/cern.ch/user/c/coldham/private/CMSSW_10_2_3/src/hitresolutionproject/StripHitResolution/SiStripHitResolution/interface/TrajectoryAtInvalidHit.h"
+#include "UserCode/SiStripHitResolution/interface/TrajectoryAtInvalidHit.h"
 #include "DataFormats/TrackerCommon/interface/TrackerTopology.h"
 #include "Geometry/Records/interface/TrackerTopologyRcd.h"
 #include "RecoLocalTracker/ClusterParameterEstimator/interface/StripClusterParameterEstimator.h"
