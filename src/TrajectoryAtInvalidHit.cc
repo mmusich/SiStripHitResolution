@@ -1,4 +1,4 @@
-#include "/afs/cern.ch/user/c/coldham/private/CMSSW_10_2_3/src/hitresolutionproject/StripHitResolution/SiStripHitResolution/interface/TrajectoryAtInvalidHit.h"
+#include "UserCode/SiStripHitResolution/interface/TrajectoryAtInvalidHit.h"
 #include "TrackingTools/TrackFitters/interface/TrajectoryStateCombiner.h"
 #include "TrackingTools/TrajectoryState/interface/TrajectoryStateOnSurface.h"
 #include "TrackingTools/TrajectoryState/interface/TrajectoryStateTransform.h"
