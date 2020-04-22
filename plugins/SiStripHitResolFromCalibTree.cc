@@ -267,13 +267,14 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
     goodlayertotal[l] = 0;
     goodlayerfound[l] = 0;
     alllayertotal[l] = 0;
-    alllayerfound[l] = 0;
+     alllayerfound[l] = 0;
   }
 
   TH1F* resolutionPlots[23];
   for(Long_t ilayer = 0; ilayer <23; ilayer++) {
     resolutionPlots[ilayer] = fs->make<TH1F>(Form("resol_layer_%i",(int)(ilayer)),GetLayerName(ilayer),20,-10,10);
     resolutionPlots[ilayer]->GetXaxis()->SetTitle("trajX-clusX [strip unit]");
+
 
 	layerfound_vsLumi.push_back( fs->make<TH1F>(Form("layerfound_vsLumi_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,0,25000)); 
 	layertotal_vsLumi.push_back( fs->make<TH1F>(Form("layertotal_vsLumi_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,0,25000));
@@ -286,6 +287,7 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 	}
 	layertotal[ilayer] = 0;
 	layerfound[ilayer] = 0;
+
   }
 
   if(!_autoIneffModTagging) cout << "A module is bad if efficiency < " << threshold << " and has at least " << nModsMin << " nModsMin." << endl;
@@ -508,6 +510,8 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 		if(resxsig!=1000.0) resolutionPlots[layer]->Fill(stripTrajMid-stripCluster);
 		else resolutionPlots[layer]->Fill(1000);
 	  }
+
+
 
 
 	  // New matching methods
@@ -762,6 +766,25 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
   //&&&&&&&&&&&&&&&&&&
   // printout
   //&&&&&&&&&&&&&&&&&&
+
+   std::ofstream ResolutionValues;
+
+   int RunNumInt = e.id().run();   
+   std::string RunNumString = std::to_string(RunNumInt);
+
+   std::string ResolutionTextFileString = "ResolutionValues_" + RunNumString + ".txt";
+   ResolutionValues.open(ResolutionTextFileString.c_str());
+
+   for(Long_t ilayer = 0; ilayer <23; ilayer++) {
+
+	//Printing out the resolution values
+   	float Resolution = resolutionPlots[ilayer]->GetStdDev();
+        std::cout << "Resolution for layer number " << ilayer << " ("<< GetLayerName(ilayer) << ")" << " is: " << Resolution << std::endl;
+
+	//Saving the resolution values to a text file
+	ResolutionValues << "Resolution for layer number " << ilayer << " ("<< GetLayerName(ilayer) << ")" << " is: " << Resolution << std::endl;
+
+   }
  
   cout << "\n-----------------\nNew IOV starting from run " <<   e.id().run() << " event " << e.id().event() << " lumiBlock " << e.luminosityBlock() << " time " << e.time().value()  << "\n-----------------\n";
   cout << "\n-----------------\nGlobal Info\n-----------------";
