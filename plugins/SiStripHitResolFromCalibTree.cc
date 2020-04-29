@@ -272,7 +272,7 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 
   TH1F* resolutionPlots[23];
   for(Long_t ilayer = 0; ilayer <23; ilayer++) {
-    resolutionPlots[ilayer] = fs->make<TH1F>(Form("resol_layer_%i",(int)(ilayer)),GetLayerName(ilayer),20,-10,10);
+    resolutionPlots[ilayer] = fs->make<TH1F>(Form("resol_layer_%i",(int)(ilayer)),GetLayerName(ilayer),40,-10,10);
     resolutionPlots[ilayer]->GetXaxis()->SetTitle("trajX-clusX [strip unit]");
 
 
@@ -769,15 +769,14 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 
    std::ofstream ResolutionValues;
 
-   int RunNumInt = e.id().run();   
-   std::string RunNumString = std::to_string(RunNumInt);
-
-   std::string ResolutionTextFileString = "ResolutionValues_" + RunNumString + ".txt";
+   std::string ResolutionTextFileString = "ResolutionValues.txt";
    ResolutionValues.open(ResolutionTextFileString.c_str());
 
    for(Long_t ilayer = 0; ilayer <23; ilayer++) {
 
 	//Printing out the resolution values
+	
+	resolutionPlots[ilayer]->Fit("gaus");
    	float Resolution = resolutionPlots[ilayer]->GetStdDev();
         std::cout << "Resolution for layer number " << ilayer << " ("<< GetLayerName(ilayer) << ")" << " is: " << Resolution << std::endl;
 
