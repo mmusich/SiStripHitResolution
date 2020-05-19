@@ -791,7 +791,7 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
    	float PredMinusMeas = resolutionPlots[ilayer]->GetStdDev();
 	float Meas = MeasPlots[ilayer]->GetStdDev();
 
-	float Resolution = sqrt( abs( (pow(PredMinusMeas, 2) - pow(Meas, 2)) ) / 2 );
+	float Resolution = sqrt( (pow(PredMinusMeas, 2) - pow(Meas, 2))  / 2 );
 
 
 	//Saving the resolution values to a text file
