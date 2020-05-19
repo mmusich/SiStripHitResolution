@@ -374,7 +374,7 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
           }
 
           simpleRes = getSimpleRes(&(*itm)); // simple resolution by using the track re-fit forward and backward predicted state
-       
+	   
           // Now to see if there is a match - pair method - hit in overlapping sensors
           vector < TrajectoryMeasurement >::const_iterator itTraj2 =  TMeas.end(); // last hit along the fitted track
 
@@ -426,7 +426,7 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
           const SiStripRecHit1D *hit1d_2 = dynamic_cast < const SiStripRecHit1D * >(myhit_2);
 
           if (hit1d_2) {
-//             float myres_2 = getSimHitRes(det_2,trackDirection_2,*hit1d_2,expWidth_2,&mypitch_2,drift_2);
+
              getSimHitRes(det_2,trackDirection_2,*hit1d_2,expWidth_2,&mypitch_2,drift_2);
              clusterWidth_2 = hit1d_2->cluster()->amplitudes().size();
              uint16_t firstStrip_2 = hit1d_2->cluster()->firstStrip();
@@ -740,6 +740,7 @@ bool HitResol::getPairParameters(const MagneticField* magField_, AnalyticalPropa
   (hitDX) = recHitX_1 + relativeXSign_*recHitX_2;
 
 
+  
   return true;
 }
 

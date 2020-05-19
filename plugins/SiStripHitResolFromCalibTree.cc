@@ -271,9 +271,15 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
   }
 
   TH1F* resolutionPlots[23];
+  TH1F* MeasPlots[23];
+
   for(Long_t ilayer = 0; ilayer <23; ilayer++) {
-    resolutionPlots[ilayer] = fs->make<TH1F>(Form("resol_layer_%i",(int)(ilayer)),GetLayerName(ilayer),40,-10,10);
+
+    resolutionPlots[ilayer] = fs->make<TH1F>(Form("resol_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
     resolutionPlots[ilayer]->GetXaxis()->SetTitle("trajX-clusX [strip unit]");
+
+    MeasPlots[ilayer] = fs->make<TH1F>(Form("meas_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
+    MeasPlots[ilayer]->GetXaxis()->SetTitle("clusX [strip unit]");
 
 
 	layerfound_vsLumi.push_back( fs->make<TH1F>(Form("layerfound_vsLumi_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,0,25000)); 
@@ -507,8 +513,8 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 
 
 	  if(!badquality && layer<23) {
-		if(resxsig!=1000.0) resolutionPlots[layer]->Fill(stripTrajMid-stripCluster);
-		else resolutionPlots[layer]->Fill(1000);
+		if(resxsig!=1000.0){ resolutionPlots[layer]->Fill(stripTrajMid-stripCluster); MeasPlots[layer]->Fill(stripCluster); }
+		else{ resolutionPlots[layer]->Fill(1000); MeasPlots[layer]->Fill(1000); }
 	  }
 
 
@@ -768,8 +774,11 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
   //&&&&&&&&&&&&&&&&&&
 
    std::ofstream ResolutionValues;
+   int RunNumInt = e.id().run(); 
+   std::string RunNumString = std::to_string(RunNumInt);
+   std::string ResolutionTextFileString = "ResolutionValues_" + RunNumString + ".txt";
 
-   std::string ResolutionTextFileString = "ResolutionValues.txt";
+
    ResolutionValues.open(ResolutionTextFileString.c_str());
 
    for(Long_t ilayer = 0; ilayer <23; ilayer++) {
@@ -777,11 +786,18 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 	//Printing out the resolution values
 	
 	resolutionPlots[ilayer]->Fit("gaus");
-   	float Resolution = resolutionPlots[ilayer]->GetStdDev();
-        std::cout << "Resolution for layer number " << ilayer << " ("<< GetLayerName(ilayer) << ")" << " is: " << Resolution << std::endl;
+	MeasPlots[ilayer]->Fit("gaus");
+
+   	float PredMinusMeas = resolutionPlots[ilayer]->GetStdDev();
+	float Meas = MeasPlots[ilayer]->GetStdDev();
+
+	float Resolution = sqrt( abs( (pow(PredMinusMeas, 2) - pow(Meas, 2)) ) / 2 );
+
 
 	//Saving the resolution values to a text file
-	ResolutionValues << "Resolution for layer number " << ilayer << " ("<< GetLayerName(ilayer) << ")" << " is: " << Resolution << std::endl;
+	ResolutionValues << '\n' << "Resolution for layer number " << ilayer << " ("<< GetLayerName(ilayer) << ")" << " is: " << Resolution << '\n'
+			 << "Double difference of the measured and predicted position between the two sensors under consideration for layer number " << ilayer << " ("<< GetLayerName(ilayer) << ")" << " is: " << PredMinusMeas << '\n' 
+			 << "The difference between the two positions of the hit measurements for layer number " << ilayer << " ("<< GetLayerName(ilayer) << ")" << " is: " << Meas << '\n' << std::endl;
 
    }
  
