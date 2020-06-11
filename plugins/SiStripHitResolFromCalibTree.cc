@@ -270,16 +270,16 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
      alllayerfound[l] = 0;
   }
 
-  TH1F* resolutionPlots[23];
+  TH1F* PredMinusMeasPlots[23];
   TH1F* MeasPlots[23];
 
   for(Long_t ilayer = 0; ilayer <23; ilayer++) {
 
-    resolutionPlots[ilayer] = fs->make<TH1F>(Form("resol_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
-    resolutionPlots[ilayer]->GetXaxis()->SetTitle("trajX-clusX [strip unit]");
+    MeasPlots[ilayer] = fs->make<TH1F>(Form("resol_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
+    MeasPlots[ilayer]->GetXaxis()->SetTitle("trajX-clusX [strip unit]");
 
-    MeasPlots[ilayer] = fs->make<TH1F>(Form("meas_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
-    MeasPlots[ilayer]->GetXaxis()->SetTitle("clusX [strip unit]");
+    PredMinusMeasPlots[ilayer] = fs->make<TH1F>(Form("meas_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
+    PredMinusMeasPlots[ilayer]->GetXaxis()->SetTitle("clusX [strip unit]");
 
 
 	layerfound_vsLumi.push_back( fs->make<TH1F>(Form("layerfound_vsLumi_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,0,25000)); 
@@ -513,8 +513,8 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 
 
 	  if(!badquality && layer<23) {
-		if(resxsig!=1000.0){ resolutionPlots[layer]->Fill(stripTrajMid-stripCluster); MeasPlots[layer]->Fill(stripCluster); }
-		else{ resolutionPlots[layer]->Fill(1000); MeasPlots[layer]->Fill(1000); }
+		if(resxsig!=1000.0){ MeasPlots[layer]->Fill(stripTrajMid-stripCluster); PredMinusMeasPlots[layer]->Fill(stripCluster); }
+		else{ MeasPlots[layer]->Fill(1000); MeasPlots[layer]->Fill(1000); }
 	  }
 
 
@@ -783,13 +783,13 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 
    for(Long_t ilayer = 0; ilayer <23; ilayer++) {
 
-	//Printing out the resolution values
-	
-	resolutionPlots[ilayer]->Fit("gaus");
+	//Calculating and printing out the resolution values
+
+	PredMinusMeasPlots[ilayer]->Fit("gaus");
 	MeasPlots[ilayer]->Fit("gaus");
 
-   	float PredMinusMeas = resolutionPlots[ilayer]->GetStdDev();
-	float Meas = MeasPlots[ilayer]->GetStdDev();
+   	float Meas = MeasPlots[ilayer]->GetStdDev();
+	float PredMinusMeas = PredMinusMeasPlots[ilayer]->GetStdDev();
 
 	float Resolution = sqrt( (pow(PredMinusMeas, 2) - pow(Meas, 2))  / 2 );
 
