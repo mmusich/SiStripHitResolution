@@ -276,10 +276,10 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
   for(Long_t ilayer = 0; ilayer <23; ilayer++) {
 
     MeasPlots[ilayer] = fs->make<TH1F>(Form("resol_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
-    MeasPlots[ilayer]->GetXaxis()->SetTitle("trajX-clusX [strip unit]");
+    MeasPlots[ilayer]->GetXaxis()->SetTitle("clusX [strip unit]");
 
     PredMinusMeasPlots[ilayer] = fs->make<TH1F>(Form("meas_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
-    PredMinusMeasPlots[ilayer]->GetXaxis()->SetTitle("clusX [strip unit]");
+    PredMinusMeasPlots[ilayer]->GetXaxis()->SetTitle("trajX-clusX [strip unit]");
 
 
 	layerfound_vsLumi.push_back( fs->make<TH1F>(Form("layerfound_vsLumi_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,0,25000)); 
@@ -479,6 +479,7 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
       int   nstrips = -9; 
       float Pitch   = -9.0; 
 
+
       if (resxsig==1000.0) { // special treatment, no GeomDetUnit associated in some cases when no cluster found
     	Pitch = 0.0205;  // maximum
     	nstrips = 768;  // maximum
@@ -513,8 +514,8 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 
 
 	  if(!badquality && layer<23) {
-		if(resxsig!=1000.0){ MeasPlots[layer]->Fill(stripTrajMid-stripCluster); PredMinusMeasPlots[layer]->Fill(stripCluster); }
-		else{ MeasPlots[layer]->Fill(1000); MeasPlots[layer]->Fill(1000); }
+		if(resxsig!=1000.0){ MeasPlots[layer]->Fill(ClusterLocX); PredMinusMeasPlots[layer]->Fill(TrajLocX-ClusterLocX); }
+		else{ MeasPlots[layer]->Fill(1000); PredMinusMeasPlots[layer]->Fill(1000); }
 	  }
 
 
