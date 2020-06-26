@@ -270,16 +270,16 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
      alllayerfound[l] = 0;
   }
 
-  TH1F* PredMinusMeasPlots[23];
+  TH1F* PredPlots[23];
   TH1F* MeasPlots[23];
 
   for(Long_t ilayer = 0; ilayer <23; ilayer++) {
 
-    MeasPlots[ilayer] = fs->make<TH1F>(Form("resol_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
+    MeasPlots[ilayer] = fs->make<TH1F>(Form("MeasPlots_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
     MeasPlots[ilayer]->GetXaxis()->SetTitle("clusX [strip unit]");
 
-    PredMinusMeasPlots[ilayer] = fs->make<TH1F>(Form("meas_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
-    PredMinusMeasPlots[ilayer]->GetXaxis()->SetTitle("trajX-clusX [strip unit]");
+    PredPlots[ilayer] = fs->make<TH1F>(Form("PredPlots_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
+    PredPlots[ilayer]->GetXaxis()->SetTitle("trajX [strip unit]");
 
 
 	layerfound_vsLumi.push_back( fs->make<TH1F>(Form("layerfound_vsLumi_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,0,25000)); 
@@ -514,8 +514,9 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 
 
 	  if(!badquality && layer<23) {
-		if(resxsig!=1000.0){ MeasPlots[layer]->Fill(ClusterLocX); PredMinusMeasPlots[layer]->Fill(TrajLocX-ClusterLocX); }
-		else{ MeasPlots[layer]->Fill(1000); PredMinusMeasPlots[layer]->Fill(1000); }
+		if(resxsig!=1000.0){ 
+			MeasPlots[layer]->Fill(ClusterLocX); PredPlots[layer]->Fill(TrajLocX); }
+		else{ MeasPlots[layer]->Fill(1000); PredPlots[layer]->Fill(1000); }
 	  }
 
 
@@ -786,13 +787,14 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 
 	//Calculating and printing out the resolution values
 
-	PredMinusMeasPlots[ilayer]->Fit("gaus");
-	MeasPlots[ilayer]->Fit("gaus");
+	PredPlots[ilayer]->Fit("gaus");
 
    	float Meas = MeasPlots[ilayer]->GetStdDev();
-	float PredMinusMeas = PredMinusMeasPlots[ilayer]->GetStdDev();
+	float Pred = PredPlots[ilayer]->GetStdDev();
 
-	float Resolution = sqrt( (pow(PredMinusMeas, 2) - pow(Meas, 2))  / 2 );
+	float PredMinusMeas = pow(Meas, 2) + pow(Pred, 2);
+
+	float Resolution = sqrt( PredMinusMeas - pow(Meas, 2))  / 2 ;
 
 
 	//Saving the resolution values to a text file
