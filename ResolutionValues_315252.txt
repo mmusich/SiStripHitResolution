@@ -1,0 +1,115 @@
+
+Resolution for layer number 0 () is: 0
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 0 () is: 0
+The difference between the two positions of the hit measurements for layer number 0 () is: 0
+
+
+Resolution for layer number 1 (TIB L1) is: 0.938794
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 1 (TIB L1) is: 6.21356
+The difference between the two positions of the hit measurements for layer number 1 (TIB L1) is: 1.76255
+
+
+Resolution for layer number 2 (TIB L2) is: 0.925501
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 2 (TIB L2) is: 5.86959
+The difference between the two positions of the hit measurements for layer number 2 (TIB L2) is: 1.71314
+
+
+Resolution for layer number 3 (TIB L3) is: 0.932335
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 3 (TIB L3) is: 6.04502
+The difference between the two positions of the hit measurements for layer number 3 (TIB L3) is: 1.73858
+
+
+Resolution for layer number 4 (TIB L4) is: 0.933699
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 4 (TIB L4) is: 6.0799
+The difference between the two positions of the hit measurements for layer number 4 (TIB L4) is: 1.7435
+
+
+Resolution for layer number 5 (TOB L1) is: 1.14281
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 5 (TOB L1) is: 13.6359
+The difference between the two positions of the hit measurements for layer number 5 (TOB L1) is: 2.61022
+
+
+Resolution for layer number 6 (TOB L2) is: 1.14637
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 6 (TOB L2) is: 13.8132
+The difference between the two positions of the hit measurements for layer number 6 (TOB L2) is: 2.62776
+
+
+Resolution for layer number 7 (TOB L3) is: 1.15583
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 7 (TOB L3) is: 14.2771
+The difference between the two positions of the hit measurements for layer number 7 (TOB L3) is: 2.67171
+
+
+Resolution for layer number 8 (TOB L4) is: 1.15917
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 8 (TOB L4) is: 14.4426
+The difference between the two positions of the hit measurements for layer number 8 (TOB L4) is: 2.68717
+
+
+Resolution for layer number 9 (TOB L5) is: 1.1544
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 9 (TOB L5) is: 14.2096
+The difference between the two positions of the hit measurements for layer number 9 (TOB L5) is: 2.66568
+
+
+Resolution for layer number 10 (TOB L6) is: 0
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 10 (TOB L6) is: 0
+The difference between the two positions of the hit measurements for layer number 10 (TOB L6) is: 0
+
+
+Resolution for layer number 11 (TID R1) is: 1.04701
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 11 (TID R1) is: 9.41404
+The difference between the two positions of the hit measurements for layer number 11 (TID R1) is: 2.14641
+
+
+Resolution for layer number 12 (TID R2) is: 1.18088
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 12 (TID R2) is: 15.6326
+The difference between the two positions of the hit measurements for layer number 12 (TID R2) is: 2.80255
+
+
+Resolution for layer number 13 (TID R3) is: 1.00165
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 13 (TID R3) is: 8.20431
+The difference between the two positions of the hit measurements for layer number 13 (TID R3) is: 2.04399
+
+
+Resolution for layer number 14 (TEC R1) is: 1.03474
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 14 (TEC R1) is: 8.86346
+The difference between the two positions of the hit measurements for layer number 14 (TEC R1) is: 2.06831
+
+
+Resolution for layer number 15 (TEC R2) is: 1.16783
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 15 (TEC R2) is: 14.8475
+The difference between the two positions of the hit measurements for layer number 15 (TEC R2) is: 2.72167
+
+
+Resolution for layer number 16 (TEC R3) is: 1.01297
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 16 (TEC R3) is: 8.42605
+The difference between the two positions of the hit measurements for layer number 16 (TEC R3) is: 2.0529
+
+
+Resolution for layer number 17 (TEC R4) is: 0.959007
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 17 (TEC R4) is: 6.76396
+The difference between the two positions of the hit measurements for layer number 17 (TEC R4) is: 1.83864
+
+
+Resolution for layer number 18 (TEC R5) is: 1.22486
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 18 (TEC R5) is: 18.1336
+The difference between the two positions of the hit measurements for layer number 18 (TEC R5) is: 3.02162
+
+
+Resolution for layer number 19 (TEC R6) is: 1.15316
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 19 (TEC R6) is: 14.2932
+The difference between the two positions of the hit measurements for layer number 19 (TEC R6) is: 2.68698
+
+
+Resolution for layer number 20 (TEC R7) is: 1.04802
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 20 (TEC R7) is: 10.1267
+The difference between the two positions of the hit measurements for layer number 20 (TEC R7) is: 2.30244
+
+
+Resolution for layer number 21 () is: 0
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 21 () is: 0
+The difference between the two positions of the hit measurements for layer number 21 () is: 0
+
+
+Resolution for layer number 22 () is: 0
+Double difference of the measured and predicted position between the two sensors under consideration for layer number 22 () is: 0
+The difference between the two positions of the hit measurements for layer number 22 () is: 0
+
