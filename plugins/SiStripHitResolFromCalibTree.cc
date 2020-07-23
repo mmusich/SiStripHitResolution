@@ -787,8 +787,6 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 
 	//Calculating and printing out the resolution values
 
-	PredPlots[ilayer]->Fit("gaus");
-
    	float Meas = MeasPlots[ilayer]->GetStdDev();
 	float Pred = PredPlots[ilayer]->GetStdDev();
 
