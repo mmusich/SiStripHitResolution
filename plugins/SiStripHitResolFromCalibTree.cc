@@ -273,13 +273,23 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
   TH1F* PredPlots[23];
   TH1F* MeasPlots[23];
 
+  //std::string UnitString = "cm";
+  std::string UnitString = "strip unit";
+  std::string PlotTitleClusX;
+  std::string PlotTitleTrajX;
+  std::string FileNameEnding;
+
+  if(UnitString == "cm"){PlotTitleClusX = "clusX [cm]"; PlotTitleTrajX = "trajX [cm]"; FileNameEnding = "CM";}
+  else if(UnitString == "strip unit"){PlotTitleClusX = "clusX [strip unit]"; PlotTitleTrajX = "trajX [strip unit]"; FileNameEnding = "StripUnit";}
+  else{std::cout << "ERROR: Unit must either be cm or strip unit." << std::endl; }
+
   for(Long_t ilayer = 0; ilayer <23; ilayer++) {
 
     MeasPlots[ilayer] = fs->make<TH1F>(Form("MeasPlots_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
-    MeasPlots[ilayer]->GetXaxis()->SetTitle("clusX [strip unit]");
+    MeasPlots[ilayer]->GetXaxis()->SetTitle("clusX [cm]");
 
     PredPlots[ilayer] = fs->make<TH1F>(Form("PredPlots_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
-    PredPlots[ilayer]->GetXaxis()->SetTitle("trajX [strip unit]");
+    PredPlots[ilayer]->GetXaxis()->SetTitle("trajX [cm]");
 
 
 	layerfound_vsLumi.push_back( fs->make<TH1F>(Form("layerfound_vsLumi_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,0,25000)); 
@@ -479,6 +489,17 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
       int   nstrips = -9; 
       float Pitch   = -9.0; 
 
+      //For converting from pitch units into micrometres
+      //const StripGeomDetUnit * conversion = dynamic_cast<const StripGeomDetUnit*>(tkgeom->idToDetUnit(DetId)); 
+      //auto SpecTopo = conversion->specificTopology();
+
+      //const StripGeomDetUnit * conversion=(const StripGeomDetUnit*)tkgeom->idToDetUnit(DetId);
+      //auto SpecTopo = conversion->specificTopology();
+
+      //std::cout << '\n' << std::endl;
+      //std::cout << "SpecTopo = " << SpecTopo << std::endl;
+      //std::cout << '\n' << std::endl;
+
 
       if (resxsig==1000.0) { // special treatment, no GeomDetUnit associated in some cases when no cluster found
     	Pitch = 0.0205;  // maximum
@@ -512,10 +533,17 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 		  }
 	  }
 
+		
+	  double MeasPlotsVariable;
+   	  double PredPlotsVariable;
+
+	  if(UnitString == "cm"){MeasPlotsVariable = ClusterLocX; PredPlotsVariable = TrajLocX;}
+	  else if(UnitString == "strip unit"){MeasPlotsVariable = ClusterLocX/Pitch; PredPlotsVariable = TrajLocX/Pitch;}
+	  else{std::cout << "ERROR: Unit must be cm or strip unit" << std::endl;}
 
 	  if(!badquality && layer<23) {
 		if(resxsig!=1000.0){ 
-			MeasPlots[layer]->Fill(ClusterLocX); PredPlots[layer]->Fill(TrajLocX); }
+			MeasPlots[layer]->Fill(MeasPlotsVariable); PredPlots[layer]->Fill(PredPlotsVariable); }
 		else{ MeasPlots[layer]->Fill(1000); PredPlots[layer]->Fill(1000); }
 	  }
 
@@ -778,7 +806,8 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
    std::ofstream ResolutionValues;
    int RunNumInt = e.id().run(); 
    std::string RunNumString = std::to_string(RunNumInt);
-   std::string ResolutionTextFileString = "ResolutionValues_" + RunNumString + ".txt";
+   std::cout << "RunNumString" << RunNumString << std::endl;
+   std::string ResolutionTextFileString = "ResolutionValues_" + RunNumString + "_" + FileNameEnding + ".txt";
 
 
    ResolutionValues.open(ResolutionTextFileString.c_str());
@@ -868,6 +897,7 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
     badModules << "\nTEC- Disk " << i-9 << " :" << ssV[3][i].str();
   badModules.close();
   
+
 }
 
 void SiStripHitResolFromCalibTree::makeHotColdMaps() {

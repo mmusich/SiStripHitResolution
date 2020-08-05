@@ -7,17 +7,28 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run2_data', '')  
 
+RunNumberBegin = 315252
+RunNumberEnd = 315252
+#RunNumberBegin = 325310
+#RunNumberEnd = 325310
+
 process.source = cms.Source("EmptyIOVSource",
-    firstValue = cms.uint64(325310),
-    lastValue = cms.uint64(325310),
-    timetype = cms.string('runnumber'),
-    interval = cms.uint64(1)
+  firstValue = cms.uint64(RunNumberBegin),
+  lastValue = cms.uint64(RunNumberEnd),
+  timetype = cms.string('runnumber'),
+  interval = cms.uint64(1)
 )
 
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1))
 
+InputFilePath =  'root://cms-xrd-global.cern.ch///eos/cms/store/group/dpg_tracker_strip/comm_tracker/Strip/Calibration/calibrationtree/GR18/calibTree_'
+InputFilePathEnd = '.root'
+
+FileName1 = InputFilePath + str(RunNumberBegin) + InputFilePathEnd
+#FileName2 = InputFilePath + str(RunNumberEnd) + InputFilePathEnd
+
 process.SiStripHitEff = cms.EDAnalyzer("SiStripHitResolFromCalibTree",
-    CalibTreeFilenames = cms.untracked.vstring('root://cms-xrd-global.cern.ch///eos/cms/store/group/dpg_tracker_strip/comm_tracker/Strip/Calibration/calibrationtree/GR18/calibTree_325310_50.root'),
+    CalibTreeFilenames = cms.untracked.vstring(FileName1),
     Threshold         = cms.double(0.2),
     nModsMin          = cms.int32(25),
     doSummary         = cms.int32(0),
@@ -56,8 +67,21 @@ process.PoolDBOutputService = cms.Service("PoolDBOutputService",
     ))
 )
 
+UnitString = "strip unit"
+#UnitString = "cm"
+
+if UnitString == "cm":
+	RootFileEnding = "_CM.root"
+elif UnitString == "strip unit":
+	RootFileEnding = "_StripUnit.root"
+else:
+ 	print('ERROR: Unit must be cm or strip unit')	
+
+RootFileBeginning = "SiStripHitEffHistos_run_"
+RootFileName = RootFileBeginning + str(RunNumberBegin) + "_" + str(RunNumberEnd) + RootFileEnding
+
 process.TFileService = cms.Service("TFileService",
-        fileName = cms.string('SiStripHitEffHistos_run325310.root')  
+        fileName = cms.string(RootFileName)  
 )
 
 process.allPath = cms.Path(process.SiStripHitEff)
