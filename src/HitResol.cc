@@ -35,7 +35,7 @@
 #include "DataFormats/TrackReco/interface/TrackExtra.h"
 #include "DataFormats/TrackReco/interface/TrackBase.h"
 #include "MagneticField/Records/interface/IdealMagneticFieldRecord.h"
-#include "TrackingTools/Records/interface/TransientRecHitRecord.h" 
+#include "TrackingTools/Records/interface/TransientRecHitRecord.h"
 #include "DataFormats/TrackingRecHit/interface/TrackingRecHit.h"
 #include "UserCode/SiStripHitResolution/interface/TrajectoryAtInvalidHit.h"
 #include "DataFormats/TrackerCommon/interface/TrackerTopology.h"
@@ -55,7 +55,7 @@
 #include "Geometry/CommonDetUnit/interface/GluedGeomDet.h"
 #include "DataFormats/Common/interface/DetSetVector.h"
 #include "DataFormats/Common/interface/DetSetVectorNew.h"
-#include "DataFormats/SiStripCluster/interface/SiStripCluster.h" 
+#include "DataFormats/SiStripCluster/interface/SiStripCluster.h"
 
 #include "DataFormats/MuonReco/interface/Muon.h"
 #include "DataFormats/MuonReco/interface/MuonFwd.h"
@@ -78,7 +78,7 @@
 //
 
 using namespace std;
-HitResol::HitResol(const edm::ParameterSet& conf) : 
+HitResol::HitResol(const edm::ParameterSet& conf) :
   scalerToken_( consumes< LumiScalersCollection >(conf.getParameter<edm::InputTag>("lumiScalers")) ),
   commonModeToken_( mayConsume< edm::DetSetVector<SiStripRawDigi> >(conf.getParameter<edm::InputTag>("commonMode")) ),
   combinatorialTracks_token_( consumes< reco::TrackCollection >(conf.getParameter<edm::InputTag>("combinatorialTracks")) ),
@@ -107,7 +107,7 @@ HitResol::HitResol(const edm::ParameterSet& conf) :
   useLastMeas_ = conf_.getUntrackedParameter<bool>("useLastMeas", false);
   useAllHitsFromTracksWithMissingHits_ = conf_.getUntrackedParameter<bool>("useAllHitsFromTracksWithMissingHits", false);
   MomentumCut_ = conf_.getUntrackedParameter<double>("MomentumCut", 3.);
-  UsePairsOnly_ = conf.getUntrackedParameter<unsigned int>("UsePairsOnly",1); 
+  UsePairsOnly_ = conf.getUntrackedParameter<unsigned int>("UsePairsOnly",1);
 }
 
 // Virtual destructor needed.
@@ -155,7 +155,6 @@ void HitResol::beginJob(){
 
   events = 0;
   EventTrackCKF = 0;
-  
 }
 
 
@@ -171,25 +170,25 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
 
   using namespace edm;
   using namespace reco;
-  // Step A: Get Inputs 
+  // Step A: Get Inputs
 
   int run_nr = e.id().run();
   int ev_nr = e.id().event();
-  
-  // 
+
+  //
   edm::Handle<edm::DetSetVector<SiStripRawDigi> > commonModeDigis;
   if(addCommonMode_) e.getByToken(commonModeToken_, commonModeDigis);
 
   //CombinatoriaTrack
   edm::Handle<reco::TrackCollection> trackCollectionCKF;
   e.getByToken(combinatorialTracks_token_,trackCollectionCKF);
-  
+
   edm::Handle<std::vector<Trajectory> > TrajectoryCollectionCKF;
   e.getByToken(trajectories_token_,TrajectoryCollectionCKF);
-  
+
   edm::Handle<TrajTrackAssociationCollection> trajTrackAssociationHandle;
   e.getByToken(trajTrackAsso_token_, trajTrackAssociationHandle);
-  
+
   // Clusters
   // get the SiStripClusters from the event
   edm::Handle< edmNew::DetSetVector<SiStripCluster> > theClusters;
@@ -202,13 +201,13 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
 
   //get Cluster Parameter Estimator
   edm::ESHandle<StripClusterParameterEstimator> parameterestimator;
-  es.get<TkStripCPERecord>().get("StripCPEfromTrackAngle", parameterestimator); 
+  es.get<TkStripCPERecord>().get("StripCPEfromTrackAngle", parameterestimator);
   const StripClusterParameterEstimator &stripcpe(*parameterestimator);
 
   // get the SiStripQuality records
   edm::ESHandle<SiStripQuality> SiStripQuality_;
   es.get<SiStripQualityRcd>().get(SiStripQuality_);
-  
+
   edm::ESHandle<MagneticField> magFieldHandle;
   es.get<IdealMagneticFieldRecord>().get(magFieldHandle);
   const MagneticField* magField_ = magFieldHandle.product();
@@ -235,7 +234,7 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
   const TrajectoryCollection*  trajectoryCollection = trajectoryCollectionHandle.product();
 
   events++;
-  
+
 //   // *************** SiStripCluster Collection
 //   const edmNew::DetSetVector<SiStripCluster>& input = *theClusters;
 
@@ -250,8 +249,8 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
    expWidth         = 0;
    atEdge           = 0;
    simpleRes        = 0;
-   iidd2            = 0; 
-   clusterWidth_2   = 0; 
+   iidd2            = 0;
+   clusterWidth_2   = 0;
    expWidth_2       = 0;
    atEdge_2         = 0;
    pairPath	    = 0;
@@ -266,19 +265,13 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
    trackParamYE     = 0;
    trackParamDXDZE  = 0;
    trackParamDYDZE  = 0;
-   pairsOnly        = 0;  
-   
+   pairsOnly        = 0;
 
-
-    
-   
-  // Tracking 
+  // Tracking
   const   reco::TrackCollection *tracksCKF=trackCollectionCKF.product();
- 
- 
+
 ////// Plugin of Nico code:
 
-  
   std::cout<<"Starting analysis, nrun nevent, tracksCKF->size(): "<<run_nr<<" "<<ev_nr<<" "<<  tracksCKF->size() <<std::endl;
 
   for(unsigned int iT = 0; iT < tracksCKF->size(); ++iT){
@@ -287,69 +280,62 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
     track_trackChi2   = ChiSquaredProbability((double)( tracksCKF->at(iT).chi2() ),(double)( tracksCKF->at(iT).ndof() ));
     treso->Fill();
   }
-    
-    
 
   // loop over trajectories from refit
-  for ( TrajectoryCollection::const_iterator it=trajectoryCollection->begin();
-  it!=trajectoryCollection->end(); ++it ){ 
-
-
-    vector < TrajectoryMeasurement > TMeas = it->measurements(); 
-      
-	// Loop on each measurement and take it into consideration
-	//--------------------------------------------------------
-	
-    for (vector < TrajectoryMeasurement >::const_iterator itm = TMeas.begin();
-      itm != TMeas.end(); itm++) {	
-	
-      if (!itm->updatedState().isValid()) std::cout<<"NONVALIDE"<<std::endl; 
-      if (!itm->updatedState().isValid()) continue;
+  for ( const auto& traj : *trajectoryCollection ) {
+    const auto& TMeas = traj.measurements();
+    // Loop on each measurement and take it into consideration
+    //--------------------------------------------------------
+    for ( auto itm = TMeas.cbegin(); itm != TMeas.cend(); ++itm ) {
+      if (!itm->updatedState().isValid()) {
+        std::cout<<"NONVALIDE"<<std::endl;
+        continue;
+      }
 
       const TransientTrackingRecHit::ConstRecHitPointer mypointhit = itm->recHit();
       const TrackingRecHit*         myhit                 = (*itm->recHit()).hit();
-      
+
       ProbTrackChi2 = 0;
       numHits = 0;
 
-////    std::cout<<"TrackChi2 =  "<< ChiSquaredProbability((double)( itm->chiSquared() ),(double)( itm->ndof(false) ))  <<std::endl; 
-//    std::cout<<"itm->updatedState().globalMomentum().perp(): "<<  itm->updatedState().globalMomentum().perp() <<std::endl; 
-//    std::cout<<"numhits "<< itraj->foundHits()  <<std::endl; 
+////    std::cout<<"TrackChi2 =  "<< ChiSquaredProbability((double)( itm->chiSquared() ),(double)( itm->ndof(false) ))  <<std::endl;
+//    std::cout<<"itm->updatedState().globalMomentum().perp(): "<<  itm->updatedState().globalMomentum().perp() <<std::endl;
+//    std::cout<<"numhits "<< itraj->foundHits()  <<std::endl;
 
-      numHits = it->foundHits() ;
-      ProbTrackChi2 = ChiSquaredProbability((double)( it->chiSquared() ),(double)( it->ndof(false) ));
+      numHits = traj.foundHits() ;
+      ProbTrackChi2 = ChiSquaredProbability((double)( traj.chiSquared() ),(double)( traj.ndof(false) ));
 
-      mymom =  itm->updatedState().globalMomentum().perp(); 
-    
+      mymom =  itm->updatedState().globalMomentum().perp();
+
       std::cout<<"mymom "<<mymom<<std::endl;
 
-//      double  MomentumCut_ = 3. ; 
-         
+//      double  MomentumCut_ = 3. ;
+
       //Now for the first hit
       TrajectoryStateOnSurface mytsos = itm->updatedState();
-      const TransientTrackingRecHit::ConstRecHitPointer hit1 = itm->recHit();
+      const auto hit1 = itm->recHit();
       DetId id1 = hit1->geographicalId();
 //      if(id1.subdetId() < StripSubdetector::TIB || id1.subdetId() > StripSubdetector::TEC) continue;
 //      if(id1.subdetId() < StripSubdetector::TIB || id1.subdetId() > StripSubdetector::TEC) std::cout<<"AUTRE"<<std::endl;
 
-//      if (    hit1->isValid()  && mymom > MomentumCut_) std::cout<<"mymom: "<<  itm->updatedState().globalMomentum().perp() <<std::endl; 
-	
+//      if (    hit1->isValid()  && mymom > MomentumCut_) std::cout<<"mymom: "<<  itm->updatedState().globalMomentum().perp() <<std::endl;
+
       if (    hit1->isValid()  &&
               mymom > MomentumCut_  &&
 	      ( id1.subdetId() >= StripSubdetector::TIB && id1.subdetId() <= StripSubdetector::TEC) ) {
-      
-          const StripGeomDetUnit * stripdet = (const StripGeomDetUnit*) tkgeom->idToDetUnit( hit1->geographicalId() );
+
+          const auto stripdet = dynamic_cast<const StripGeomDetUnit*>(tkgeom->idToDetUnit( hit1->geographicalId()));
           const StripTopology& Topo  = stripdet->specificTopology();
           int Nstrips = Topo.nstrips();
           mypitch1 = stripdet->surface().bounds().width() / Topo.nstrips();
-          
-          const GeomDetUnit *det = (const StripGeomDetUnit *) tkgeom->idToDetUnit(mypointhit->geographicalId());
+
+          const auto det = dynamic_cast<const StripGeomDetUnit*>(tkgeom->idToDetUnit(mypointhit->geographicalId()));
 
           TrajectoryStateOnSurface mytsos = itm->updatedState();
           LocalVector trackDirection = mytsos.localDirection();
           LocalVector drift = stripcpe.driftDirection(stripdet);
 
-          const SiStripRecHit1D *hit1d = dynamic_cast < const SiStripRecHit1D * >(myhit);
+          const auto hit1d = dynamic_cast<const SiStripRecHit1D*>(myhit);
 
           if (hit1d) {
 //             float myres = getSimHitRes(det,trackDirection,*hit1d,expWidth,&mypitch1,drift);
@@ -361,7 +347,7 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
           }
 
 
-          const SiStripRecHit2D *hit2d = dynamic_cast < const SiStripRecHit2D * >(myhit);
+          const auto hit2d = dynamic_cast<const SiStripRecHit2D*>(myhit);
 
           if (hit2d) {
 //             float myres = getSimHitRes(det,trackDirection,*hit2d, expWidth,&mypitch1,drift);
@@ -373,17 +359,18 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
           }
 
           simpleRes = getSimpleRes(&(*itm)); // simple resolution by using the track re-fit forward and backward predicted state
-	   
+
           // Now to see if there is a match - pair method - hit in overlapping sensors
           vector < TrajectoryMeasurement >::const_iterator itTraj2 =  TMeas.end(); // last hit along the fitted track
 
-      for (vector<TrajectoryMeasurement>::const_iterator itmCompare = itm-1;  // start to compare from the 5th hit
-           itmCompare >= TMeas.begin() &&  itmCompare > itm - 4;
-           --itmCompare){
-        const TransientTrackingRecHit::ConstRecHitPointer hit2 = itmCompare->recHit();
+      for ( auto itmCompare = itm-1;
+            // start to compare from the 5th hit
+            itmCompare >= TMeas.cbegin() && itmCompare > itm-4;
+            --itmCompare ) {
+        const auto hit2 = itmCompare->recHit();
         if (!hit2->isValid()) continue;
         DetId id2 = hit2->geographicalId();
-	
+
         //must be from the same detector and layer
 	iidd1 = hit1->geographicalId().rawId();
 	iidd2 = hit2->geographicalId().rawId();
@@ -397,20 +384,20 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
         itTraj2 = itmCompare;
         break;
       }
-      
-      if ( itTraj2 == TMeas.end() ) {
-      } else { 
+
+      if ( itTraj2 == TMeas.cend() ) {
+      } else {
 //             std::cout<<"Found overlapping sensors "<<std::endl;
-      
+
 //          pairsOnly = 1;
           pairsOnly = UsePairsOnly_;
-	  
+
           //We found one....let's fill in the truth info!
           TrajectoryStateOnSurface tsos_2 = itTraj2->updatedState();
           LocalVector trackDirection_2 = tsos_2.localDirection();
-          const TransientTrackingRecHit::ConstRecHitPointer myhit2 = itTraj2->recHit();
-          const TrackingRecHit*         myhit_2                 = (*itTraj2->recHit()).hit();
-          const StripGeomDetUnit * stripdet_2 = (const StripGeomDetUnit*) tkgeom->idToDetUnit( myhit2->geographicalId() );
+          const auto myhit2 = itTraj2->recHit();
+          const auto myhit_2 = (*itTraj2->recHit()).hit();
+          const auto stripdet_2 = dynamic_cast<const StripGeomDetUnit*>(tkgeom->idToDetUnit(myhit2->geographicalId()));
           const StripTopology& Topo_2  = stripdet_2->specificTopology();
           int Nstrips_2 = Topo_2.nstrips();
           float mypitch_2 = stripdet_2->surface().bounds().width() / Topo_2.nstrips();
@@ -418,14 +405,12 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
           if ( mypitch1 != mypitch_2 ) return;  // for PairsOnly
 
 
-          const GeomDetUnit *det_2 = (const StripGeomDetUnit *) tkgeom->idToDetUnit(myhit2->geographicalId());
+          const auto det_2 = dynamic_cast<const StripGeomDetUnit*>(tkgeom->idToDetUnit(myhit2->geographicalId()));
 
           LocalVector drift_2 = stripcpe.driftDirection(stripdet_2);
 
-          const SiStripRecHit1D *hit1d_2 = dynamic_cast < const SiStripRecHit1D * >(myhit_2);
-
+          const auto hit1d_2 = dynamic_cast<const SiStripRecHit1D*>(myhit_2);
           if (hit1d_2) {
-
              getSimHitRes(det_2,trackDirection_2,*hit1d_2,expWidth_2,&mypitch_2,drift_2);
              clusterWidth_2 = hit1d_2->cluster()->amplitudes().size();
              uint16_t firstStrip_2 = hit1d_2->cluster()->firstStrip();
@@ -433,9 +418,7 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
              atEdge_2 = (firstStrip_2 == 0 || lastStrip_2 == (Nstrips_2-1) );
           }
 
-
-          const SiStripRecHit2D *hit2d_2 = dynamic_cast < const SiStripRecHit2D * >(myhit_2);
-
+          const auto hit2d_2 = dynamic_cast<const SiStripRecHit2D*>(myhit_2);
           if (hit2d_2) {
 //             float myres_2 = getSimHitRes(det_2,trackDirection_2,*hit2d_2, expWidth_2,&mypitch_2,drift_2);
              getSimHitRes(det_2,trackDirection_2,*hit2d_2, expWidth_2,&mypitch_2,drift_2);
@@ -450,8 +433,8 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
 
 
 	   // Make AnalyticalPropagator to use in getPairParameters
-	   AnalyticalPropagator mypropagator(magField_,anyDirection); 
-         
+	   AnalyticalPropagator mypropagator(magField_,anyDirection);
+
            if(!getPairParameters(&(*magField_),mypropagator,&(*itTraj2),&(*itm),pairPath,hitDX,trackDX,trackDXE,trackParamX,trackParamY,trackParamDXDZ,trackParamDYDZ,trackParamXE,trackParamYE,trackParamDXDZE,trackParamDYDZE) ){
 
 
@@ -460,7 +443,7 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
 //   std::cout<<"  "<<std::endl;
 //   std::cout<<"  "<<std::endl;
 //   std::cout<<"  "<<std::endl;
-// 
+//
 // //   std::cout<<" momentum "<< track_momentum <<std::endl;
 // //   std::cout<<" track_trackChi2      "<<   track_trackChi2<<std::endl;
 // //   std::cout<<" track_trackChi2_2   "<<    track_trackChi2_2<<std::endl;
@@ -478,12 +461,12 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
 //   std::cout<<" clusterW2        "<<       clusterWidth_2<<std::endl;
 //   std::cout<<" expectedW2       "<<       expWidth_2<<std::endl;
 //   std::cout<<" atEdge2          "<<       atEdge_2<<std::endl;
-//   
+//
 //   std::cout<<" pairPath         "<<       pairPath<<std::endl;
 //   std::cout<<" hitDX            "<<       hitDX<<std::endl;
 //   std::cout<<" trackDX          "<<       trackDX<<std::endl;
 //   std::cout<<" trackDXE         "<<       trackDXE<<std::endl;
-// 
+//
 //   std::cout<<" trackParamX	  "<<        trackParamX<<std::endl;
 //   std::cout<<" trackParamY	  "<<        trackParamY <<std::endl;
 //   std::cout<<" trackParamDXDZ     "<<     trackParamDXDZ<<std::endl;
@@ -492,14 +475,9 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
 //   std::cout<<" trackParamYE        "<<    trackParamYE<<std::endl;
 //   std::cout<<" trackParamDXDZE     "<<    trackParamDXDZE<<std::endl;
 //   std::cout<<" trackParamDYDZE     "<<    trackParamDYDZE<<std::endl;
-// 
+//
    reso->Fill();
-   
-   
 	   }
-	       
-	       
-	       
        }//itTraj2 != TMeas.end()
 
 
@@ -528,14 +506,14 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
 
 void HitResol::endJob(){
 //   traj->GetDirectory()->cd();
-//   traj->Write();  
-  
+//   traj->Write();
+
   LogDebug("SiStripHitResolution:HitResol") << " Events Analysed             " <<  events          << endl;
   LogDebug("SiStripHitResolution:HitResol") << " Number Of Tracked events    " <<  EventTrackCKF   << endl;
-  
+
   reso->GetDirectory()->cd();
-  reso->Write();  
-  treso->Write();  
+  reso->Write();
+  treso->Write();
 }
 
 double HitResol::checkConsistency(const StripClusterParameterEstimator::LocalValues& parameters, double xx, double xerr) {
@@ -549,27 +527,23 @@ bool HitResol::isDoubleSided(unsigned int iidd, const TrackerTopology* tTopo) co
   StripSubdetector strip=StripSubdetector(iidd);
   unsigned int subid=strip.subdetId();
   unsigned int layer = 0;
-  if (subid ==  StripSubdetector::TIB) { 
-    
+  if (subid ==  StripSubdetector::TIB) {
     layer = tTopo->tibLayer(iidd);
     if (layer == 1 || layer == 2) return true;
     else return false;
   }
-  else if (subid ==  StripSubdetector::TOB) { 
-    
-    layer = tTopo->tobLayer(iidd) + 4 ; 
+  else if (subid ==  StripSubdetector::TOB) {
+    layer = tTopo->tobLayer(iidd) + 4 ;
     if (layer == 5 || layer == 6) return true;
     else return false;
   }
-  else if (subid ==  StripSubdetector::TID) { 
-    
+  else if (subid ==  StripSubdetector::TID) {
     layer = tTopo->tidRing(iidd) + 10;
     if (layer == 11 || layer == 12) return true;
     else return false;
   }
-  else if (subid ==  StripSubdetector::TEC) { 
-    
-    layer = tTopo->tecRing(iidd) + 13 ; 
+  else if (subid ==  StripSubdetector::TEC) {
+    layer = tTopo->tecRing(iidd) + 13 ;
     if (layer == 14 || layer == 15 || layer == 18) return true;
     else return false;
   }
@@ -579,14 +553,11 @@ bool HitResol::isDoubleSided(unsigned int iidd, const TrackerTopology* tTopo) co
 
 //float HitResol::getSimHitRes(const GeomDetUnit * det, const LocalVector& trackdirection, const TrackingRecHit& recHit, float& trackWidth, float* pitch, LocalVector& drift){
 void HitResol::getSimHitRes(const GeomDetUnit * det, const LocalVector& trackdirection, const TrackingRecHit& recHit, float& trackWidth, float* pitch, LocalVector& drift){
-
-  const StripGeomDetUnit * stripdet = (const StripGeomDetUnit *) (det);
-  const StripTopology & topol = (const StripTopology &) stripdet->topology();
+  const auto stripdet = dynamic_cast<const StripGeomDetUnit*>(det);
+  const auto& topol = dynamic_cast<const StripTopology&>(stripdet->topology());
 
   LocalPoint position = recHit.localPosition();
   (*pitch) = topol.localPitch(position);
-  
-  
 
 //  float rechitrphiresMF = -1;
 
@@ -609,21 +580,20 @@ void HitResol::getSimHitRes(const GeomDetUnit * det, const LocalVector& trackdir
 
 double HitResol::getSimpleRes(const TrajectoryMeasurement* traj1){
   TrajectoryStateOnSurface theCombinedPredictedState;
-  
+
   if ( traj1->backwardPredictedState().isValid() )
     theCombinedPredictedState = TrajectoryStateCombiner().combine( traj1->forwardPredictedState(),
 								   traj1->backwardPredictedState());
   else
     theCombinedPredictedState = traj1->forwardPredictedState();
-  
+
   if (!theCombinedPredictedState.isValid()) {
     return -100;
   }
-  
+
   const TransientTrackingRecHit::ConstRecHitPointer firstRecHit = traj1->recHit();
   double recHitX_1 = firstRecHit->localPosition().x();
   return (theCombinedPredictedState.localPosition().x() - recHitX_1);
-  
 }
 
 
@@ -642,10 +612,8 @@ bool HitResol::getPairParameters(const MagneticField* magField_, AnalyticalPropa
   trackParamYE    = 0;
   trackParamDXDZE = 0;
   trackParamDYDZE = 0;
-  
+
   TrajectoryStateCombiner combiner_;
-  
-  
 
   // backward predicted state at module 1
   TrajectoryStateOnSurface bwdPred1 = traj1->backwardPredictedState();
@@ -680,7 +648,7 @@ bool HitResol::getPairParameters(const MagneticField* magField_, AnalyticalPropa
   double predX1 = pars[3];
   //track fitted parameters in local coordinates for position 0
   (trackParamX    ) = pars[3];
-  (trackParamY    ) = pars[4]; 
+  (trackParamY    ) = pars[4];
   (trackParamDXDZ ) = pars[1];
   (trackParamDYDZ ) = pars[2];
   (trackParamXE   ) = TMath::Sqrt(errs(3,3));
@@ -727,26 +695,13 @@ bool HitResol::getPairParameters(const MagneticField* magField_, AnalyticalPropa
 
   (trackDX) = predX1 + relativeXSign_*predX2;
 
-
-
-
-
-  const TransientTrackingRecHit::ConstRecHitPointer firstRecHit = traj1->recHit();
-  const TransientTrackingRecHit::ConstRecHitPointer secondRecHit = traj2->recHit();
-  double recHitX_1 = firstRecHit->localPosition().x();
-  double recHitX_2 = secondRecHit->localPosition().x();
+  double recHitX_1 = traj1->recHit()->localPosition().x();
+  double recHitX_2 = traj2->recHit()->localPosition().x();
 
   (hitDX) = recHitX_1 + relativeXSign_*recHitX_2;
 
-
-  
   return true;
 }
-
-
-
-
-
 
 bool HitResol::check2DPartner(unsigned int iidd, const std::vector<TrajectoryMeasurement>& traj) {
   unsigned int partner_iidd = 0;
@@ -756,8 +711,8 @@ bool HitResol::check2DPartner(unsigned int iidd, const std::vector<TrajectoryMea
   if ((iidd & 0x3)==2) partner_iidd = iidd-1;
   // next look in the trajectory measurements for a measurement from that detector
   // loop through trajectory measurements to find the partner_iidd
-  for (std::vector<TrajectoryMeasurement>::const_iterator iTM=traj.begin(); iTM!=traj.end(); ++iTM) {
-    if (iTM->recHit()->geographicalId().rawId()==partner_iidd) {
+  for ( const auto& tm : traj ) {
+    if (tm.recHit()->geographicalId().rawId()==partner_iidd) {
       found2DPartner = true;
     }
   }
@@ -767,21 +722,17 @@ bool HitResol::check2DPartner(unsigned int iidd, const std::vector<TrajectoryMea
 unsigned int HitResol::checkLayer( unsigned int iidd, const TrackerTopology* tTopo) {
   StripSubdetector strip=StripSubdetector(iidd);
   unsigned int subid=strip.subdetId();
-  if (subid ==  StripSubdetector::TIB) { 
-    
+  if (subid ==  StripSubdetector::TIB) {
     return tTopo->tibLayer(iidd);
   }
-  if (subid ==  StripSubdetector::TOB) { 
-    
-    return tTopo->tobLayer(iidd) + 4 ; 
+  if (subid ==  StripSubdetector::TOB) {
+    return tTopo->tobLayer(iidd) + 4 ;
   }
-  if (subid ==  StripSubdetector::TID) { 
-    
+  if (subid ==  StripSubdetector::TID) {
     return tTopo->tidWheel(iidd) + 10;
   }
-  if (subid ==  StripSubdetector::TEC) { 
-    
-    return tTopo->tecWheel(iidd) + 13 ; 
+  if (subid ==  StripSubdetector::TEC) {
+    return tTopo->tecWheel(iidd) + 13 ;
   }
   return 0;
 }
