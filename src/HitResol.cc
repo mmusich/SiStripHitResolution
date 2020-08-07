@@ -48,7 +48,6 @@
 #include "RecoTracker/MeasurementDet/interface/MeasurementTrackerEvent.h"
 
 #include "RecoTracker/Record/interface/CkfComponentsRecord.h"
-#include "AnalysisDataFormats/SiStripClusterInfo/interface/SiStripClusterInfo.h"
 #include "CalibTracker/Records/interface/SiStripDetCablingRcd.h"
 #include "CalibFormats/SiStripObjects/interface/SiStripDetCabling.h"
 #include "CalibTracker/Records/interface/SiStripQualityRcd.h"
@@ -390,10 +389,10 @@ void HitResol::analyze(const edm::Event& e, const edm::EventSetup& es){
 	iidd2 = hit2->geographicalId().rawId();
         if ( id1.subdetId() != id2.subdetId() || checkLayer(iidd1, tTopo) !=  checkLayer(iidd2, tTopo)  ) break;
         //must both be stereo if one is
-        if(SiStripDetId(id1).stereo() != SiStripDetId(id2).stereo() ) continue;
+        if(tTopo->isStereo(id1) != tTopo->isStereo(id2) ) continue;
         //A check i dont completely understand but might as well keep there
-        if (  SiStripDetId(id1).glued() == id1.rawId() ) cout << "BAD GLUED: Have glued layer with id = " << id1.rawId() << " and glued id = " << SiStripDetId(id1).glued() << "  and stereo = " << SiStripDetId(id1).stereo() << endl;
-        if (  SiStripDetId(id2).glued() == id2.rawId() ) cout << "BAD GLUED: Have glued layer with id = " << id2.rawId() << " and glued id = " << SiStripDetId(id2).glued() << "  and stereo = " << SiStripDetId(id2).stereo() << endl;
+        if (tTopo->glued(id1) == id1.rawId() ) cout << "BAD GLUED: Have glued layer with id = " << id1.rawId() << " and glued id = " << tTopo->glued(id1) << "  and stereo = " << tTopo->isStereo(id1) << endl;
+        if (tTopo->glued(id2) == id2.rawId() ) cout << "BAD GLUED: Have glued layer with id = " << id2.rawId() << " and glued id = " << tTopo->glued(id2) << "  and stereo = " << tTopo->isStereo(id2) << endl;
 
         itTraj2 = itmCompare;
         break;

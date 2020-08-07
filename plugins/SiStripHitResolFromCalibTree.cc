@@ -42,7 +42,6 @@
 #include "RecoTracker/MeasurementDet/interface/MeasurementTracker.h"
 
 #include "RecoTracker/Record/interface/CkfComponentsRecord.h"
-#include "AnalysisDataFormats/SiStripClusterInfo/interface/SiStripClusterInfo.h"
 #include "CalibTracker/Records/interface/SiStripDetCablingRcd.h"
 #include "CalibFormats/SiStripObjects/interface/SiStripDetCabling.h"
 #include "CalibTracker/Records/interface/SiStripQualityRcd.h"
@@ -116,7 +115,7 @@ class SiStripHitResolFromCalibTree : public ConditionDBWriter<SiStripBadStrip> {
     SiStripDetInfoFileReader* reader;
     edm::FileInPath FileInPath_;
     SiStripQuality* quality_;
-    SiStripBadStrip* getNewObject() override;
+    std::unique_ptr<SiStripBadStrip> getNewObject() override;
     
     TTree* CalibTree;
     vector<string> CalibTreeFilenames; 
@@ -743,8 +742,8 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
     //&&&&&&&&&&&&&&&&&
  
     int component;
-    SiStripDetId a(BC[i].detid);
-    if ( a.subdetId() == SiStripDetId::TIB ){
+    DetId a(BC[i].detid);
+    if ( a.subdetId() == StripSubdetector::TIB ){
       //&&&&&&&&&&&&&&&&&
       //TIB
       //&&&&&&&&&&&&&&&&&
@@ -752,7 +751,7 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
       component=tTopo->tibLayer(BC[i].detid);
       SetBadComponents(0, component, BC[i], ssV, NBadComponent);	      
  
-    } else if ( a.subdetId() == SiStripDetId::TID ) {
+    } else if ( a.subdetId() == StripSubdetector::TID ) {
       //&&&&&&&&&&&&&&&&&
       //TID
       //&&&&&&&&&&&&&&&&&
@@ -760,7 +759,7 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
       component=tTopo->tidSide(BC[i].detid)==2?tTopo->tidWheel(BC[i].detid):tTopo->tidWheel(BC[i].detid)+3;
       SetBadComponents(1, component, BC[i], ssV, NBadComponent);	      
  
-    } else if ( a.subdetId() == SiStripDetId::TOB ) {
+    } else if ( a.subdetId() == StripSubdetector::TOB ) {
       //&&&&&&&&&&&&&&&&&
       //TOB
       //&&&&&&&&&&&&&&&&&
@@ -768,7 +767,7 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
       component=tTopo->tobLayer(BC[i].detid);
       SetBadComponents(2, component, BC[i], ssV, NBadComponent);	      
  
-    } else if ( a.subdetId() == SiStripDetId::TEC ) {
+    } else if ( a.subdetId() == StripSubdetector::TEC ) {
       //&&&&&&&&&&&&&&&&&
       //TEC
       //&&&&&&&&&&&&&&&&&
@@ -791,7 +790,7 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
     unsigned int detid=rp->detid;
  
     int subdet=-999; int component=-999;
-    SiStripDetId a(detid);
+    DetId a(detid);
     if ( a.subdetId() == 3 ){
       subdet=0;
       component=tTopo->tibLayer(detid);
@@ -1576,10 +1575,10 @@ TString SiStripHitResolFromCalibTree::GetLayerSideName(Long_t k) {
     return layername;
 }
 
-SiStripBadStrip* SiStripHitResolFromCalibTree::getNewObject() {
+std::unique_ptr<SiStripBadStrip> SiStripHitResolFromCalibTree::getNewObject() {
   //Need this for a Condition DB Writer
   //Initialize a return variable
-  SiStripBadStrip* obj=new SiStripBadStrip();
+  auto obj= std::make_unique<SiStripBadStrip>();
   
   SiStripBadStrip::RegistryIterator rIter=quality_->getRegistryVectorBegin();
   SiStripBadStrip::RegistryIterator rIterEnd=quality_->getRegistryVectorEnd();
@@ -1590,7 +1589,7 @@ SiStripBadStrip* SiStripHitResolFromCalibTree::getNewObject() {
     edm::LogError("SiStripHitResolFromCalibTree")<<"[SiStripHitResolFromCalibTree::getNewObject] detid already exists"<<std::endl;
   }
   
-  return obj;
+  return std::move(obj);
 }
 
 float SiStripHitResolFromCalibTree::calcPhi(float x, float y) {
