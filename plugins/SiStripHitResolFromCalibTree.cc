@@ -42,7 +42,6 @@
 #include "RecoTracker/MeasurementDet/interface/MeasurementTracker.h"
 
 #include "RecoTracker/Record/interface/CkfComponentsRecord.h"
-#include "AnalysisDataFormats/SiStripClusterInfo/interface/SiStripClusterInfo.h"
 #include "CalibTracker/Records/interface/SiStripDetCablingRcd.h"
 #include "CalibFormats/SiStripObjects/interface/SiStripDetCabling.h"
 #include "CalibTracker/Records/interface/SiStripQualityRcd.h"
@@ -116,7 +115,7 @@ class SiStripHitResolFromCalibTree : public ConditionDBWriter<SiStripBadStrip> {
     SiStripDetInfoFileReader* reader;
     edm::FileInPath FileInPath_;
     SiStripQuality* quality_;
-    SiStripBadStrip* getNewObject() override;
+    std::unique_ptr<SiStripBadStrip> getNewObject() override;
     
     TTree* CalibTree;
     vector<string> CalibTreeFilenames; 
@@ -270,8 +269,12 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
      alllayerfound[l] = 0;
   }
 
-  TH1F* PredPlots[23];
-  TH1F* MeasPlots[23];
+  TH1F* PredPlots_m[23];
+  TH1F* PredPlots_p[23];
+  TH1F* MeasPlots_m[23];
+  TH1F* MeasPlots_p[23];
+  TH1F* ResidPlots_m[23];
+  TH1F* ResidPlots_p[23];
 
   //std::string UnitString = "cm";
   std::string UnitString = "strip unit";
@@ -285,11 +288,20 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 
   for(Long_t ilayer = 0; ilayer <23; ilayer++) {
 
-    MeasPlots[ilayer] = fs->make<TH1F>(Form("MeasPlots_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
-    MeasPlots[ilayer]->GetXaxis()->SetTitle("clusX [cm]");
+      MeasPlots_m[ilayer] = fs->make<TH1F>(Form("MeasPlots_m_layer_%i",(int)(ilayer)),GetLayerName(ilayer),1000,-5., 5.);
+      MeasPlots_m[ilayer]->GetXaxis()->SetTitle("clusX [cm]");
+      MeasPlots_p[ilayer] = fs->make<TH1F>(Form("MeasPlots_p_layer_%i",(int)(ilayer)),GetLayerName(ilayer),1000,-400,400);
+      MeasPlots_p[ilayer]->GetXaxis()->SetTitle("clusX [strip]");
 
-    PredPlots[ilayer] = fs->make<TH1F>(Form("PredPlots_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,-10,10);
-    PredPlots[ilayer]->GetXaxis()->SetTitle("trajX [cm]");
+      PredPlots_m[ilayer] = fs->make<TH1F>(Form("PredPlots_m_layer_%i",(int)(ilayer)),GetLayerName(ilayer),1000,-5., 5.);
+      PredPlots_m[ilayer]->GetXaxis()->SetTitle("trajX [cm]");
+      PredPlots_p[ilayer] = fs->make<TH1F>(Form("PredPlots_p_layer_%i",(int)(ilayer)),GetLayerName(ilayer),1000,-400,400);
+      PredPlots_p[ilayer]->GetXaxis()->SetTitle("trajX [strip]");
+
+      ResidPlots_m[ilayer] = fs->make<TH1F>(Form("ResidPlots_m_layer_%i",(int)(ilayer)),GetLayerName(ilayer),250,-.125, .125);
+      ResidPlots_m[ilayer]->GetXaxis()->SetTitle("trajX [cm]");
+      ResidPlots_p[ilayer] = fs->make<TH1F>(Form("ResidPlots_p_layer_%i",(int)(ilayer)),GetLayerName(ilayer),200,-10.,10);
+      ResidPlots_p[ilayer]->GetXaxis()->SetTitle("trajX [strip]");
 
 
 	layerfound_vsLumi.push_back( fs->make<TH1F>(Form("layerfound_vsLumi_layer_%i",(int)(ilayer)),GetLayerName(ilayer),100,0,25000)); 
@@ -534,21 +546,30 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 	  }
 
 		
+          /*
 	  double MeasPlotsVariable;
    	  double PredPlotsVariable;
 
 	  if(UnitString == "cm"){MeasPlotsVariable = ClusterLocX; PredPlotsVariable = TrajLocX;}
 	  else if(UnitString == "strip unit"){MeasPlotsVariable = ClusterLocX/Pitch; PredPlotsVariable = TrajLocX/Pitch;}
 	  else{std::cout << "ERROR: Unit must be cm or strip unit" << std::endl;}
+          */
 
 	  if(!badquality && layer<23) {
-		if(resxsig!=1000.0){ 
-			MeasPlots[layer]->Fill(MeasPlotsVariable); PredPlots[layer]->Fill(PredPlotsVariable); }
-		else{ MeasPlots[layer]->Fill(1000); PredPlots[layer]->Fill(1000); }
+            if(resxsig!=1000.0){
+              MeasPlots_m[layer]->Fill(ClusterLocX);
+              MeasPlots_p[layer]->Fill(ClusterLocX/Pitch);
+              PredPlots_m[layer]->Fill(TrajLocX);
+              PredPlots_p[layer]->Fill(TrajLocX/Pitch);
+              ResidPlots_m[layer]->Fill(ClusterLocX-TrajLocX);
+              ResidPlots_p[layer]->Fill((ClusterLocX-TrajLocX)/Pitch);
+            } else {
+              MeasPlots_m[layer]->Fill(1000);
+              MeasPlots_p[layer]->Fill(1000);
+              PredPlots_m[layer]->Fill(1000);
+              PredPlots_p[layer]->Fill(1000);
+            }
 	  }
-
-
-
 
 	  // New matching methods
       int   tapv   = -9;
@@ -721,8 +742,8 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
     //&&&&&&&&&&&&&&&&&
  
     int component;
-    SiStripDetId a(BC[i].detid);
-    if ( a.subdetId() == SiStripDetId::TIB ){
+    DetId a(BC[i].detid);
+    if ( a.subdetId() == StripSubdetector::TIB ){
       //&&&&&&&&&&&&&&&&&
       //TIB
       //&&&&&&&&&&&&&&&&&
@@ -730,7 +751,7 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
       component=tTopo->tibLayer(BC[i].detid);
       SetBadComponents(0, component, BC[i], ssV, NBadComponent);	      
  
-    } else if ( a.subdetId() == SiStripDetId::TID ) {
+    } else if ( a.subdetId() == StripSubdetector::TID ) {
       //&&&&&&&&&&&&&&&&&
       //TID
       //&&&&&&&&&&&&&&&&&
@@ -738,7 +759,7 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
       component=tTopo->tidSide(BC[i].detid)==2?tTopo->tidWheel(BC[i].detid):tTopo->tidWheel(BC[i].detid)+3;
       SetBadComponents(1, component, BC[i], ssV, NBadComponent);	      
  
-    } else if ( a.subdetId() == SiStripDetId::TOB ) {
+    } else if ( a.subdetId() == StripSubdetector::TOB ) {
       //&&&&&&&&&&&&&&&&&
       //TOB
       //&&&&&&&&&&&&&&&&&
@@ -746,7 +767,7 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
       component=tTopo->tobLayer(BC[i].detid);
       SetBadComponents(2, component, BC[i], ssV, NBadComponent);	      
  
-    } else if ( a.subdetId() == SiStripDetId::TEC ) {
+    } else if ( a.subdetId() == StripSubdetector::TEC ) {
       //&&&&&&&&&&&&&&&&&
       //TEC
       //&&&&&&&&&&&&&&&&&
@@ -769,7 +790,7 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
     unsigned int detid=rp->detid;
  
     int subdet=-999; int component=-999;
-    SiStripDetId a(detid);
+    DetId a(detid);
     if ( a.subdetId() == 3 ){
       subdet=0;
       component=tTopo->tibLayer(detid);
@@ -816,8 +837,8 @@ void SiStripHitResolFromCalibTree::algoAnalyze(const edm::Event& e, const edm::E
 
 	//Calculating and printing out the resolution values
 
-   	float Meas = MeasPlots[ilayer]->GetStdDev();
-	float Pred = PredPlots[ilayer]->GetStdDev();
+	float Meas = MeasPlots_p[ilayer]->GetStdDev();
+	float Pred = PredPlots_p[ilayer]->GetStdDev();
 
 	float PredMinusMeas = pow(Meas, 2) + pow(Pred, 2); //width^2= sigma(deltaX_pred)^2 + sigma(deltaX_hit)^2 
 
@@ -1554,10 +1575,10 @@ TString SiStripHitResolFromCalibTree::GetLayerSideName(Long_t k) {
     return layername;
 }
 
-SiStripBadStrip* SiStripHitResolFromCalibTree::getNewObject() {
+std::unique_ptr<SiStripBadStrip> SiStripHitResolFromCalibTree::getNewObject() {
   //Need this for a Condition DB Writer
   //Initialize a return variable
-  SiStripBadStrip* obj=new SiStripBadStrip();
+  auto obj= std::make_unique<SiStripBadStrip>();
   
   SiStripBadStrip::RegistryIterator rIter=quality_->getRegistryVectorBegin();
   SiStripBadStrip::RegistryIterator rIterEnd=quality_->getRegistryVectorEnd();
@@ -1568,7 +1589,7 @@ SiStripBadStrip* SiStripHitResolFromCalibTree::getNewObject() {
     edm::LogError("SiStripHitResolFromCalibTree")<<"[SiStripHitResolFromCalibTree::getNewObject] detid already exists"<<std::endl;
   }
   
-  return obj;
+  return std::move(obj);
 }
 
 float SiStripHitResolFromCalibTree::calcPhi(float x, float y) {
