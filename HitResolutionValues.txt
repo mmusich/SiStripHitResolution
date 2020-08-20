@@ -1,16 +1,17 @@
--nan
--nan
--nan
--nan
--nan
--nan
--nan
--nan
--nan
--nan
--nan
--nan
--nan
--nan
--nan
--nan
+Layer               Resolution                    HitDX           sigma2_trackDX         DoubleDifference 
+TIB_L1                     -nan                  25.5135                  25.5406               0.00405728
+TIB_L2                     -nan                  25.5135                  25.5406               0.00405728
+TIB_L3                     -nan                  25.5135                  25.5406               0.00405728
+TIB_L4                     -nan                  25.5135                  25.5406               0.00405728
+Side_TID                   -nan                25.5135                25.5406             0.00405728
+Wheel_TID                  -nan               25.5135               25.5406            0.00405728
+Ring_TID                   -nan                25.5135                25.5406             0.00405728
+TOB_L1                     -nan                  25.5135                  25.5406               0.00405728
+TOB_L2                     -nan                  25.5135                  25.5406               0.00405728
+TOB_L3                     -nan                  25.5135                  25.5406               0.00405728
+TOB_L4                     -nan                  25.5135                  25.5406               0.00405728
+TOB_L5                     -nan                  25.5135                  25.5406               0.00405728
+TOB_L6                     -nan                  25.5135                  25.5406               0.00405728
+Side_TEC                   -nan                25.5135                25.5406             0.00405728
+Wheel_TEC                  -nan               25.5135               25.5406            0.00405728
+Ring_TEC                   -nan                25.5135                25.5406             0.00405728
