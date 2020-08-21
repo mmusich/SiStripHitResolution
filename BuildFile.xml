@@ -28,4 +28,5 @@
 <use   name="CommonTools/Statistics"/>
 <use   name="DataFormats/TrackerRecHit2D"/>
 <use   name="TrackingTools/AnalyticalJacobians"/>
+<use   name="TrackingTools/KalmanUpdators"/>
 <flags   EDM_PLUGIN="1"/>
