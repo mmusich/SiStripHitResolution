@@ -73,12 +73,14 @@ void ResolutionsCalculator(const string& region){
   auto HistoName_TrackDX = "TrackDX_" + region;
   auto HistoName_ClusterW1 = "ClusterW1_" + region;
   auto HistoName_ExpectedW1 = "ExpectedW1_" + region;
+  auto HistoName_DetID1 = "DetID1_" + region;
 
-  auto h_DoubleDifference = dataframe.Define(HistoName_DoubleDiff, DifferenceFunction, {"hitDX", "trackDX"}).Histo1D({HistoName_DoubleDiff.c_str(), HistoName_DoubleDiff.c_str(), 40, -10, 10}, HistoName_DoubleDiff); 
+  auto h_DoubleDifference = dataframe.Define(HistoName_DoubleDiff, DifferenceFunction, {"hitDX", "trackDX"}).Histo1D({HistoName_DoubleDiff.c_str(), HistoName_DoubleDiff.c_str(), 40, -0.5, 0.5}, HistoName_DoubleDiff); 
   auto h_hitDX = dataframe.Define(HistoName_HitDX, {"hitDX"}).Histo1D(HistoName_HitDX);
   auto h_trackDX = dataframe.Define(HistoName_TrackDX, {"trackDX"}).Histo1D(HistoName_TrackDX);
   auto h_expectedW1 = dataframe.Define(HistoName_ExpectedW1, {"expectedW1"}).Histo1D(HistoName_ExpectedW1);
   auto h_clusterW1 = dataframe.Define(HistoName_ClusterW1, {"clusterW1"}).Histo1D(HistoName_ClusterW1);
+  auto h_DetID1 = dataframe.Define(HistoName_DetID1, {"detID1"}).Histo1D(HistoName_DetID1);
 
   //Applying gaussian fits, taking the resolutions and squaring them
   h_DoubleDifference->Fit("gaus");
@@ -113,10 +115,11 @@ void ResolutionsCalculator(const string& region){
   h_trackDX->Write();
   h_expectedW1->Write();
   h_clusterW1->Write();
+  h_DetID1->Write();
 
   //Calculating the hit resolution
   //sigma2_PredMinusMeas - sigma2_Meas;
-  auto HitResolution = sqrt( (DoubleDifferenceWidth - sigma2_Meas)/2 );
+  auto HitResolution = sqrt( (sigma2_PredMinusMeas - sigma2_Meas)/2 );
   HitResolutionVector.push_back(HitResolution);
 
   //Printing the resolution 
@@ -147,16 +150,6 @@ void Resolutions(){
   HitResoTextFile << std::right << "Layer " << std::setw(Width) << " Resolution " << std::setw(Width) << " sigma2_HitDX " << std::setw(Width) << " sigma2_trackDX " << std::setw(Width) << " DoubleDifference " << std::setw(Width) << " sigma2_expectedW1 " << std::setw(Width) << " sigma2_clusterW1 "<< std::endl;
 
   for(int i = 0; i < HitResolutionVector.size(); i++){
-
-/*
-        if(LayerNames.at(i) == "Wheel_TID" || LayerNames.at(i) == "Wheel_TEC"){
-		Width = Width-3;
-	}
-	else if(LayerNames.at(i) == "Side_TID" || LayerNames.at(i) == "Side_TEC" || LayerNames.at(i) == "Ring_TID" || LayerNames.at(i) == "Ring_TEC"){
-		Width = Width-2;
-        }
-        else{Width = Width;}
-*/
 
 	HitResoTextFile << std::right << LayerNames.at(i) << std::setw(Width) << HitResolutionVector.at(i) << std::setw(Width) << HitDXVector.at(i)  << std::setw(Width) << TrackDXVector.at(i) << std::setw(Width) << DoubleDifferenceVector.at(i) << std::setw(Width) << ExpectedW1Vector.at(i) << std::setw(Width) << ClusterW1Vector.at(i) << endl;
 
