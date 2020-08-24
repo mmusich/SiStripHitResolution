@@ -1,3 +1,5 @@
+#include <typeinfo>
+
 using namespace ROOT; 
 
 
@@ -14,54 +16,61 @@ void ResolutionsCalculator(const string& region){
   //opening the root file
   ROOT::RDataFrame d("anResol/reso", "hitresol.root");
 
-  //Layers 1-4 of the TIB
-  auto SubDet_TIB_L1_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 1);}};
-  auto SubDet_TIB_L2_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 2);}};
-  auto SubDet_TIB_L3_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 3);}};
-  auto SubDet_TIB_L4_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 4);}};
+  int RegionInt = 0;
 
-  //TID
-  auto SubDet_SideTID_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 4) && (detID1_input>>13)&0x3;}};
-  auto SubDet_WheelTID_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 4) && (detID1_input>>13)&0x11;}};
-  auto SubDet_RingTID_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 4) && (detID1_input>>13)&0x9;}};
-
-
-  //Layers 1-6 of the TOB
-  auto SubDet_TOB_L1_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 1);}};
-  auto SubDet_TOB_L2_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 2);}};
-  auto SubDet_TOB_L3_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 3);}};
-  auto SubDet_TOB_L4_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 4);}};
-  auto SubDet_TOB_L5_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 5);}};
-  auto SubDet_TOB_L6_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 6);}};  
-
-  //TEC
-  auto SubDet_SideTEC_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 6) && ((detID1_input>>18)&0x3);}};
-  auto SubDet_WheelTEC_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 6) && ((detID1_input>>14)&0xF);}};
-  auto SubDet_RingTEC_Function{[](const unsigned int& detID1_input){return (((detID1_input>>25)&0x7) == 6) && ((detID1_input>>5)&0x7);}};
-
-
-  //Filtering the RDataFrame to consider each tracker region
-  auto dataframe = d.Filter("detID1"); //this is just to define dataframe and is overwritten in the if else statements below
-
-  if(region == "TIB_L1"){auto dataframe = d.Filter(SubDet_TIB_L1_Function, {"detID1"});} 
-  else if(region == "TIB_L2"){auto dataframe = d.Filter(SubDet_TIB_L2_Function, {"detID1"});}
-  else if(region == "TIB_L3"){auto dataframe = d.Filter(SubDet_TIB_L3_Function, {"detID1"});} 
-  else if(region == "TIB_L4"){auto dataframe = d.Filter(SubDet_TIB_L4_Function, {"detID1"});}
-  else if(region == "Side_TID"){auto dataframe = d.Filter(SubDet_SideTID_Function, {"detID1"});}
-  else if(region == "Wheel_TID"){auto dataframe = d.Filter(SubDet_WheelTID_Function, {"detID1"});}
-  else if(region == "Ring_TID"){auto dataframe = d.Filter(SubDet_RingTID_Function, {"detID1"});}
-  else if(region == "TOB_L1"){auto dataframe = d.Filter(SubDet_TOB_L1_Function, {"detID1"});}
-  else if(region == "TOB_L2"){auto dataframe = d.Filter(SubDet_TOB_L2_Function, {"detID1"});}
-  else if(region == "TOB_L3"){auto dataframe = d.Filter(SubDet_TOB_L3_Function, {"detID1"});}
-  else if(region == "TOB_L4"){auto dataframe = d.Filter(SubDet_TOB_L4_Function, {"detID1"});}
-  else if(region == "TOB_L5"){auto dataframe = d.Filter(SubDet_TOB_L5_Function, {"detID1"});}
-  else if(region == "TOB_L6"){auto dataframe = d.Filter(SubDet_TOB_L6_Function, {"detID1"});}
-  else if(region == "Side_TEC"){auto dataframe = d.Filter(SubDet_SideTEC_Function, {"detID1"});}
-  else if(region == "Wheel_TEC"){auto dataframe = d.Filter(SubDet_WheelTEC_Function, {"detID1"});}
-  else if(region == "Ring_TEC"){auto dataframe = d.Filter(SubDet_RingTEC_Function, {"detID1"});}
+  if(region == "TIB_L1"){RegionInt = 1;}
+  else if(region == "TIB_L2"){RegionInt = 2;}
+  else if(region == "TIB_L3"){RegionInt = 3;}
+  else if(region == "TIB_L4"){RegionInt = 4;}
+  else if(region == "Side_TID"){RegionInt = 5;}
+  else if(region == "Wheel_TID"){RegionInt = 6;}
+  else if(region == "Ring_TID"){RegionInt = 7;}
+  else if(region == "TOB_L1"){RegionInt = 8;}
+  else if(region == "TOB_L2"){RegionInt = 9;}
+  else if(region == "TOB_L3"){RegionInt = 10;}
+  else if(region == "TOB_L4"){RegionInt = 11;}
+  else if(region == "TOB_L5"){RegionInt = 12;}
+  else if(region == "TOB_L6"){RegionInt = 13;}
+  else if(region == "Side_TEC"){RegionInt = 14;}
+  else if(region == "Wheel_TEC"){RegionInt = 15;}
+  else if(region == "Ring_TEC"){RegionInt = 16;}
   else{std::cout << "Error: The tracker region " << region << " was chosen. Please choose a region out of: TIB L1, TIB L2, TIB L3, TIB L4, Side TID, Wheel TID, Ring TID, TOB L1, TOB L2, TOB L3, TOB L4, TOB L5, TOB L6, Side TEC, Wheel TEC or Ring TEC." << std::endl; return 0;}
 
 
+
+  //Layers 1-4 of the TIB
+  auto SubDet_Function{[&RegionInt](const int& detID1_input){
+	
+        bool OutputBool = 0;
+
+	switch(RegionInt){
+
+		case 1: {OutputBool = (((detID1_input>>25)&0x7) == 3) && ((detID1_input>>14)&0x7) == 1; break;}
+		case 2: {OutputBool = (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 2); break;}
+		case 3: {OutputBool = (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 3); break;}
+		case 4: {OutputBool = (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 4); break;}
+		case 5: {OutputBool = (((detID1_input>>25)&0x7) == 4) && (detID1_input>>13)&0x3; break;}
+		case 6: {OutputBool = (((detID1_input>>25)&0x7) == 4) && (detID1_input>>13)&0x11; break;}
+		case 7: {OutputBool = (((detID1_input>>25)&0x7) == 4) && (detID1_input>>13)&0x9; break;}
+		case 8: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 1); break;}
+		case 9: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 2); break;}
+		case 10: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 3); break;}
+		case 11: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 4); break;}
+		case 12: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 5); break;}
+		case 13: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 6); break;}
+		case 14: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ((detID1_input>>18)&0x3); break;}
+		case 15: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ((detID1_input>>14)&0xF); break;}
+		case 16: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ((detID1_input>>5)&0x7); break;}
+
+	}
+
+	return OutputBool;
+
+  }};
+
+
+
+  auto dataframe = d.Filter(SubDet_Function, {"detID1"});
 
   //obtaining the branches trackDX and hitDX
   //hitDX = the difference in the hit positions for the pair
