@@ -1,5 +1,3 @@
-#include <typeinfo>
-
 using namespace ROOT; 
 
 
@@ -37,8 +35,7 @@ void ResolutionsCalculator(const string& region){
   else{std::cout << "Error: The tracker region " << region << " was chosen. Please choose a region out of: TIB L1, TIB L2, TIB L3, TIB L4, Side TID, Wheel TID, Ring TID, TOB L1, TOB L2, TOB L3, TOB L4, TOB L5, TOB L6, Side TEC, Wheel TEC or Ring TEC." << std::endl; return 0;}
 
 
-
-  //Layers 1-4 of the TIB
+  //Lambda function to filter the detID for different layers
   auto SubDet_Function{[&RegionInt](const int& detID1_input){
 	
         bool OutputBool = 0;
@@ -69,7 +66,7 @@ void ResolutionsCalculator(const string& region){
   }};
 
 
-
+  //Applying the filter
   auto dataframe = d.Filter(SubDet_Function, {"detID1"});
 
   //obtaining the branches trackDX and hitDX
@@ -139,6 +136,9 @@ void ResolutionsCalculator(const string& region){
 }
 
 
+
+
+//main function
 void Resolutions(){
 
   TFile * output = new TFile("GaussianFits.root", "RECREATE");
