@@ -7,14 +7,16 @@ vector<float> HitDXVector;
 vector<float> TrackDXVector;
 vector<float> ExpectedW1Vector;
 vector<float> ClusterW1Vector;
+vector<float> ExpectedW2Vector;
+vector<float> ClusterW2Vector;
 
-
-void ResolutionsCalculator(const string& region){
+void ResolutionsCalculator(const string& region, const string& unit){
 
   //opening the root file
   ROOT::RDataFrame d("anResol/reso", "hitresol.root");
 
   int RegionInt = 0;
+  int UnitInt = 0;
 
   if(region == "TIB_L1"){RegionInt = 1;}
   else if(region == "TIB_L2"){RegionInt = 2;}
@@ -34,6 +36,10 @@ void ResolutionsCalculator(const string& region){
   else if(region == "Ring_TEC"){RegionInt = 16;}
   else{std::cout << "Error: The tracker region " << region << " was chosen. Please choose a region out of: TIB L1, TIB L2, TIB L3, TIB L4, Side TID, Wheel TID, Ring TID, TOB L1, TOB L2, TOB L3, TOB L4, TOB L5, TOB L6, Side TEC, Wheel TEC or Ring TEC." << std::endl; return 0;}
 
+
+  if(unit == "pitch"){UnitInt = 0;}
+  else if(unit == "micrometres"){UnitInt = 1;}
+  else{std::cout << "Error: The unit " << unit << " was chosen. Please choose a unit out of pitch or micrometres." << std::endl; return 0; }
 
   //Lambda function to filter the detID for different layers
   auto SubDet_Function{[&RegionInt](const int& detID1_input){
@@ -66,27 +72,48 @@ void ResolutionsCalculator(const string& region){
   }};
 
 
+  auto Pitch_Function{[&UnitInt](const float& pitch, const float& input){
+
+	float InputOverPitch;
+
+	switch(UnitInt){
+
+		case 0: InputOverPitch = input/pitch; break; 
+		case 1: InputOverPitch = 1.0; break;
+			
+	}
+
+	return InputOverPitch;
+
+  }};
+
   //Applying the filter
   auto dataframe = d.Filter(SubDet_Function, {"detID1"});
 
-  //obtaining the branches trackDX and hitDX
   //hitDX = the difference in the hit positions for the pair
   //trackDX =  the difference in the track positions for the pair 
-  auto DifferenceFunction{[](const float& hitDX, const float& trackDX){auto DoubleDiff = hitDX-trackDX; return DoubleDiff;}};
 
   auto HistoName_DoubleDiff = "DoubleDifference_" + region;
   auto HistoName_HitDX = "HitDX_" + region;
   auto HistoName_TrackDX = "TrackDX_" + region;
   auto HistoName_ClusterW1 = "ClusterW1_" + region;
   auto HistoName_ExpectedW1 = "ExpectedW1_" + region;
+  auto HistoName_ClusterW2 = "ClusterW2_" + region;
+  auto HistoName_ExpectedW2 = "ExpectedW2_" + region;
   auto HistoName_DetID1 = "DetID1_" + region;
+  auto HistoName_Pitch = "Pitch_" + region;
 
-  auto h_DoubleDifference = dataframe.Define(HistoName_DoubleDiff, DifferenceFunction, {"hitDX", "trackDX"}).Histo1D({HistoName_DoubleDiff.c_str(), HistoName_DoubleDiff.c_str(), 40, -0.5, 0.5}, HistoName_DoubleDiff); 
+  auto dataframe_filtered = dataframe.Filter("momentum > 20 && trackChi2 > 0.001 && numHits > 5 && trackDXE < 25");
+
+  auto h_DoubleDifference = dataframe.Define(HistoName_DoubleDiff, {"trackDX-hitDX"}).Histo1D({HistoName_DoubleDiff.c_str(), HistoName_DoubleDiff.c_str(), 40, -0.5, 0.5}, HistoName_DoubleDiff); 
   auto h_hitDX = dataframe.Define(HistoName_HitDX, {"hitDX"}).Histo1D(HistoName_HitDX);
   auto h_trackDX = dataframe.Define(HistoName_TrackDX, {"trackDX"}).Histo1D(HistoName_TrackDX);
   auto h_expectedW1 = dataframe.Define(HistoName_ExpectedW1, {"expectedW1"}).Histo1D(HistoName_ExpectedW1);
   auto h_clusterW1 = dataframe.Define(HistoName_ClusterW1, {"clusterW1"}).Histo1D(HistoName_ClusterW1);
+  auto h_expectedW2 = dataframe.Define(HistoName_ExpectedW2, {"expectedW2"}).Histo1D(HistoName_ExpectedW2);
+  auto h_clusterW2 = dataframe.Define(HistoName_ClusterW2, {"clusterW2"}).Histo1D(HistoName_ClusterW2);
   auto h_DetID1 = dataframe.Define(HistoName_DetID1, {"detID1"}).Histo1D(HistoName_DetID1);
+  auto h_pitch1 = dataframe.Define(HistoName_Pitch, {"pitch1"}).Histo1D(HistoName_Pitch);
 
   //Applying gaussian fits, taking the resolutions and squaring them
   h_DoubleDifference->Fit("gaus");
@@ -94,18 +121,24 @@ void ResolutionsCalculator(const string& region){
   h_trackDX->Fit("gaus");
   h_expectedW1->Fit("gaus");
   h_clusterW1->Fit("gaus");
+  h_expectedW2->Fit("gaus");
+  h_clusterW2->Fit("gaus");
 
-  auto hitDX_trackDX_StdDev = h_DoubleDifference->GetStdDev();
+  auto double_diff_StdDev = h_DoubleDifference->GetStdDev();
   auto hitDX_StdDev = h_hitDX->GetStdDev();
   auto trackDX_StdDev = h_trackDX->GetStdDev();
   auto expectedW1_StdDev = h_expectedW1->GetStdDev();
   auto clusterW1_StdDev = h_clusterW1->GetStdDev();
+  auto expectedW2_StdDev = h_expectedW2->GetStdDev();
+  auto clusterW2_StdDev = h_clusterW2->GetStdDev();
 
-  auto sigma2_PredMinusMeas = pow(hitDX_trackDX_StdDev, 2);
+  auto sigma2_PredMinusMeas = pow(double_diff_StdDev, 2);
   auto sigma2_Meas = pow(hitDX_StdDev, 2);
   auto sigma2_Pred = pow(trackDX_StdDev, 2); 
   auto sigma2_expectedW1 = pow(expectedW1_StdDev, 2);
   auto sigma2_clusterW1 = pow(clusterW1_StdDev, 2);
+  auto sigma2_expectedW2 = pow(expectedW2_StdDev, 2);
+  auto sigma2_clusterW2 = pow(clusterW2_StdDev, 2);
 
   auto DoubleDifferenceWidth = sigma2_Pred + sigma2_Meas;
 
@@ -114,6 +147,8 @@ void ResolutionsCalculator(const string& region){
   TrackDXVector.push_back(sigma2_Pred);
   ExpectedW1Vector.push_back(sigma2_expectedW1);
   ClusterW1Vector.push_back(sigma2_clusterW1);
+  ExpectedW2Vector.push_back(sigma2_expectedW2);
+  ClusterW2Vector.push_back(sigma2_clusterW2);
 
   //Saving the histograms with gaussian fits applied to an output root file
   h_DoubleDifference->Write();
@@ -121,11 +156,19 @@ void ResolutionsCalculator(const string& region){
   h_trackDX->Write();
   h_expectedW1->Write();
   h_clusterW1->Write();
+  h_expectedW2->Write();
+  h_clusterW2->Write();
   h_DetID1->Write();
+  h_pitch1->Write();
 
   //Calculating the hit resolution
   //sigma2_PredMinusMeas - sigma2_Meas;
-  auto HitResolution = sqrt( (sigma2_PredMinusMeas - sigma2_Meas)/2 );
+  std::cout << "sigma2_PredMinusMeas = " << sigma2_PredMinusMeas << std::endl;
+  std::cout << "sigma2_Meas = " << sigma2_Meas << std::endl;
+
+  auto numerator = sigma2_PredMinusMeas - sigma2_Meas;
+
+  auto HitResolution = sqrt( numerator/2 );
   HitResolutionVector.push_back(HitResolution);
 
   //Printing the resolution 
@@ -149,12 +192,17 @@ void Resolutions(){
 				    "TOB_L6",   "Side_TEC",  "Wheel_TEC", "Ring_TEC"};
 
 
+  vector<std::string> UnitNames = {"pitch", "micrometres"};
+
   std::ofstream HitResoTextFile;
   HitResoTextFile.open("HitResolutionValues.txt");
 
   auto Width = 28; 
 
-  for(int i = 0; i < LayerNames.size(); i++){ResolutionsCalculator(LayerNames.at(i));}
+  for(int i = 0; i < LayerNames.size(); i++){
+	ResolutionsCalculator(LayerNames.at(i), UnitNames.at(0));
+	ResolutionsCalculator(LayerNames.at(i), UnitNames.at(1));
+  }
  
   HitResoTextFile << std::right << "Layer " << std::setw(Width) << " Resolution " << std::setw(Width) << " sigma2_HitDX " << std::setw(Width) << " sigma2_trackDX " << std::setw(Width) << " DoubleDifference " << std::setw(Width) << " sigma2_expectedW1 " << std::setw(Width) << " sigma2_clusterW1 "<< std::endl;
 
