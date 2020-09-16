@@ -103,17 +103,17 @@ void ResolutionsCalculator(const string& region, const string& unit){
   auto HistoName_DetID1 = "DetID1_" + region;
   auto HistoName_Pitch = "Pitch_" + region;
 
-  auto dataframe_filtered = dataframe.Filter("momentum > 20 && trackChi2 > 0.001 && numHits > 5 && trackDXE < 25");
+  auto dataframe_filtered = dataframe.Filter("trackChi2 > 0.001 && numHits > 5 && trackDXE < 25");
 
-  auto h_DoubleDifference = dataframe.Define(HistoName_DoubleDiff, {"trackDX-hitDX"}).Histo1D({HistoName_DoubleDiff.c_str(), HistoName_DoubleDiff.c_str(), 40, -0.5, 0.5}, HistoName_DoubleDiff); 
-  auto h_hitDX = dataframe.Define(HistoName_HitDX, {"hitDX"}).Histo1D(HistoName_HitDX);
-  auto h_trackDX = dataframe.Define(HistoName_TrackDX, {"trackDX"}).Histo1D(HistoName_TrackDX);
-  auto h_expectedW1 = dataframe.Define(HistoName_ExpectedW1, {"expectedW1"}).Histo1D(HistoName_ExpectedW1);
-  auto h_clusterW1 = dataframe.Define(HistoName_ClusterW1, {"clusterW1"}).Histo1D(HistoName_ClusterW1);
-  auto h_expectedW2 = dataframe.Define(HistoName_ExpectedW2, {"expectedW2"}).Histo1D(HistoName_ExpectedW2);
+  auto h_DoubleDifference = dataframe_filtered.Define(HistoName_DoubleDiff, {"trackDX-hitDX"}).Histo1D({HistoName_DoubleDiff.c_str(), HistoName_DoubleDiff.c_str(), 40, -0.5, 0.5}, HistoName_DoubleDiff); 
+  auto h_hitDX = dataframe_filtered.Define(HistoName_HitDX, {"hitDX"}).Histo1D(HistoName_HitDX);
+  auto h_trackDX = dataframe_filtered.Define(HistoName_TrackDX, {"trackDX"}).Histo1D(HistoName_TrackDX);
+  auto h_expectedW1 = dataframe_filtered.Define(HistoName_ExpectedW1, {"expectedW1"}).Histo1D(HistoName_ExpectedW1);
+  auto h_clusterW1 = dataframe_filtered.Define(HistoName_ClusterW1, {"clusterW1"}).Histo1D(HistoName_ClusterW1);
+  auto h_expectedW2 = dataframe_filtered.Define(HistoName_ExpectedW2, {"expectedW2"}).Histo1D(HistoName_ExpectedW2);
   auto h_clusterW2 = dataframe.Define(HistoName_ClusterW2, {"clusterW2"}).Histo1D(HistoName_ClusterW2);
-  auto h_DetID1 = dataframe.Define(HistoName_DetID1, {"detID1"}).Histo1D(HistoName_DetID1);
-  auto h_pitch1 = dataframe.Define(HistoName_Pitch, {"pitch1"}).Histo1D(HistoName_Pitch);
+  auto h_DetID1 = dataframe_filtered.Define(HistoName_DetID1, {"detID1"}).Histo1D(HistoName_DetID1);
+  auto h_pitch1 = dataframe_filtered.Define(HistoName_Pitch, {"pitch1"}).Histo1D(HistoName_Pitch);
 
   //Applying gaussian fits, taking the resolutions and squaring them
   h_DoubleDifference->Fit("gaus");
@@ -183,7 +183,7 @@ void ResolutionsCalculator(const string& region, const string& unit){
 
 void Resolutions(){
 
-  int UnitInteger = 1;
+  int UnitInteger = 0;
 
   std::string HitResoFileName;
   std::string GaussianFitsFileName;
