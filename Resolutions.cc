@@ -181,10 +181,20 @@ void ResolutionsCalculator(const string& region, const string& unit){
 
 
 
-//main function
 void Resolutions(){
 
-  TFile * output = new TFile("GaussianFits.root", "RECREATE");
+  int UnitInteger = 1;
+
+  std::string HitResoFileName;
+  std::string GaussianFitsFileName;
+
+  switch(UnitInteger){
+	case 0: GaussianFitsFileName = "GaussianFits_PitchUnits.root"; HitResoFileName = "HitResolutionValues_PitchUnits.txt"; break;
+	case 1: GaussianFitsFileName = "GaussianFits_Micrometres.root"; HitResoFileName = "HitResolutionValues_Micrometres.txt"; break;
+	default: std::cout << "ERROR: UnitInteger must be 0 or 1." << std::endl; break; 
+  }
+
+  TFile * output = new TFile(GaussianFitsFileName.c_str(), "RECREATE");
 
   vector<std::string> LayerNames = {"TIB_L1",   "TIB_L2",    "TIB_L3",    "TIB_L4",
 				    "Side_TID", "Wheel_TID", "Ring_TID",  "TOB_L1",
@@ -195,13 +205,13 @@ void Resolutions(){
   vector<std::string> UnitNames = {"pitch", "micrometres"};
 
   std::ofstream HitResoTextFile;
-  HitResoTextFile.open("HitResolutionValues.txt");
+  HitResoTextFile.open(HitResoFileName);
 
   auto Width = 28; 
 
   for(int i = 0; i < LayerNames.size(); i++){
-	ResolutionsCalculator(LayerNames.at(i), UnitNames.at(0));
-	ResolutionsCalculator(LayerNames.at(i), UnitNames.at(1));
+
+	ResolutionsCalculator(LayerNames.at(i), UnitNames.at(UnitInteger));
   }
  
   HitResoTextFile << std::right << "Layer " << std::setw(Width) << " Resolution " << std::setw(Width) << " sigma2_HitDX " << std::setw(Width) << " sigma2_trackDX " << std::setw(Width) << " DoubleDifference " << std::setw(Width) << " sigma2_expectedW1 " << std::setw(Width) << " sigma2_clusterW1 "<< std::endl;
