@@ -103,7 +103,7 @@ void ResolutionsCalculator(const string& region, const string& unit){
   auto HistoName_DetID1 = "DetID1_" + region;
   auto HistoName_Pitch = "Pitch_" + region;
 
-  auto dataframe_filtered = dataframe.Filter("trackChi2 > 0.001 && numHits > 5 && trackDXE < 25");
+  auto dataframe_filtered = dataframe.Filter("trackChi2 > 0.001 && numHits > 5 && trackDXE < 0.0025");
 
   auto h_DoubleDifference = dataframe_filtered.Define(HistoName_DoubleDiff, {"trackDX-hitDX"}).Histo1D({HistoName_DoubleDiff.c_str(), HistoName_DoubleDiff.c_str(), 40, -0.5, 0.5}, HistoName_DoubleDiff); 
   auto h_hitDX = dataframe_filtered.Define(HistoName_HitDX, {"hitDX"}).Histo1D(HistoName_HitDX);
