@@ -10,11 +10,11 @@ where \sigma_pred-meas is the standard deviation for the distribution of the dou
 The following parameters are used:
 
 * The charged particle must have traversed through two sufficiently-overlapping detector modules. 
-* Tracks must have transverse momenta greater than 3 GeV ([Permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/src/HitResol.cc#L324))
-* Most than six hits must be left in the SST layers and the pixel detector. No more than four of these can have a large cluster width.
-* The track fit must yield a good $\chi^{2}$ probability of $\chi^{2} \geqslant 10^{-2}$
+* Tracks must have transverse momenta greater than 3 GeV ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/src/HitResol.cc#L324)).
+* Most than six hits must be left in the SST layers and the pixel detector. No more than four of these can have a large cluster width. ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L106)).
+* The track fit must yield a good $\chi^{2}$ probability of $\chi^{2} \geqslant 10^{-2}$ ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L106)).
 * The predicted path (the distance of propagation of the charged particle from one layer to the next) must be < 7cm
-* The error in the distance between two hit resolution measurements must be < 0.0025
+* The error in the distance between two hit resolution measurements must be < 0.0025 ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L106)).
 * Clusters in the silicon module under consideration must have the same width
 * Clusters positioned on the edge of modules are not considered
 
