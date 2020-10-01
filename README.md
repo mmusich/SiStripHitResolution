@@ -1,4 +1,5 @@
-Markup: # HitResolutionProject #
+Markup :  # Hit Resolution Project #
+
 The scripts should be run inside CMSSW_11_1_0_pre6. Firstly, the following commands should be used:
 
 * cd CMSSW_11_1_0_pre6/src
