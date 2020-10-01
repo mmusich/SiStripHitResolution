@@ -16,7 +16,7 @@ The following parameters are used:
 * The predicted path (the distance of propagation of the charged particle from one layer to the next) must be < 7cm
 * The error in the distance between two hit resolution measurements must be < 0.0025 ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L106)).
 * Clusters in the silicon module under consideration must have the same width
-* Clusters positioned on the edge of modules are not considered
+* Clusters positioned on the edge of modules are not considered ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/src/HitResol.cc#L346))
 
 ## How to run the code ##
  
