@@ -87,7 +87,7 @@ else:
     				        "file:/eos/cms/store/data/Run2018D/ZeroBias/ALCARECO/SiStripCalMinBias-12Nov2019_UL2018-v3/280000/F5BBBBCF-2EC7-F54D-8A9C-A557B12F77C1.root")
 
 
-process.source = cms.Source("PoolSource", fileNames)
+process.source = cms.Source("PoolSource", fileNames=fileNames)
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1))
 
 process.load("RecoVertex.BeamSpotProducer.BeamSpot_cfi")
