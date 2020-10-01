@@ -19,6 +19,10 @@ The following parameters are used:
 * Clusters positioned on the edge of modules are not considered ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/src/HitResol.cc#L346))
 
 ## How to run the code ##
+The following scripts are used for the hit resolution study:
+*[src/HitResol.cc](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/src/HitResol.cc)
+*[test/SiStripHitResol_testULcosmics.py](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/test/SiStripHitResol_testULcosmics.py)
+*[Resolutions.cc](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc)
  
 The scripts should be run inside CMSSW_11_1_0_pre6. Firstly, the following commands should be used:
 
