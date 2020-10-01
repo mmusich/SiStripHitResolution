@@ -36,4 +36,11 @@ This will produce an output root file, which will be called hitresol_ALCARECO_UL
 
 * root -l Resolutions.cc
 
-This will produce two output files: GaussianFits_Micrometres.root and HitResolutionValues_Micrometres.txt (for hit resolution values expressed in micrometres), and GaussianFits_PitchUnits.root and HitResolutionValues_PitchUnits.txt (for hit resolution values expressed in pitch units) 
+This will produce two output files: GaussianFits_Micrometres.root and HitResolutionValues_Micrometres.txt (for hit resolution values expressed in micrometres), and GaussianFits_PitchUnits.root and HitResolutionValues_PitchUnits.txt (for hit resolution values expressed in pitch units)
+
+## References ##
+
+* Butz, E. (2017). Operation and Performance of the CMS Outer Tracker. The Compact Muon Solenoid Experiment Conference Report. 2017/428.
+* Chiochia, V et al. (2005). Track reconstruction in the CMS tracker. CMS Analysis Note. CMS AN 2005/063.
+* Gelé, D. (2018). Status of SiStripHitResolution studies.
+* Ulmer, K. (2009). Tracker Hit Resolution Measurements in 2009 CRAFT Data. 
