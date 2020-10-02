@@ -5,15 +5,49 @@ vector<float> HitResolutionVector;
 vector<float> DoubleDifferenceVector;
 vector<float> HitDXVector;
 vector<float> TrackDXVector;
-vector<float> ExpectedW1Vector;
-vector<float> ClusterW1Vector;
-vector<float> ExpectedW2Vector;
-vector<float> ClusterW2Vector;
 
-void ResolutionsCalculator(const string& region, const string& unit){
+std::string InputFileString;
+std::string HitResoFileName;
+std::string GaussianFitsFileName;
+
+void ResolutionsCalculator(const string& region, const int& UnitInt, const int& UL){
+
+
+  switch(UL){
+	case 0: switch(UnitInt){
+        		case 0: GaussianFitsFileName = "GaussianFits_PitchUnits_ALCARECO.root"; 
+				HitResoFileName = "HitResolutionValues_PitchUnits_ALCARECO.txt"; 
+				break;
+
+        		case 1: GaussianFitsFileName = "GaussianFits_Micrometres_ALCARECO.root"; 
+				HitResoFileName = "HitResolutionValues_Micrometres_ALCARECO.txt"; 
+				break;
+
+        		default: std::cout << "ERROR: UnitInt must be 0 or 1." << std::endl; break;
+  		}
+
+		InputFileString = "hitresol_ALCARECO.root"; 
+		break;
+
+	case 1: switch(UnitInt){
+                        case 0: GaussianFitsFileName = "GaussianFits_PitchUnits_ALCARECO_UL.root"; 
+                                HitResoFileName = "HitResolutionValues_PitchUnits_ALCARECO_UL.txt"; 
+                                break;
+
+                        case 1: GaussianFitsFileName = "GaussianFits_Micrometres_ALCARECO_UL.root"; 
+                                HitResoFileName = "HitResolutionValues_Micrometres_ALCARECO_UL.txt"; 
+                                break;
+
+                        default: std::cout << "ERROR: UnitInt must be 0 or 1." << std::endl; break;
+                }
+
+		InputFileString = "hitresol_ALCARECO_UL.root"; 
+		break;
+	default: std::cout << "The UL input parameter must be set to 0 (for ALCARECO) or 1 (for UL ALCARECO)." << std::endl; break;
+  }
 
   //opening the root file
-  ROOT::RDataFrame d("anResol/reso", "hitresol.root");
+  ROOT::RDataFrame d("anResol/reso", InputFileString.c_str());
 
   int RegionInt = 0;
   int UnitInt = 0;
@@ -108,60 +142,30 @@ void ResolutionsCalculator(const string& region, const string& unit){
   auto h_DoubleDifference = dataframe_filtered.Define(HistoName_DoubleDiff, {"trackDX-hitDX"}).Histo1D({HistoName_DoubleDiff.c_str(), HistoName_DoubleDiff.c_str(), 40, -0.5, 0.5}, HistoName_DoubleDiff); 
   auto h_hitDX = dataframe_filtered.Define(HistoName_HitDX, {"hitDX"}).Histo1D(HistoName_HitDX);
   auto h_trackDX = dataframe_filtered.Define(HistoName_TrackDX, {"trackDX"}).Histo1D(HistoName_TrackDX);
-  auto h_expectedW1 = dataframe_filtered.Define(HistoName_ExpectedW1, {"expectedW1"}).Histo1D(HistoName_ExpectedW1);
-  auto h_clusterW1 = dataframe_filtered.Define(HistoName_ClusterW1, {"clusterW1"}).Histo1D(HistoName_ClusterW1);
-  auto h_expectedW2 = dataframe_filtered.Define(HistoName_ExpectedW2, {"expectedW2"}).Histo1D(HistoName_ExpectedW2);
-  auto h_clusterW2 = dataframe.Define(HistoName_ClusterW2, {"clusterW2"}).Histo1D(HistoName_ClusterW2);
-  auto h_DetID1 = dataframe_filtered.Define(HistoName_DetID1, {"detID1"}).Histo1D(HistoName_DetID1);
-  auto h_pitch1 = dataframe_filtered.Define(HistoName_Pitch, {"pitch1"}).Histo1D(HistoName_Pitch);
 
   //Applying gaussian fits, taking the resolutions and squaring them
   h_DoubleDifference->Fit("gaus");
   h_hitDX->Fit("gaus");
   h_trackDX->Fit("gaus");
-  h_expectedW1->Fit("gaus");
-  h_clusterW1->Fit("gaus");
-  h_expectedW2->Fit("gaus");
-  h_clusterW2->Fit("gaus");
 
   auto double_diff_StdDev = h_DoubleDifference->GetStdDev();
   auto hitDX_StdDev = h_hitDX->GetStdDev();
   auto trackDX_StdDev = h_trackDX->GetStdDev();
-  auto expectedW1_StdDev = h_expectedW1->GetStdDev();
-  auto clusterW1_StdDev = h_clusterW1->GetStdDev();
-  auto expectedW2_StdDev = h_expectedW2->GetStdDev();
-  auto clusterW2_StdDev = h_clusterW2->GetStdDev();
 
   auto sigma2_PredMinusMeas = pow(double_diff_StdDev, 2);
   auto sigma2_Meas = pow(hitDX_StdDev, 2);
   auto sigma2_Pred = pow(trackDX_StdDev, 2); 
-  auto sigma2_expectedW1 = pow(expectedW1_StdDev, 2);
-  auto sigma2_clusterW1 = pow(clusterW1_StdDev, 2);
-  auto sigma2_expectedW2 = pow(expectedW2_StdDev, 2);
-  auto sigma2_clusterW2 = pow(clusterW2_StdDev, 2);
-
+  
   auto DoubleDifferenceWidth = sigma2_Pred + sigma2_Meas;
 
   DoubleDifferenceVector.push_back(sigma2_PredMinusMeas);
   HitDXVector.push_back(sigma2_Meas);
   TrackDXVector.push_back(sigma2_Pred);
-  ExpectedW1Vector.push_back(sigma2_expectedW1);
-  ClusterW1Vector.push_back(sigma2_clusterW1);
-  ExpectedW2Vector.push_back(sigma2_expectedW2);
-  ClusterW2Vector.push_back(sigma2_clusterW2);
 
   //Saving the histograms with gaussian fits applied to an output root file
   h_DoubleDifference->Write();
   h_hitDX->Write();
   h_trackDX->Write();
-  h_expectedW1->Write();
-  h_clusterW1->Write();
-  h_expectedW2->Write();
-  h_clusterW2->Write();
-  h_DetID1->Write();
-  h_pitch1->Write();
-
-  //Calculating the hit resolution
   //sigma2_PredMinusMeas - sigma2_Meas;
   std::cout << "sigma2_PredMinusMeas = " << sigma2_PredMinusMeas << std::endl;
   std::cout << "sigma2_Meas = " << sigma2_Meas << std::endl;
@@ -184,15 +188,7 @@ void ResolutionsCalculator(const string& region, const string& unit){
 void Resolutions(){
 
   int UnitInteger = 0;
-
-  std::string HitResoFileName;
-  std::string GaussianFitsFileName;
-
-  switch(UnitInteger){
-	case 0: GaussianFitsFileName = "GaussianFits_PitchUnits.root"; HitResoFileName = "HitResolutionValues_PitchUnits.txt"; break;
-	case 1: GaussianFitsFileName = "GaussianFits_Micrometres.root"; HitResoFileName = "HitResolutionValues_Micrometres.txt"; break;
-	default: std::cout << "ERROR: UnitInteger must be 0 or 1." << std::endl; break; 
-  }
+  int ULInteger = 0;
 
   TFile * output = new TFile(GaussianFitsFileName.c_str(), "RECREATE");
 
