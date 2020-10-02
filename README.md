@@ -40,7 +40,7 @@ This will produce two output files: GaussianFits_Micrometres.root and HitResolut
 
 ## References ##
 
-* Butz, E. (2017). Operation and Performance of the CMS Outer Tracker. The Compact Muon Solenoid Experiment Conference Report. 2017/428.
-* Chiochia, V et al. (2005). Track reconstruction in the CMS tracker. CMS Analysis Note. CMS AN 2005/063.
-* Gelé, D. (2018). Status of SiStripHitResolution studies.
-* Ulmer, K. (2009). Tracker Hit Resolution Measurements in 2009 CRAFT Data. 
+* [Butz, E. (2017). Operation and Performance of the CMS Outer Tracker. The Compact Muon Solenoid Experiment Conference Report. 2017/428.](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resources/CR2017_428.pdf)
+* [Chiochia, V et al. (2005). Track reconstruction in the CMS tracker. CMS Analysis Note. CMS AN 2005/063.](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resources/AN2005_063_v2.pdf)
+* [Gelé, D. (2018). Status of SiStripHitResolution studies.](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resources/PresentationTracker_17072018.pdf)
+* [Ulmer, K. (2009). Tracker Hit Resolution Measurements in 2009 CRAFT Data.](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resources/HitResLPCPhysics_10_15_09.ppt) 
