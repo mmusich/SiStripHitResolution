@@ -3,9 +3,9 @@
 ## Explanation for the pair method ## 
 The hit resolution, $\sigma_hit$, can be obtained by using the following equation:
 
-$`\sigma_hit = \sqrt{\frac{\sigma^{2}_pred-meas - \sigma^{2}_meas}{2}}`$,
+$`\sigma_{hit} = \sqrt{\frac{\sigma^{2}_{pred-meas} - \sigma^{2}_{meas}}{2}}`$,
 
-where $\sigma_{pred-meas}$ is the standard deviation for the distribution of the double difference between the predicted and measured hit positions, and $\sigma_{meas}$ is the standard deviation of the distribution of the measured hit positions. 
+where $`\sigma_{pred-meas}`$ is the standard deviation for the distribution of the double difference between the predicted and measured hit positions, and $`\sigma_{meas}`$ is the standard deviation of the distribution of the measured hit positions. 
 
 The following parameters are used:
 
