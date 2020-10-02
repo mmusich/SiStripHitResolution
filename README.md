@@ -1,7 +1,7 @@
 # Hit Resolution Project #
 
 ## Explanation for the pair method ## 
-The hit resolution, $\sigma_hit$, can be obtained by using the following equation:
+The hit resolution, $`\sigma_{hit}`$, can be obtained by using the following equation:
 
 $`\sigma_{hit} = \sqrt{\frac{\sigma^{2}_{pred-meas} - \sigma^{2}_{meas}}{2}}`$,
 
