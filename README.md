@@ -7,7 +7,7 @@ $`\sigma_{hit} = \sqrt{\frac{\sigma^{2}_{pred-meas} - \sigma^{2}_{meas}}{2}}`$,
 
 where $`\sigma_{pred-meas}`$ is the standard deviation for the distribution of the double difference between the predicted and measured hit positions, and $`\sigma_{meas}`$ is the standard deviation of the distribution of the measured hit positions. 
 
-The following parameters are used:
+The following criteria are used:
 
 * The charged particle must have traversed through two sufficiently-overlapping detector modules. 
 * Tracks must have transverse momenta greater than 3 GeV ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/src/HitResol.cc#L324)).
