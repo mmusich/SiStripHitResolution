@@ -10,13 +10,16 @@ std::string InputFileString;
 std::string HitResoFileName;
 std::string GaussianFitsFileName;
 
-void ResolutionsCalculator(const string& region, const int& UnitInt, const int& UL){
+void ResolutionsCalculator(const string& region, const int& Unit_Int, const int& UL){
 
+  std::cout << "Unit_Int = " << Unit_Int << std::endl;
+  std::cout << "UL = " << UL << std::endl;
 
   switch(UL){
-	case 0: switch(UnitInt){
+	case 0: switch(Unit_Int){
         		case 0: GaussianFitsFileName = "GaussianFits_PitchUnits_ALCARECO.root"; 
-				HitResoFileName = "HitResolutionValues_PitchUnits_ALCARECO.txt"; 
+				HitResoFileName = "HitResolutionValues_PitchUnits_ALCARECO.txt";
+				std::cout << "first switch statement" << std::endl; 
 				break;
 
         		case 1: GaussianFitsFileName = "GaussianFits_Micrometres_ALCARECO.root"; 
@@ -29,7 +32,7 @@ void ResolutionsCalculator(const string& region, const int& UnitInt, const int& 
 		InputFileString = "hitresol_ALCARECO.root"; 
 		break;
 
-	case 1: switch(UnitInt){
+	case 1: switch(Unit_Int){
                         case 0: GaussianFitsFileName = "GaussianFits_PitchUnits_ALCARECO_UL.root"; 
                                 HitResoFileName = "HitResolutionValues_PitchUnits_ALCARECO_UL.txt"; 
                                 break;
@@ -47,10 +50,11 @@ void ResolutionsCalculator(const string& region, const int& UnitInt, const int& 
   }
 
   //opening the root file
-  ROOT::RDataFrame d("anResol/reso", InputFileString.c_str());
+  std::cout << "InputFileString = " << InputFileString << std::endl;
+
+  ROOT::RDataFrame d("anResol/reso", InputFileString);
 
   int RegionInt = 0;
-  int UnitInt = 0;
 
   if(region == "TIB_L1"){RegionInt = 1;}
   else if(region == "TIB_L2"){RegionInt = 2;}
@@ -71,9 +75,6 @@ void ResolutionsCalculator(const string& region, const int& UnitInt, const int& 
   else{std::cout << "Error: The tracker region " << region << " was chosen. Please choose a region out of: TIB L1, TIB L2, TIB L3, TIB L4, Side TID, Wheel TID, Ring TID, TOB L1, TOB L2, TOB L3, TOB L4, TOB L5, TOB L6, Side TEC, Wheel TEC or Ring TEC." << std::endl; return 0;}
 
 
-  if(unit == "pitch"){UnitInt = 0;}
-  else if(unit == "micrometres"){UnitInt = 1;}
-  else{std::cout << "Error: The unit " << unit << " was chosen. Please choose a unit out of pitch or micrometres." << std::endl; return 0; }
 
   //Lambda function to filter the detID for different layers
   auto SubDet_Function{[&RegionInt](const int& detID1_input){
@@ -106,11 +107,11 @@ void ResolutionsCalculator(const string& region, const int& UnitInt, const int& 
   }};
 
 
-  auto Pitch_Function{[&UnitInt](const float& pitch, const float& input){
+  auto Pitch_Function{[&Unit_Int](const float& pitch, const float& input){
 
 	float InputOverPitch;
 
-	switch(UnitInt){
+	switch(Unit_Int){
 
 		case 0: InputOverPitch = input/pitch; break; 
 		case 1: InputOverPitch = 1.0; break;
@@ -130,13 +131,7 @@ void ResolutionsCalculator(const string& region, const int& UnitInt, const int& 
   auto HistoName_DoubleDiff = "DoubleDifference_" + region;
   auto HistoName_HitDX = "HitDX_" + region;
   auto HistoName_TrackDX = "TrackDX_" + region;
-  auto HistoName_ClusterW1 = "ClusterW1_" + region;
-  auto HistoName_ExpectedW1 = "ExpectedW1_" + region;
-  auto HistoName_ClusterW2 = "ClusterW2_" + region;
-  auto HistoName_ExpectedW2 = "ExpectedW2_" + region;
-  auto HistoName_DetID1 = "DetID1_" + region;
-  auto HistoName_Pitch = "Pitch_" + region;
-
+  
   auto dataframe_filtered = dataframe.Filter("trackChi2 > 0.001 && numHits > 5 && trackDXE < 0.0025");
 
   auto h_DoubleDifference = dataframe_filtered.Define(HistoName_DoubleDiff, {"trackDX-hitDX"}).Histo1D({HistoName_DoubleDiff.c_str(), HistoName_DoubleDiff.c_str(), 40, -0.5, 0.5}, HistoName_DoubleDiff); 
@@ -163,9 +158,14 @@ void ResolutionsCalculator(const string& region, const int& UnitInt, const int& 
   TrackDXVector.push_back(sigma2_Pred);
 
   //Saving the histograms with gaussian fits applied to an output root file
+  TFile * output = new TFile(GaussianFitsFileName.c_str(), "UPDATE");
+
   h_DoubleDifference->Write();
   h_hitDX->Write();
   h_trackDX->Write();
+
+  output->Close();
+
   //sigma2_PredMinusMeas - sigma2_Meas;
   std::cout << "sigma2_PredMinusMeas = " << sigma2_PredMinusMeas << std::endl;
   std::cout << "sigma2_Meas = " << sigma2_Meas << std::endl;
@@ -187,37 +187,31 @@ void ResolutionsCalculator(const string& region, const int& UnitInt, const int& 
 
 void Resolutions(){
 
-  int UnitInteger = 0;
-  int ULInteger = 0;
-
-  TFile * output = new TFile(GaussianFitsFileName.c_str(), "RECREATE");
+  int UnitInteger = 1;
+  int ULInteger = 1;
 
   vector<std::string> LayerNames = {"TIB_L1",   "TIB_L2",    "TIB_L3",    "TIB_L4",
 				    "Side_TID", "Wheel_TID", "Ring_TID",  "TOB_L1",
 				    "TOB_L2",   "TOB_L3",    "TOB_L4",    "TOB_L5",
 				    "TOB_L6",   "Side_TEC",  "Wheel_TEC", "Ring_TEC"};
 
+  for(int i = 0; i < LayerNames.size(); i++){
 
-  vector<std::string> UnitNames = {"pitch", "micrometres"};
+	ResolutionsCalculator(LayerNames.at(i), UnitInteger, ULInteger);
+  }
+ 
 
   std::ofstream HitResoTextFile;
   HitResoTextFile.open(HitResoFileName);
 
-  auto Width = 28; 
+  auto Width = 28;
 
-  for(int i = 0; i < LayerNames.size(); i++){
-
-	ResolutionsCalculator(LayerNames.at(i), UnitNames.at(UnitInteger));
-  }
- 
-  HitResoTextFile << std::right << "Layer " << std::setw(Width) << " Resolution " << std::setw(Width) << " sigma2_HitDX " << std::setw(Width) << " sigma2_trackDX " << std::setw(Width) << " DoubleDifference " << std::setw(Width) << " sigma2_expectedW1 " << std::setw(Width) << " sigma2_clusterW1 "<< std::endl;
+  HitResoTextFile << std::right << "Layer " << std::setw(Width) << " Resolution " << std::setw(Width) << " sigma2_HitDX " << std::setw(Width) << " sigma2_trackDX " << std::setw(Width) << " DoubleDifference " << std::endl;
 
   for(int i = 0; i < HitResolutionVector.size(); i++){
-
-	HitResoTextFile << std::right << LayerNames.at(i) << std::setw(Width) << HitResolutionVector.at(i) << std::setw(Width) << HitDXVector.at(i)  << std::setw(Width) << TrackDXVector.at(i) << std::setw(Width) << DoubleDifferenceVector.at(i) << std::setw(Width) << ExpectedW1Vector.at(i) << std::setw(Width) << ClusterW1Vector.at(i) << endl;
+	HitResoTextFile << std::right << LayerNames.at(i) << std::setw(Width) << HitResolutionVector.at(i) << std::setw(Width) << HitDXVector.at(i)  << std::setw(Width) << TrackDXVector.at(i) << std::setw(Width) << DoubleDifferenceVector.at(i) << std::endl;
 
   }
 
-  output->Close();
 
 }
