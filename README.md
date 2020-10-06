@@ -36,7 +36,7 @@ This will produce an output root file, which will be called hitresol_ALCARECO_UL
 
 * root -l Resolutions.cc
 
-This will produce two output files: GaussianFits_Micrometres.root and HitResolutionValues_Micrometres.txt (for hit resolution values expressed in micrometres), or GaussianFits_PitchUnits.root and HitResolutionValues_PitchUnits.txt (for hit resolution values expressed in pitch units)
+This will produce two output files: GaussianFits_Micrometres.root and HitResolutionValues_Micrometres.txt (for hit resolution values expressed in micrometres), or GaussianFits_PitchUnits.root and HitResolutionValues_PitchUnits.txt (for hit resolution values expressed in pitch units). To choose between pitch units or micrometres, [UnitInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L190) must be set as 0 (for pitch units) or 1 (for micrometres). To choose between using the UL or non-UL ALCARECO samples, the value of [ULInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L191) must be set as 0 (for non-UL samples) or 1 (for UL samples). 
 
 ## References ##
 
