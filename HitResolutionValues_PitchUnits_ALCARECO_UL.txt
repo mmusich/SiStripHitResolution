@@ -1,0 +1,17 @@
+Layer                  Resolution                sigma2_HitDX              sigma2_trackDX            DoubleDifference 
+TIB_L1                        -nan                     19.7335                      19.739                 0.000173839
+TIB_L2                        -nan                     16.9047                     16.9126                 0.000158577
+TIB_L3                        -nan                     12.2575                     12.2596                 0.000120779
+TIB_L4                        -nan                     11.6825                     11.6842                 0.000128315
+Side_TID                           0                           0                           0                           0
+Wheel_TID                           0                           0                           0                           0
+Ring_TID                           0                           0                           0                           0
+TOB_L1                        -nan                      27.825                     27.8457                  0.00100958
+TOB_L2                        -nan                     28.6456                     28.6592                 0.000856366
+TOB_L3                        -nan                     29.1582                     29.1665                 0.000368474
+TOB_L4                        -nan                     30.6311                     30.6353                 0.000377885
+TOB_L5                        -nan                     29.1893                     29.1934                 0.000182837
+TOB_L6                        -nan                     10.0271                     10.0273                 0.000102899
+Side_TEC                           0                           0                           0                           0
+Wheel_TEC                           0                           0                           0                           0
+Ring_TEC                           0                           0                           0                           0
