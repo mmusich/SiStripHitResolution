@@ -18,7 +18,7 @@ The following criteria are used:
 * The predicted path (the distance of propagation of the charged particle from one layer to the next) must be < 7cm in the TIB and TOB ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L135)).
 * The predicted path must be < 2cm for pixels.
 * The error in the distance between two hit resolution measurements must be < 0.0025 ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L106)).
-* Misalignment uncertainty < 5$`\mu$m.
+* Misalignment uncertainty < 5$`\mu`$m.
 * Clusters in the silicon module under consideration must have the same width ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L135)).
 * Clusters positioned on the edge of modules are not considered ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/src/HitResol.cc#L346))
 
