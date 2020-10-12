@@ -1,4 +1,5 @@
 Layer                  Resolution                sigma2_HitDX              sigma2_trackDX     sigma2_DoubleDifference 
+Pixels                           0                           0                           0                           0
 TIB_L1                        -nan                     14.3238                     14.3233                 4.31201e-06
 TIB_L2                        -nan                     17.2068                     17.2145                 4.94824e-06
 TIB_L3                        -nan                     15.3074                     15.3075                 1.01765e-05
