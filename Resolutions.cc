@@ -75,6 +75,10 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   else if(region == "Side_TEC"){RegionInt = 14;}
   else if(region == "Wheel_TEC"){RegionInt = 15;}
   else if(region == "Ring_TEC"){RegionInt = 16;}
+  else if(region == "TIB_All"){RegionInt = 17;}
+  else if(region == "TOB_All"){RegionInt = 18;}
+  else if(region == "TID_All"){RegionInt = 19;}
+  else if(region == "TEC_All"){RegionInt = 20;}
   else{std::cout << "Error: The tracker region " << region << " was chosen. Please choose a region out of: TIB L1, TIB L2, TIB L3, TIB L4, Side TID, Wheel TID, Ring TID, TOB L1, TOB L2, TOB L3, TOB L4, TOB L5, TOB L6, Side TEC, Wheel TEC or Ring TEC." << std::endl; return 0;}
 
 
@@ -156,6 +160,21 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 
 			 break;}
 
+		case 17: {OutputBool = ( (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>25)&0x7) == 3) ); //All TIB
+
+			  break;}
+
+	 	case 18: {OutputBool = ( (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>25)&0x7) == 5) ); //All TOB
+			
+			 break;}
+
+		case 19: {OutputBool = ( (((detID1_input>>25)&0x7) == 4) && (((detID1_input>>25)&0x7) == 4) ); //All TID
+		
+			 break;}
+
+		case 20: {OutputBool = ( (((detID1_input>>25)&0x7) == 6) && (((detID1_input>>25)&0x7) == 6) ); //All TEC
+
+			break;}
 
 	}
 
@@ -187,7 +206,7 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   //Implementing selection criteria that were not implemented in HitResol.cc
   auto PairPathCriteriaFunction{[&RegionInt](const float& pairPath_input){
 
-	if((RegionInt > 0 && RegionInt < 5) || (RegionInt > 7 || RegionInt < 13)){return abs(pairPath_input) < 7;} //for TIB and TOB
+	if((RegionInt > 0 && RegionInt < 5) || (RegionInt > 7 || RegionInt < 13) || (RegionInt == 17) || (RegionInt == 18)){return abs(pairPath_input) < 7;} //for TIB and TOB
 	else if(RegionInt == 0){return abs(pairPath_input) < 2;} //for pixels
 	else{return abs(pairPath_input) < 20;}//for everything else (max value is 15cm so this will return all events anyway)
   }};
@@ -266,7 +285,8 @@ void Resolutions(){
   vector<std::string> LayerNames = {"Pixels",   "TIB_L1",    "TIB_L2",    "TIB_L3",    "TIB_L4",
 				    "Side_TID", "Wheel_TID", "Ring_TID",  "TOB_L1",
 				    "TOB_L2",   "TOB_L3",    "TOB_L4",    "TOB_L5",
-				    "TOB_L6",   "Side_TEC",  "Wheel_TEC", "Ring_TEC"};
+				    "TOB_L6",   "Side_TEC",  "Wheel_TEC", "Ring_TEC", 
+				    "TIB_All",  "TOB_All",   "TID_All",   "TEC_All"};
 
   for(int i = 0; i < LayerNames.size(); i++){
 
