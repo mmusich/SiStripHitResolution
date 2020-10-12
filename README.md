@@ -11,12 +11,11 @@ The following criteria are used:
 
 * The charged particle must have traversed through two sufficiently-overlapping detector modules. 
 * Tracks must have transverse momenta greater than 3 GeV ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/src/HitResol.cc#L324)).
-* Track momentum > 15 GeV for strips.
-* Track momentum > 5 GeV for pixels.
+* Track momentum is > 15 GeV for strips and > 5 GeV for pixels([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L189)).
 * More than six hits must be left in the SST layers and the pixel detector. No more than four of these can have a large cluster width. ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L106)).
 * The track fit must yield a good $`\chi^{2}`$ probability of $`\chi^{2} \geqslant 10^{-2}`$ ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L106)).
-* The predicted path (the distance of propagation of the charged particle from one layer to the next) must be < 7cm in the TIB and TOB ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L135)).
-* The predicted path must be < 2cm for pixels.
+* The predicted path (the distance of propagation of the charged particle from one layer to the next) must be < 7cm in the TIB and TOB ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L182)).
+* The predicted path must be < 2cm for pixels([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L182)).
 * The error in the distance between two hit resolution measurements must be < 0.0025 ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L106)).
 * Misalignment uncertainty < 5$`\mu`$m.
 * Clusters in the silicon module under consideration must have the same width ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L135)).
