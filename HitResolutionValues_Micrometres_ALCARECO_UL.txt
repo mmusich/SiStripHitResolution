@@ -16,3 +16,7 @@ TOB_L6                        -nan                     20.2171                  
 Side_TEC                           0                           0                           0                           0
 Wheel_TEC                           0                           0                           0                           0
 Ring_TEC                           0                           0                           0                           0
+TIB_All                        -nan                     15.2931                     15.2984                 1.24206e-05
+TOB_All                        -nan                     35.5324                     35.5562                 6.67242e-05
+TID_All                           0                           0                           0                           0
+TEC_All                           0                           0                           0                           0
