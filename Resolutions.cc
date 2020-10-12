@@ -113,12 +113,12 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 				      (((detID2_input>>25)&0x7) == 4) && ( (((detID2_input>>13)&0x3) == 0) || (((detID2_input>>13)&0x3) == 1) );
 			 break;}
 
-		case 6: {OutputBool = (((detID1_input>>25)&0x7) == 4) && ( (((detID1_input>>13)&0x11) == 0) || (((detID1_input>>13)&0x11) == 1) ) &&
-				      (((detID2_input>>25)&0x7) == 4) && ( (((detID2_input>>13)&0x11) == 0) || (((detID2_input>>13)&0x11) == 1) ); 
+		case 6: {OutputBool = (((detID1_input>>25)&0x7) == 4) && ( (((detID1_input>>11)&0x3) == 0) || (((detID1_input>>11)&0x3) == 1) ) &&
+				      (((detID2_input>>25)&0x7) == 4) && ( (((detID2_input>>11)&0x3) == 0) || (((detID2_input>>11)&0x3) == 1) ); 
 			 break;}
 
-		case 7: {OutputBool = (((detID1_input>>25)&0x7) == 4) && ( (((detID1_input>>13)&0x9) == 0) || (((detID1_input>>13)&0x9) == 1) ) &&
-				      (((detID2_input>>25)&0x7) == 4) && ( (((detID2_input>>13)&0x9) == 0) || (((detID2_input>>13)&0x9) == 1) ); 
+		case 7: {OutputBool = (((detID1_input>>25)&0x7) == 4) && ( (((detID1_input>>9)&0x3) == 0) || (((detID1_input>>9)&0x3) == 1) ) &&
+				      (((detID2_input>>25)&0x7) == 4) && ( (((detID2_input>>9)&0x3) == 0) || (((detID2_input>>9)&0x3) == 1) ); 
 			 break;}
 
 
