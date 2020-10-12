@@ -1,5 +1,10 @@
 using namespace ROOT; 
-
+using ROOT::RDF::RNode;
+using floats = ROOT::VecOps::RVec<float>;
+using ints = ROOT::VecOps::RVec<int>;
+using bools = ROOT::VecOps::RVec<bool>;
+using chars = ROOT::VecOps::RVec<UChar_t>;
+using doubles = ROOT::VecOps::RVec<double>;
 
 vector<float> HitResolutionVector;
 vector<float> DoubleDifferenceVector;
@@ -10,10 +15,10 @@ std::string InputFileString;
 std::string HitResoFileName;
 std::string GaussianFitsFileName;
 
+
+
 void ResolutionsCalculator(const string& region, const int& Unit_Int, const int& UL){
 
-  std::cout << "Unit_Int = " << Unit_Int << std::endl;
-  std::cout << "UL = " << UL << std::endl;
 
   switch(UL){
 	case 0: switch(Unit_Int){
@@ -50,13 +55,12 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   }
 
   //opening the root file
-  std::cout << "InputFileString = " << InputFileString << std::endl;
-
   ROOT::RDataFrame d("anResol/reso", InputFileString);
 
   int RegionInt = 0;
 
-  if(region == "TIB_L1"){RegionInt = 1;}
+  if(region == "Pixels"){RegionInt = 0;}
+  else if(region == "TIB_L1"){RegionInt = 1;}
   else if(region == "TIB_L2"){RegionInt = 2;}
   else if(region == "TIB_L3"){RegionInt = 3;}
   else if(region == "TIB_L4"){RegionInt = 4;}
@@ -77,28 +81,77 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 
 
   //Lambda function to filter the detID for different layers
-  auto SubDet_Function{[&RegionInt](const int& detID1_input){
+  auto SubDet_Function{[&RegionInt](const int& detID1_input, const int& detID2_input){
 	
         bool OutputBool = 0;
 
 	switch(RegionInt){
+		case 0: {OutputBool = (((detID1_input>>25)&0x7) < 3) && (((detID2_input>>25)&0x7) < 3);
+			 break;}
 
-		case 1: {OutputBool = (((detID1_input>>25)&0x7) == 3) && ((detID1_input>>14)&0x7) == 1; break;}
-		case 2: {OutputBool = (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 2); break;}
-		case 3: {OutputBool = (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 3); break;}
-		case 4: {OutputBool = (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 4); break;}
-		case 5: {OutputBool = (((detID1_input>>25)&0x7) == 4) && (detID1_input>>13)&0x3; break;}
-		case 6: {OutputBool = (((detID1_input>>25)&0x7) == 4) && (detID1_input>>13)&0x11; break;}
-		case 7: {OutputBool = (((detID1_input>>25)&0x7) == 4) && (detID1_input>>13)&0x9; break;}
-		case 8: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 1); break;}
-		case 9: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 2); break;}
-		case 10: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 3); break;}
-		case 11: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 4); break;}
-		case 12: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 5); break;}
-		case 13: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 6); break;}
-		case 14: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ((detID1_input>>18)&0x3); break;}
-		case 15: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ((detID1_input>>14)&0xF); break;}
-		case 16: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ((detID1_input>>5)&0x7); break;}
+		case 1: {OutputBool = (((detID1_input>>25)&0x7) == 3) && ((detID1_input>>14)&0x7) == 1 &&
+				      (((detID2_input>>25)&0x7) == 3) && ((detID2_input>>14)&0x7) == 1; 
+			 break;}
+
+		case 2: {OutputBool = (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 2) &&
+				      (((detID2_input>>25)&0x7) == 3) && (((detID2_input>>14)&0x7) == 2);
+			 break;}
+
+		case 3: {OutputBool = (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 3) &&
+				      (((detID2_input>>25)&0x7) == 3) && (((detID2_input>>14)&0x7) == 3);
+			 break;}
+
+		case 4: {OutputBool = (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 4) &&
+				      (((detID2_input>>25)&0x7) == 3) && (((detID2_input>>14)&0x7) == 4);
+			 break;}
+
+		case 5: {OutputBool = (((detID1_input>>25)&0x7) == 4) && (detID1_input>>13)&0x3 &&
+				      (((detID2_input>>25)&0x7) == 4) && (detID2_input>>13)&0x3;
+			 break;}
+
+		case 6: {OutputBool = (((detID1_input>>25)&0x7) == 4) && (detID1_input>>13)&0x11 &&
+				      (((detID2_input>>25)&0x7) == 4) && (detID2_input>>13)&0x11; 
+			 break;}
+
+		case 7: {OutputBool = (((detID1_input>>25)&0x7) == 4) && (detID1_input>>13)&0x9 &&
+				      (((detID2_input>>25)&0x7) == 4) && (detID2_input>>13)&0x9; 
+			 break;}
+
+		case 8: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 1) &&
+			 	      (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 1); 
+			 break;}
+
+		case 9: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 2) &&
+			              (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 2); 
+			 break;}
+
+		case 10: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 3) && 
+				       (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 3);
+			 break;}
+
+		case 11: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 4) &&
+				       (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 4); 
+			 break;}
+
+		case 12: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 5) &&
+				       (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 5); 
+			 break;}
+
+		case 13: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 6) &&
+				       (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 6); 
+			 break;}
+
+		case 14: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ((detID1_input>>18)&0x3) &&
+				       (((detID2_input>>25)&0x7) == 6) && ((detID2_input>>18)&0x3); 
+			 break;}
+
+		case 15: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ((detID1_input>>14)&0xF) &&
+				       (((detID2_input>>25)&0x7) == 6) && ((detID2_input>>14)&0xF); 
+			 break;}
+
+		case 16: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ((detID1_input>>5)&0x7) &&
+				       (((detID2_input>>25)&0x7) == 6) && ((detID2_input>>5)&0x7); 
+			 break;}
 
 	}
 
@@ -106,7 +159,7 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 
   }};
 
-
+  //Function for expressing the hit resolution in either micrometres or pitch units.
   auto Pitch_Function{[&Unit_Int](const float& pitch, const float& input){
 
 	float InputOverPitch;
@@ -122,17 +175,34 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 
   }};
 
-  //Applying the filter
-  auto dataframe = d.Filter(SubDet_Function, {"detID1"});
+  //Applying the filter for the subdetector
+  auto dataframe = d.Filter(SubDet_Function, {"detID1", "detID2"});
 
+  //Implementing selection criteria that were not implemented in HitResol.cc
+  auto PairPathCriteriaFunction{[&RegionInt](const float& pairPath_input){
+
+	if((RegionInt > 0 && RegionInt < 5) || (RegionInt > 7 || RegionInt < 13)){return abs(pairPath_input) < 7;} //for TIB and TOB
+	else if(RegionInt == 0){return abs(pairPath_input) < 2;} //for pixels
+	else{return abs(pairPath_input) < 20;}//for everything else (max value is 15cm so this will return all events anyway)
+  }};
+
+  auto MomentaFunction{[&RegionInt](const float& momentum_input){
+
+	if(RegionInt == 0){return momentum_input > 5;} //pixels
+	else{return momentum_input > 15;} //strips
+  }};
+
+  auto dataframe_filtered = dataframe.Filter(PairPathCriteriaFunction, {"pairPath"})
+				     .Filter(MomentaFunction, {"momentum"})
+			             .Filter("trackChi2 > 0.001 && numHits > 6 && trackDXE < 0.0025 && (clusterW1 == clusterW2) && clusterW1 <= 4 && clusterW2 <= 4");
+
+  //Creating histograms for the difference between the two hit positions, the difference between the two predicted positions and for the double difference
   //hitDX = the difference in the hit positions for the pair
   //trackDX =  the difference in the track positions for the pair 
 
   auto HistoName_DoubleDiff = "DoubleDifference_" + region;
   auto HistoName_HitDX = "HitDX_" + region;
-  auto HistoName_TrackDX = "TrackDX_" + region;
-  
-  auto dataframe_filtered = dataframe.Filter("trackChi2 > 0.001 && numHits > 6 && trackDXE < 0.0025 && (clusterW1 == clusterW2) && clusterW1 <= 4 && clusterW2 <= 4 && abs(pairPath) < 7");
+  auto HistoName_TrackDX = "TrackDX_" + region; 
 
   auto h_DoubleDifference = dataframe_filtered.Define(HistoName_DoubleDiff, {"trackDX-hitDX"}).Histo1D({HistoName_DoubleDiff.c_str(), HistoName_DoubleDiff.c_str(), 40, -0.5, 0.5}, HistoName_DoubleDiff); 
   auto h_hitDX = dataframe_filtered.Define(HistoName_HitDX, {"hitDX"}).Histo1D(HistoName_HitDX);
@@ -165,11 +235,8 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   h_trackDX->Write();
 
   output->Close();
-
-  //sigma2_PredMinusMeas - sigma2_Meas;
-  std::cout << "sigma2_PredMinusMeas = " << sigma2_PredMinusMeas << std::endl;
-  std::cout << "sigma2_Meas = " << sigma2_Meas << std::endl;
-
+  
+  //Calculating the hit resolution;
   auto numerator = sigma2_PredMinusMeas - sigma2_Meas;
 
   auto HitResolution = sqrt( numerator/2 );
