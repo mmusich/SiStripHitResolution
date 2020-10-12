@@ -24,7 +24,6 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 	case 0: switch(Unit_Int){
         		case 0: GaussianFitsFileName = "GaussianFits_PitchUnits_ALCARECO.root"; 
 				HitResoFileName = "HitResolutionValues_PitchUnits_ALCARECO.txt";
-				std::cout << "first switch statement" << std::endl; 
 				break;
 
         		case 1: GaussianFitsFileName = "GaussianFits_Micrometres_ALCARECO.root"; 
@@ -105,17 +104,19 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 				      (((detID2_input>>25)&0x7) == 3) && (((detID2_input>>14)&0x7) == 4);
 			 break;}
 
-		case 5: {OutputBool = (((detID1_input>>25)&0x7) == 4) && (detID1_input>>13)&0x3 &&
-				      (((detID2_input>>25)&0x7) == 4) && (detID2_input>>13)&0x3;
+
+		case 5: {OutputBool = (((detID1_input>>25)&0x7) == 4) && ( (((detID1_input>>13)&0x3) == 0) || (((detID1_input>>13)&0x3) == 1) ) &&
+				      (((detID2_input>>25)&0x7) == 4) && ( (((detID2_input>>13)&0x3) == 0) || (((detID2_input>>13)&0x3) == 1) );
 			 break;}
 
-		case 6: {OutputBool = (((detID1_input>>25)&0x7) == 4) && (detID1_input>>13)&0x11 &&
-				      (((detID2_input>>25)&0x7) == 4) && (detID2_input>>13)&0x11; 
+		case 6: {OutputBool = (((detID1_input>>25)&0x7) == 4) && ( (((detID1_input>>13)&0x11) == 0) || (((detID1_input>>13)&0x11) == 1) ) &&
+				      (((detID2_input>>25)&0x7) == 4) && ( (((detID2_input>>13)&0x11) == 0) || (((detID2_input>>13)&0x11) == 1) ); 
 			 break;}
 
-		case 7: {OutputBool = (((detID1_input>>25)&0x7) == 4) && (detID1_input>>13)&0x9 &&
-				      (((detID2_input>>25)&0x7) == 4) && (detID2_input>>13)&0x9; 
+		case 7: {OutputBool = (((detID1_input>>25)&0x7) == 4) && ( (((detID1_input>>13)&0x9) == 0) || (((detID1_input>>13)&0x9) == 1) ) &&
+				      (((detID2_input>>25)&0x7) == 4) && ( (((detID2_input>>13)&0x9) == 0) || (((detID2_input>>13)&0x9) == 1) ); 
 			 break;}
+
 
 		case 8: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 1) &&
 			 	      (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 1); 
@@ -141,17 +142,20 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 				       (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 6); 
 			 break;}
 
-		case 14: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ((detID1_input>>18)&0x3) &&
-				       (((detID2_input>>25)&0x7) == 6) && ((detID2_input>>18)&0x3); 
+
+		case 14: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ( (((detID1_input>>18)&0x3) == 0) || (((detID1_input>>18)&0x3) == 1) ) &&
+				       (((detID2_input>>25)&0x7) == 6) && ( (((detID2_input>>18)&0x3) == 0) || (((detID2_input>>18)&0x3) == 1) ); 
 			 break;}
 
-		case 15: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ((detID1_input>>14)&0xF) &&
-				       (((detID2_input>>25)&0x7) == 6) && ((detID2_input>>14)&0xF); 
+		case 15: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ( (((detID1_input>>14)&0xF) == 0) || (((detID1_input>>14)&0xF) == 1) ) &&
+				       (((detID2_input>>25)&0x7) == 6) && ( (((detID2_input>>14)&0xF) == 0) || (((detID2_input>>14)&0xF) == 1) ); 
 			 break;}
 
-		case 16: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ((detID1_input>>5)&0x7) &&
-				       (((detID2_input>>25)&0x7) == 6) && ((detID2_input>>5)&0x7); 
+		case 16: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ( (((detID1_input>>5)&0x7) == 0) || (((detID1_input>>5)&0x7) == 1) ) &&
+				       (((detID2_input>>25)&0x7) == 6) && ( (((detID2_input>>5)&0x7) == 0) || (((detID2_input>>5)&0x7) == 1) );
+
 			 break;}
+
 
 	}
 
@@ -177,6 +181,8 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 
   //Applying the filter for the subdetector
   auto dataframe = d.Filter(SubDet_Function, {"detID1", "detID2"});
+
+  if(RegionInt == 5){auto snapshot = dataframe.Snapshot("reso", "snapshot.root");}
 
   //Implementing selection criteria that were not implemented in HitResol.cc
   auto PairPathCriteriaFunction{[&RegionInt](const float& pairPath_input){
