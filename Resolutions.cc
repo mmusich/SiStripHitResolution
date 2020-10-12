@@ -19,15 +19,18 @@ std::string GaussianFitsFileName;
 
 void ResolutionsCalculator(const string& region, const int& Unit_Int, const int& UL){
 
+  std::string CutFlowReportString;
 
   switch(UL){
 	case 0: switch(Unit_Int){
         		case 0: GaussianFitsFileName = "GaussianFits_PitchUnits_ALCARECO.root"; 
 				HitResoFileName = "HitResolutionValues_PitchUnits_ALCARECO.txt";
+				CutFlowReportString = "CutFlowReport_" + region + "_PitchUnits_ALCARECO.txt";
 				break;
 
         		case 1: GaussianFitsFileName = "GaussianFits_Micrometres_ALCARECO.root"; 
-				HitResoFileName = "HitResolutionValues_Micrometres_ALCARECO.txt"; 
+				HitResoFileName = "HitResolutionValues_Micrometres_ALCARECO.txt";
+				CutFlowReportString = "CutFlowReport_" + region + "_Micrometres_ALCARECO.txt"; 
 				break;
 
         		default: std::cout << "ERROR: UnitInt must be 0 or 1." << std::endl; break;
@@ -39,10 +42,12 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 	case 1: switch(Unit_Int){
                         case 0: GaussianFitsFileName = "GaussianFits_PitchUnits_ALCARECO_UL.root"; 
                                 HitResoFileName = "HitResolutionValues_PitchUnits_ALCARECO_UL.txt"; 
+				CutFlowReportString = "CutFlowReport_" + region + "_PitchUnits_ALCARECO_UL.txt";
                                 break;
 
                         case 1: GaussianFitsFileName = "GaussianFits_Micrometres_ALCARECO_UL.root"; 
-                                HitResoFileName = "HitResolutionValues_Micrometres_ALCARECO_UL.txt"; 
+                                HitResoFileName = "HitResolutionValues_Micrometres_ALCARECO_UL.txt";
+				CutFlowReportString = "CutFlowReport_" + region + "_Micrometres_ALCARECO_UL.txt"; 
                                 break;
 
                         default: std::cout << "ERROR: UnitInt must be 0 or 1." << std::endl; break;
@@ -199,9 +204,7 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   }};
 
   //Applying the filter for the subdetector
-  auto dataframe = d.Filter(SubDet_Function, {"detID1", "detID2"});
-
-  if(RegionInt == 5){auto snapshot = dataframe.Snapshot("reso", "snapshot.root");}
+  auto dataframe = d.Filter(SubDet_Function, {"detID1", "detID2"}, "Subdetector filter");
 
   //Implementing selection criteria that were not implemented in HitResol.cc
   auto PairPathCriteriaFunction{[&RegionInt](const float& pairPath_input){
@@ -217,9 +220,12 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 	else{return momentum_input > 15;} //strips
   }};
 
-  auto dataframe_filtered = dataframe.Filter(PairPathCriteriaFunction, {"pairPath"})
-				     .Filter(MomentaFunction, {"momentum"})
-			             .Filter("trackChi2 > 0.001 && numHits > 6 && trackDXE < 0.0025 && (clusterW1 == clusterW2) && clusterW1 <= 4 && clusterW2 <= 4");
+  auto dataframe_filtered = dataframe.Filter(PairPathCriteriaFunction, {"pairPath"}, "Pair path criterion filter")
+				     .Filter(MomentaFunction, {"momentum"}, "Momentum criterion filter")
+			             .Filter("trackChi2 > 0.001", "chi2 criterion filter")
+				     .Filter("numHits > 6", "numHits filter")
+				     .Filter("trackDXE < 0.0025", "trackDXE filter")
+				     .Filter("(clusterW1 == clusterW2) && clusterW1 <= 4 && clusterW2 <= 4", "cluster filter");
 
   //Creating histograms for the difference between the two hit positions, the difference between the two predicted positions and for the double difference
   //hitDX = the difference in the hit positions for the pair
@@ -272,6 +278,16 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   std::cout << "The hit resolution for tracker region " << region << " is: " << HitResolution << std::endl;
   std::cout << '\n' << std::endl;
 
+  //Cut flow report
+  auto allCutsReport = d.Report();
+  std::ofstream CutFlowReport;
+
+  CutFlowReport.open(CutFlowReportString.c_str());
+
+  for(auto&& cutInfo: allCutsReport){
+  	CutFlowReport << cutInfo.GetName() << '\t' << cutInfo.GetAll() << '\t' << cutInfo.GetPass() << '\t' << cutInfo.GetEff() << " %" << std::endl;
+  }
+
 }
 
 
@@ -280,7 +296,7 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 void Resolutions(){
 
   int UnitInteger = 0;
-  int ULInteger = 1;
+  int ULInteger = 0;
 
   vector<std::string> LayerNames = {"Pixels",   "TIB_L1",    "TIB_L2",    "TIB_L3",    "TIB_L4",
 				    "Side_TID", "Wheel_TID", "Ring_TID",  "TOB_L1",
