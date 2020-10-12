@@ -257,7 +257,7 @@ void Resolutions(){
   int UnitInteger = 0;
   int ULInteger = 1;
 
-  vector<std::string> LayerNames = {"TIB_L1",   "TIB_L2",    "TIB_L3",    "TIB_L4",
+  vector<std::string> LayerNames = {"Pixels",   "TIB_L1",    "TIB_L2",    "TIB_L3",    "TIB_L4",
 				    "Side_TID", "Wheel_TID", "Ring_TID",  "TOB_L1",
 				    "TOB_L2",   "TOB_L3",    "TOB_L4",    "TOB_L5",
 				    "TOB_L6",   "Side_TEC",  "Wheel_TEC", "Ring_TEC"};
