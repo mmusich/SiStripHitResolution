@@ -160,19 +160,19 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 
 			 break;}
 
-		case 17: {OutputBool = ( (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>25)&0x7) == 3) ); //All TIB
+		case 17: {OutputBool = ( (((detID1_input>>25)&0x7) == 3) && (((detID2_input>>25)&0x7) == 3) ); //All TIB
 
 			  break;}
 
-	 	case 18: {OutputBool = ( (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>25)&0x7) == 5) ); //All TOB
+	 	case 18: {OutputBool = ( (((detID1_input>>25)&0x7) == 5) && (((detID2_input>>25)&0x7) == 5) ); //All TOB
 			
 			 break;}
 
-		case 19: {OutputBool = ( (((detID1_input>>25)&0x7) == 4) && (((detID1_input>>25)&0x7) == 4) ); //All TID
+		case 19: {OutputBool = ( (((detID1_input>>25)&0x7) == 4) && (((detID2_input>>25)&0x7) == 4) ); //All TID
 		
 			 break;}
 
-		case 20: {OutputBool = ( (((detID1_input>>25)&0x7) == 6) && (((detID1_input>>25)&0x7) == 6) ); //All TEC
+		case 20: {OutputBool = ( (((detID1_input>>25)&0x7) == 6) && (((detID2_input>>25)&0x7) == 6) ); //All TEC
 
 			break;}
 
