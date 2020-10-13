@@ -295,8 +295,9 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 
 void Resolutions(){
 
-  int UnitInteger = 0;
+  int UnitInteger = 1;
   int ULInteger = 0;
+
 
   vector<std::string> LayerNames = {"Pixels",   "TIB_L1",    "TIB_L2",    "TIB_L3",    "TIB_L4",
 				    "Side_TID", "Wheel_TID", "Ring_TID",  "TOB_L1",
@@ -304,11 +305,8 @@ void Resolutions(){
 				    "TOB_L6",   "Side_TEC",  "Wheel_TEC", "Ring_TEC", 
 				    "TIB_All",  "TOB_All",   "TID_All",   "TEC_All"};
 
-  for(int i = 0; i < LayerNames.size(); i++){
 
-	ResolutionsCalculator(LayerNames.at(i), UnitInteger, ULInteger);
-  }
- 
+  for(int i = 0; i < LayerNames.size(); i++){ResolutionsCalculator(LayerNames.at(i), UnitInteger, ULInteger);}
 
   std::ofstream HitResoTextFile;
   HitResoTextFile.open(HitResoFileName);
@@ -321,6 +319,9 @@ void Resolutions(){
 	HitResoTextFile << std::right << LayerNames.at(i) << std::setw(Width) << HitResolutionVector.at(i) << std::setw(Width) << HitDXVector.at(i)  << std::setw(Width) << TrackDXVector.at(i) << std::setw(Width) << DoubleDifferenceVector.at(i) << std::endl;
 
   }
+
+
+  system("mkdir HitResolutionValues; mkdir GaussianFits; mkdir CutFlowReports; mv CutFlowReport_* CutFlowReports/; mv HitResolutionValues_* HitResolutionValues/; mv GaussianFits_* GaussianFits/;");
 
 
 }
