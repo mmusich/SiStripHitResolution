@@ -1,7 +1,7 @@
-Subdetector filter	155275	0	0 %
-Pair path criterion filter	0	0	-nan %
-Momentum criterion filter	0	0	-nan %
-chi2 criterion filter	0	0	-nan %
-numHits filter	0	0	-nan %
-trackDXE filter	0	0	-nan %
-cluster filter	0	0	-nan %
+Subdetector filter	155275	67604	43.5382 %
+Pair path criterion filter	67604	66744	98.7279 %
+Momentum criterion filter	66744	184	0.27568 %
+chi2 criterion filter	184	179	97.2826 %
+numHits filter	179	175	97.7654 %
+trackDXE filter	175	135	77.1429 %
+cluster filter	135	24	17.7778 %

@@ -64,8 +64,7 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 
   int RegionInt = 0;
 
-  if(region == "Pixels"){RegionInt = 0;}
-  else if(region == "TIB_L1"){RegionInt = 1;}
+  if(region == "TIB_L1"){RegionInt = 1;}
   else if(region == "TIB_L2"){RegionInt = 2;}
   else if(region == "TIB_L3"){RegionInt = 3;}
   else if(region == "TIB_L4"){RegionInt = 4;}
@@ -85,6 +84,8 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   else if(region == "TOB_All"){RegionInt = 18;}
   else if(region == "TID_All"){RegionInt = 19;}
   else if(region == "TEC_All"){RegionInt = 20;}
+  else if(region == "Pixel_Barrel"){RegionInt = 21;}
+  else if(region == "Pixel_EndcapDisk"){RegionInt = 22;}
   else{std::cout << "Error: The tracker region " << region << " was chosen. Please choose a region out of: TIB L1, TIB L2, TIB L3, TIB L4, Side TID, Wheel TID, Ring TID, TOB L1, TOB L2, TOB L3, TOB L4, TOB L5, TOB L6, Side TEC, Wheel TEC or Ring TEC." << std::endl; return 0;}
 
 
@@ -95,74 +96,71 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
         bool OutputBool = 0;
 
 	switch(RegionInt){
-		case 0: {OutputBool = (((detID1_input>>25)&0x7) < 3) && (((detID2_input>>25)&0x7) < 3);
-			 break;}
 
 		case 1: {OutputBool = (((detID1_input>>25)&0x7) == 3) && ((detID1_input>>14)&0x7) == 1 &&
-				      (((detID2_input>>25)&0x7) == 3) && ((detID2_input>>14)&0x7) == 1; 
+				      (((detID2_input>>25)&0x7) == 3) && ((detID2_input>>14)&0x7) == 1; //TIB L1 
 			 break;}
 
 		case 2: {OutputBool = (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 2) &&
-				      (((detID2_input>>25)&0x7) == 3) && (((detID2_input>>14)&0x7) == 2);
+				      (((detID2_input>>25)&0x7) == 3) && (((detID2_input>>14)&0x7) == 2); //TIB L2
 			 break;}
 
 		case 3: {OutputBool = (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 3) &&
-				      (((detID2_input>>25)&0x7) == 3) && (((detID2_input>>14)&0x7) == 3);
+				      (((detID2_input>>25)&0x7) == 3) && (((detID2_input>>14)&0x7) == 3); //TIB L3
 			 break;}
 
 		case 4: {OutputBool = (((detID1_input>>25)&0x7) == 3) && (((detID1_input>>14)&0x7) == 4) &&
-				      (((detID2_input>>25)&0x7) == 3) && (((detID2_input>>14)&0x7) == 4);
+				      (((detID2_input>>25)&0x7) == 3) && (((detID2_input>>14)&0x7) == 4); //TIB L4
 			 break;}
 
 
-		case 5: {OutputBool = (((detID1_input>>25)&0x7) == 4) && ( (((detID1_input>>13)&0x3) == 0) || (((detID1_input>>13)&0x3) == 1) ) &&
-				      (((detID2_input>>25)&0x7) == 4) && ( (((detID2_input>>13)&0x3) == 0) || (((detID2_input>>13)&0x3) == 1) );
+		case 5: {OutputBool = ( (((detID1_input>>7)&0x3) == 1) && (((detID2_input>>7)&0x3) == 1) ) || 
+                                      ( (((detID1_input>>7)&0x3) == 2) && (((detID2_input>>7)&0x3) == 2) ); //TID Side disk (1 -> back, 2 -> front)  
+			 
+    			 break;}
+
+		case 6: {OutputBool = (((detID1_input>>11)&0x3) == 2) && (((detID2_input>>11)&0x3) == 2); //TID Wheel 
+
 			 break;}
 
-		case 6: {OutputBool = (((detID1_input>>25)&0x7) == 4) && ( (((detID1_input>>11)&0x3) == 0) || (((detID1_input>>11)&0x3) == 1) ) &&
-				      (((detID2_input>>25)&0x7) == 4) && ( (((detID2_input>>11)&0x3) == 0) || (((detID2_input>>11)&0x3) == 1) ); 
-			 break;}
-
-		case 7: {OutputBool = (((detID1_input>>25)&0x7) == 4) && ( (((detID1_input>>9)&0x3) == 0) || (((detID1_input>>9)&0x3) == 1) ) &&
-				      (((detID2_input>>25)&0x7) == 4) && ( (((detID2_input>>9)&0x3) == 0) || (((detID2_input>>9)&0x3) == 1) ); 
-			 break;}
+		case 7: {OutputBool = ( (((detID1_input>>9)&0x3) == 2) && (((detID2_input>>9)&0x3) == 2) ); //TID Ring 
+			 
+ 			 break;}
 
 
 		case 8: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 1) &&
-			 	      (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 1); 
+			 	      (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 1); //TOB L1 
 			 break;}
 
 		case 9: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 2) &&
-			              (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 2); 
+			              (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 2); //TOB L2  
 			 break;}
 
 		case 10: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 3) && 
-				       (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 3);
+				       (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 3); //TOB L3
 			 break;}
 
 		case 11: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 4) &&
-				       (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 4); 
+				       (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 4); //TOB L4 
 			 break;}
 
 		case 12: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 5) &&
-				       (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 5); 
+				       (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 5); //TOB L5 
 			 break;}
 
 		case 13: {OutputBool = (((detID1_input>>25)&0x7) == 5) && (((detID1_input>>14)&0x7) == 6) &&
-				       (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 6); 
+				       (((detID2_input>>25)&0x7) == 5) && (((detID2_input>>14)&0x7) == 6); //TOB L6 
 			 break;}
 
 
-		case 14: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ( (((detID1_input>>18)&0x3) == 0) || (((detID1_input>>18)&0x3) == 1) ) &&
-				       (((detID2_input>>25)&0x7) == 6) && ( (((detID2_input>>18)&0x3) == 0) || (((detID2_input>>18)&0x3) == 1) ); 
+		case 14: {OutputBool = ( (((detID1_input>>12)&0x3) == 2) && (((detID2_input>>12)&0x3) == 2) ) ||
+				       ( (((detID1_input>>12)&0x3) == 2) && (((detID2_input>>12)&0x3) == 2) ); //Side TEC (1 -> back, 2 -> front)
 			 break;}
 
-		case 15: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ( (((detID1_input>>14)&0xF) == 0) || (((detID1_input>>14)&0xF) == 1) ) &&
-				       (((detID2_input>>25)&0x7) == 6) && ( (((detID2_input>>14)&0xF) == 0) || (((detID2_input>>14)&0xF) == 1) ); 
+		case 15: {OutputBool = (((detID1_input>>14)&0xF) == 4) && (((detID2_input>>14)&0xF) == 4); //Wheel TEC 
 			 break;}
 
-		case 16: {OutputBool = (((detID1_input>>25)&0x7) == 6) && ( (((detID1_input>>5)&0x7) == 0) || (((detID1_input>>5)&0x7) == 1) ) &&
-				       (((detID2_input>>25)&0x7) == 6) && ( (((detID2_input>>5)&0x7) == 0) || (((detID2_input>>5)&0x7) == 1) );
+		case 16: {OutputBool = (((detID1_input>>5)&0x7) == 3)  && (((detID2_input>>5)&0x7) == 3); //Ring TEC
 
 			 break;}
 
@@ -174,13 +172,21 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 			
 			 break;}
 
-		case 19: {OutputBool = ( (((detID1_input>>25)&0x7) == 4) && (((detID2_input>>25)&0x7) == 4) ); //All TID
+		case 19: {OutputBool = ( (((detID1_input>>13)&0x3) == 1) && (((detID2_input>>13)&0x7) == 1) ) ||
+				        ( (((detID1_input>>13)&0x3) == 2) && (((detID2_input>>13)&0x7) == 2) ); //All TID (1 -> TID+, 2 -> TID-)
 		
 			 break;}
 
-		case 20: {OutputBool = ( (((detID1_input>>25)&0x7) == 6) && (((detID2_input>>25)&0x7) == 6) ); //All TEC
+		case 20: {OutputBool =  ( (((detID1_input>>18)&0x3) == 1) && (((detID2_input>>18)&0x3) == 1) ) ||
+					( (((detID1_input>>18)&0x3) == 2) && (((detID2_input>>18)&0x3) == 2) ); //All TEC (1 -> TEC +, 2 -> TEC-)
 
-			break;}
+			 break;}
+
+		case 21: {OutputBool = (((detID1_input>>20)&0xF) == 4) && (((detID2_input>>20)&0xF) == 4); //pixel barrel (phase 1)
+                         break;}
+
+		case 22: {OutputBool = (((detID1_input>>18)&0xF) == 4) && (((detID2_input>>18)&0xF) == 4); //pixel endcap disk (phase 1)
+                         break;}
 
 	}
 
@@ -211,13 +217,13 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   auto PairPathCriteriaFunction{[&RegionInt](const float& pairPath_input){
 
 	if((RegionInt > 0 && RegionInt < 5) || (RegionInt > 7 || RegionInt < 13) || (RegionInt == 17) || (RegionInt == 18)){return abs(pairPath_input) < 7;} //for TIB and TOB
-	else if(RegionInt == 0){return abs(pairPath_input) < 2;} //for pixels
+	else if(RegionInt == 21 || RegionInt == 22){return abs(pairPath_input) < 2;} //for pixels
 	else{return abs(pairPath_input) < 20;}//for everything else (max value is 15cm so this will return all events anyway)
   }};
 
   auto MomentaFunction{[&RegionInt](const float& momentum_input){
 
-	if(RegionInt == 0){return momentum_input > 5;} //pixels
+	if(RegionInt == 21 || RegionInt == 22){return momentum_input > 5;} //pixels
 	else{return momentum_input > 15;} //strips
   }};
 
@@ -302,15 +308,16 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 
 void Resolutions(){
 
-  int UnitInteger = 0;
-  int ULInteger = 1;
+  int UnitInteger = 1;
+  int ULInteger = 0;
 
 
-  vector<std::string> LayerNames = {"Pixels",   "TIB_L1",    "TIB_L2",    "TIB_L3",    "TIB_L4",
-				    "Side_TID", "Wheel_TID", "Ring_TID",  "TOB_L1",
-				    "TOB_L2",   "TOB_L3",    "TOB_L4",    "TOB_L5",
-				    "TOB_L6",   "Side_TEC",  "Wheel_TEC", "Ring_TEC", 
-				    "TIB_All",  "TOB_All",   "TID_All",   "TEC_All"};
+  vector<std::string> LayerNames = {"TIB_L1",       "TIB_L2",           "TIB_L3",    "TIB_L4",
+				    "Side_TID",     "Wheel_TID",        "Ring_TID",   "TOB_L1",
+				    "TOB_L2",       "TOB_L3",           "TOB_L4",     "TOB_L5",
+				    "TOB_L6",       "Side_TEC",         "Wheel_TEC",  "Ring_TEC", 
+				    "TIB_All",      "TOB_All",          "TID_All",    "TEC_All",
+				    "Pixel_Barrel", "Pixel_EndcapDisk"};
 
 
   for(int i = 0; i < LayerNames.size(); i++){ResolutionsCalculator(LayerNames.at(i), UnitInteger, ULInteger);}
