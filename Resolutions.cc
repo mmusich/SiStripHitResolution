@@ -114,8 +114,8 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 			 break;}
 
 
-		case 5: {OutputBool = ( (((detID1_input>>7)&0x3) == 1) && (((detID2_input>>7)&0x3) == 1) ) || 
-                                      ( (((detID1_input>>7)&0x3) == 2) && (((detID2_input>>7)&0x3) == 2) ); //TID Side disk (1 -> back, 2 -> front)  
+		case 5: {OutputBool = ( (((detID1_input>>13)&0x3) == 1) && (((detID2_input>>13)&0x3) == 1) ) || 
+                                      ( (((detID1_input>>13)&0x3) == 2) && (((detID2_input>>13)&0x3) == 2) ); //TID Side (1 -> TID-, 2 -> TID+)  
 			 
     			 break;}
 
@@ -153,8 +153,8 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 			 break;}
 
 
-		case 14: {OutputBool = ( (((detID1_input>>12)&0x3) == 2) && (((detID2_input>>12)&0x3) == 2) ) ||
-				       ( (((detID1_input>>12)&0x3) == 2) && (((detID2_input>>12)&0x3) == 2) ); //Side TEC (1 -> back, 2 -> front)
+		case 14: {OutputBool = ( (((detID1_input>>18)&0x3) == 1) && (((detID2_input>>18)&0x3) == 1) ) ||
+				       ( (((detID1_input>>18)&0x3) == 2) && (((detID2_input>>18)&0x3) == 2) ); //Side TEC (1 -> back, 2 -> front)
 			 break;}
 
 		case 15: {OutputBool = (((detID1_input>>14)&0xF) == 4) && (((detID2_input>>14)&0xF) == 4); //Wheel TEC 
@@ -173,12 +173,19 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 			 break;}
 
 		case 19: {OutputBool = ( (((detID1_input>>13)&0x3) == 1) && (((detID2_input>>13)&0x7) == 1) ) ||
-				        ( (((detID1_input>>13)&0x3) == 2) && (((detID2_input>>13)&0x7) == 2) ); //All TID (1 -> TID+, 2 -> TID-)
+				       ( (((detID1_input>>13)&0x3) == 2) && (((detID2_input>>13)&0x7) == 2) ) ||
+				       ( (((detID1_input>>11)&0x3) == 2) && (((detID2_input>>11)&0x3) == 2) ) || 
+				       ( (((detID1_input>>9)&0x3) == 2) && (((detID2_input>>9)&0x3) == 2) )   ||
+			               ( (((detID1_input>>7)&0x3) == 1) && (((detID2_input>>7)&0x3) == 1) )   ||
+			 	       ( (((detID1_input>>7)&0x3) == 2) && (((detID2_input>>7)&0x3) == 2) )   ||
+				       ( (((detID1_input>>2)&0x1F) == 5) && (((detID2_input>>2)&0x1F) == 5) ) ||
+				       ( (((detID1_input>>0)&0x3) == 0) && (((detID2_input>>0)&0x3) == 0) ) ||
+				       ( (((detID1_input>>0)&0x3) == 1) && (((detID2_input>>0)&0x3) == 1) ) ||
+				       ( (((detID1_input>>0)&0x3) == 2) && (((detID2_input>>0)&0x3) == 2) ); //All TID 
 		
 			 break;}
 
-		case 20: {//OutputBool =  ( (((detID1_input>>18)&0x3) == 1) && (((detID2_input>>18)&0x3) == 1) ) ||
-			  //		( (((detID1_input>>18)&0x3) == 2) && (((detID2_input>>18)&0x3) == 2) ); //All TEC (1 -> TEC +, 2 -> TEC-)
+		case 20: {
 
 			 OutputBool =  ( (((detID1_input>>18)&0x3) == 1) && (((detID2_input>>18)&0x3) == 1) ) ||
                                        ( (((detID1_input>>18)&0x3) == 2) && (((detID2_input>>18)&0x3) == 2) ) ||
@@ -320,7 +327,7 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 
 void Resolutions(){
 
-  int UnitInteger = 0;
+  int UnitInteger = 1;
   int ULInteger = 0;
 
 
