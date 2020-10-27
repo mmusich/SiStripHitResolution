@@ -10,6 +10,7 @@ vector<float> HitResolutionVector;
 vector<float> DoubleDifferenceVector;
 vector<float> HitDXVector;
 vector<float> TrackDXVector;
+vector<float> TrackDXEVector;
 
 std::string InputFileString;
 std::string HitResoFileName;
@@ -234,29 +235,34 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   auto HistoName_DoubleDiff = "DoubleDifference_" + region;
   auto HistoName_HitDX = "HitDX_" + region;
   auto HistoName_TrackDX = "TrackDX_" + region; 
+  auto HistoName_TrackDXE = "TrackDXE_" + region;
 
-  auto h_DoubleDifference = dataframe_filtered.Define(HistoName_DoubleDiff, {"trackDX-hitDX"}).Histo1D({HistoName_DoubleDiff.c_str(), HistoName_DoubleDiff.c_str(), 40, -0.5, 0.5}, HistoName_DoubleDiff); 
+  auto h_DoubleDifference = dataframe_filtered.Define(HistoName_DoubleDiff, {"hitDX-trackDX"}).Histo1D({HistoName_DoubleDiff.c_str(), HistoName_DoubleDiff.c_str(), 40, -0.5, 0.5}, HistoName_DoubleDiff); 
   auto h_hitDX = dataframe_filtered.Define(HistoName_HitDX, {"hitDX"}).Histo1D(HistoName_HitDX);
   auto h_trackDX = dataframe_filtered.Define(HistoName_TrackDX, {"trackDX"}).Histo1D(HistoName_TrackDX);
+  auto h_trackDXE = dataframe_filtered.Define(HistoName_TrackDXE, {"trackDXE"}).Histo1D(HistoName_TrackDXE);
 
   //Applying gaussian fits, taking the resolutions and squaring them
   h_DoubleDifference->Fit("gaus");
-  h_hitDX->Fit("gaus");
-  h_trackDX->Fit("gaus");
+  //h_hitDX->Fit("gaus");
+  //h_trackDX->Fit("gaus");
+  //h_trackDXE->Fit("gaus");
 
   auto double_diff_StdDev = h_DoubleDifference->GetStdDev();
   auto hitDX_StdDev = h_hitDX->GetStdDev();
   auto trackDX_StdDev = h_trackDX->GetStdDev();
+  //auto trackDXE_StdDev = h_trackDXE->GetStdDev();
+  auto trackDXE_Mean = h_trackDXE->GetMean();
 
-  auto sigma2_PredMinusMeas = pow(double_diff_StdDev, 2);
+  auto sigma2_MeasMinusPred = pow(double_diff_StdDev, 2);
   auto sigma2_Meas = pow(hitDX_StdDev, 2);
   auto sigma2_Pred = pow(trackDX_StdDev, 2); 
-  
-  auto DoubleDifferenceWidth = sigma2_Pred + sigma2_Meas;
+  auto sigma2_PredError = pow(trackDXE_Mean, 2);
 
-  DoubleDifferenceVector.push_back(sigma2_PredMinusMeas);
+  DoubleDifferenceVector.push_back(sigma2_MeasMinusPred);
   HitDXVector.push_back(sigma2_Meas);
   TrackDXVector.push_back(sigma2_Pred);
+  TrackDXEVector.push_back(sigma2_PredError);
 
   //Saving the histograms with gaussian fits applied to an output root file
   TFile * output = new TFile(GaussianFitsFileName.c_str(), "UPDATE");
@@ -264,11 +270,12 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   h_DoubleDifference->Write();
   h_hitDX->Write();
   h_trackDX->Write();
+  h_trackDXE->Write();
 
   output->Close();
   
   //Calculating the hit resolution;
-  auto numerator = sigma2_PredMinusMeas - sigma2_Meas;
+  auto numerator = sigma2_MeasMinusPred - sigma2_PredError;
 
   auto HitResolution = sqrt( numerator/2 );
   HitResolutionVector.push_back(HitResolution);
@@ -295,8 +302,8 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 
 void Resolutions(){
 
-  int UnitInteger = 1;
-  int ULInteger = 0;
+  int UnitInteger = 0;
+  int ULInteger = 1;
 
 
   vector<std::string> LayerNames = {"Pixels",   "TIB_L1",    "TIB_L2",    "TIB_L3",    "TIB_L4",
@@ -313,10 +320,10 @@ void Resolutions(){
 
   auto Width = 28;
 
-  HitResoTextFile << std::right << "Layer " << std::setw(Width) << " Resolution " << std::setw(Width) << " sigma2_HitDX " << std::setw(Width) << " sigma2_trackDX " << std::setw(Width) << " sigma2_DoubleDifference " << std::endl;
+  HitResoTextFile << std::right << "Layer " << std::setw(Width) << " Resolution " << std::setw(Width) << " sigma2_HitDX " << std::setw(Width) << " sigma2_trackDX " << std::setw(Width) << " sigma2_trackDXE " << std::setw(Width) << " sigma2_DoubleDifference " << std::endl;
 
   for(int i = 0; i < HitResolutionVector.size(); i++){
-	HitResoTextFile << std::right << LayerNames.at(i) << std::setw(Width) << HitResolutionVector.at(i) << std::setw(Width) << HitDXVector.at(i)  << std::setw(Width) << TrackDXVector.at(i) << std::setw(Width) << DoubleDifferenceVector.at(i) << std::endl;
+	HitResoTextFile << std::right << LayerNames.at(i) << std::setw(Width) << HitResolutionVector.at(i) << std::setw(Width) << HitDXVector.at(i)  << std::setw(Width) << TrackDXVector.at(i) << std::setw(Width) << TrackDXEVector.at(i) << std::setw(Width) << DoubleDifferenceVector.at(i) << std::endl;
 
   }
 
