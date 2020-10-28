@@ -1,11 +1,11 @@
 # Hit Resolution Project #
 
 ## Explanation for the pair method ## 
-The hit resolution, $`\sigma_{hit}`$, can be obtained by using the following equation:
+The hit resolution, $`\sigma_{hit}`$, (in centimetres) can be obtained by using the following equation:
 
-$`\sigma_{hit} = \sqrt{\frac{\sigma^{2}_{pred-meas} - \sigma^{2}_{meas}}{2}}`$,
+$`\sigma_{hit} = \sqrt{\frac{\sigma^{2}_{HitDX-TrackDX} - \sigma^{2}_{TrackDXE}}{2}}`$,
 
-where $`\sigma_{pred-meas}`$ is the standard deviation for the distribution of the double difference between the predicted and measured hit positions, and $`\sigma_{meas}`$ is the standard deviation of the distribution of the measured hit positions. 
+where $`\sigma_{TrackDX-HitDX}`$ is the standard deviation of the distribution of the double difference between the predicted and measured hit positions, and $`\sigma_{TrackDXE}`$ is the mean of the gaussian-fitted distribution of the predicted positions. 
 
 The following criteria are used:
 
