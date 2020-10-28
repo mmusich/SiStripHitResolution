@@ -41,9 +41,9 @@ This will produce an output root file, which will be called hitresol_ALCARECO_UL
 
 This will produce three output directories: GaussianFits, HitResolutionValues and CutFlowReports. 
 
-* GaussianFits will contain the root files GaussianFits_Centimetres.root or GaussianFits_PitchUnits.root.
-* HitResolutionValues will contain the text files HitResolutionValues_Centimetres.txt or HitResolutionValues_PitchUnits.txt. 
-* CutFlowReports will contain text files with the numbers of events that pass each filter, for each region.
+* [GaussianFits](https://gitlab.cern.ch/coldham/hitresolutionproject/-/tree/master/CutFlowReports) will contain the root files GaussianFits_Centimetres.root or GaussianFits_PitchUnits.root.
+* [HitResolutionValues](https://gitlab.cern.ch/coldham/hitresolutionproject/-/tree/master/HitResolutionValues) will contain the text files HitResolutionValues_Centimetres.txt or HitResolutionValues_PitchUnits.txt. 
+* [CutFlowReports](https://gitlab.cern.ch/coldham/hitresolutionproject/-/tree/master/CutFlowReports) will contain text files with the numbers of events that pass each filter, for each region.
 
 To choose between pitch units or centimetres, [UnitInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L330) must be set as 0 (for pitch units) or 1 (for centimetres). To choose between using the UL or non-UL ALCARECO samples, the value of [ULInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L331) must be set as 0 (for non-UL samples) or 1 (for UL samples). Additionally, the integer [UL](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/test/SiStripHitResol_testULcosmics.py#L11) must be set as 0 (for non-UL) or 1 (for UL). 
 
