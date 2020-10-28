@@ -5,7 +5,7 @@ The hit resolution, $`\sigma_{hit}`$, (in centimetres) can be obtained by using 
 
 $`\sigma_{hit} = \sqrt{\frac{\sigma^{2}_{HitDX-TrackDX} - \sigma^{2}_{TrackDXE}}{2}}`$,
 
-where $`\sigma_{TrackDX-HitDX}`$ is the standard deviation of the distribution of the double difference between the predicted and measured hit positions, and $`\sigma_{TrackDXE}`$ is the mean of the gaussian-fitted distribution of the predicted positions. 
+where $`\sigma_{HitDX-TrackDX}`$ is the standard deviation of the distribution of the double difference between the predicted and measured hit positions, and $`\sigma_{TrackDXE}`$ is the mean of the gaussian-fitted distribution of the predicted positions. 
 
 The following criteria are used:
 
