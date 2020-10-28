@@ -21,6 +21,31 @@ The following criteria are used:
 * Clusters in the silicon module under consideration must have the same width ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L254)).
 * Clusters positioned on the edge of modules are not considered ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/src/HitResol.cc#L346))
 
+Hit resolution measurements are obtained for each tracker region; the definitions for each region are based on those given under the "Phase 1 Upgrade Detector DetId schema" heading of the README file in the github repository linked [here](https://github.com/cms-sw/cmssw/blob/master/Geometry/TrackerNumberingBuilder/README.md). The permalinks to where these definitions are implemented are as follows:
+
+* [TIB L1](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L100)
+* [TIB L2](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L104)
+* [TIB L3](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L108)
+* [TIB L4](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L112)
+* [TID Side](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L117)
+* [TID Wheel](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L122)
+* [TID Ring](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L126)
+* [TOB L1](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L131)
+* [TOB L2](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L135)
+* [TOB L3](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L139)
+* [TOB L4](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L143)
+* [TOB L5](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L147)
+* [TOB L6](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L151)
+* [TEC Side](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L156)
+* [TEC Wheel](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L160)
+* [TEC Ring](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L163)
+* [All TIB](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L167)
+* [All TOB](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L171)
+* [All TID](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L175)
+* [All TEC](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L188)
+* [Pixel barrel](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L204)
+* [Pixel endcap disk](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L207)
+
 ## How to run the code ##
 The following scripts are used for the hit resolution study:
 * [src/HitResol.cc](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/src/HitResol.cc) (original author: Denis Gele)
