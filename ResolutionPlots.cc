@@ -15,7 +15,7 @@ void ResolutionPlots_HistoMaker(const std::string& unit){
   float UL[20] = {0};
   float NonUL[20] = {0};
 
-  if(unit == "micrometres"){
+  if(unit == "centimetres"){
 
   	float UL_Array[] = {0.00137706, 0.00142804, 0.00223064, 0.00313546, 0.00528442,
                             0.00328381, 0.00365521, 0.00362465, 0.00404834, 0.00304523,
@@ -29,10 +29,10 @@ void ResolutionPlots_HistoMaker(const std::string& unit){
 
 	for(int i = 0; i < 20; i++){UL[i] = UL_Array[i]; NonUL[i] = NonUL_Array[i];}
 
-	YAxisTitle = "Resolution [#mum]";
-        HistoTitle = "Resolution values for UL and non-UL samples, in micrometres";
-	OutputFile = "ResolutionComparison_ULAndNonUL_Micrometres.png";
-	RootFile = "ResolutionComparison_ULAndNonUL_Micrometres.root";
+	YAxisTitle = "Resolution [cm]";
+        HistoTitle = "Resolution values for UL and non-UL samples, in centimetres";
+	OutputFile = "ResolutionComparison_ULAndNonUL_Centimetres.pdf";
+	RootFile = "ResolutionComparison_ULAndNonUL_Centimetres.root";
 
   }
   else if(unit == "strip unit"){
@@ -46,7 +46,7 @@ void ResolutionPlots_HistoMaker(const std::string& unit){
 
 	YAxisTitle = "Resolution [strip units]"; 
         HistoTitle = "Resolution values for the UL and non-UL samples in strip units";
-	OutputFile = "ResolutionComparison_ULAndNonUL_StripUnit.png";
+	OutputFile = "ResolutionComparison_ULAndNonUL_StripUnit.pdf";
         RootFile = "ResolutionComparison_ULAndNonUL_StripUnit.root";
 
   }
@@ -120,7 +120,7 @@ void ResolutionPlots_HistoMaker(const std::string& unit){
 
 void ResolutionPlots(){
 
-  ResolutionPlots_HistoMaker("micrometres");
+  ResolutionPlots_HistoMaker("centimetres");
   //ResolutionPlots_HistoMaker("strip unit");
 
 }

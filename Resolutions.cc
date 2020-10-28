@@ -29,9 +29,9 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 				CutFlowReportString = "CutFlowReport_" + region + "_PitchUnits_ALCARECO.txt";
 				break;
 
-        		case 1: GaussianFitsFileName = "GaussianFits_Micrometres_ALCARECO.root"; 
-				HitResoFileName = "HitResolutionValues_Micrometres_ALCARECO.txt";
-				CutFlowReportString = "CutFlowReport_" + region + "_Micrometres_ALCARECO.txt"; 
+        		case 1: GaussianFitsFileName = "GaussianFits_Centimetres_ALCARECO.root"; 
+				HitResoFileName = "HitResolutionValues_Centimetres_ALCARECO.txt";
+				CutFlowReportString = "CutFlowReport_" + region + "_Centimetres_ALCARECO.txt"; 
 				break;
 
         		default: std::cout << "ERROR: UnitInt must be 0 or 1." << std::endl; break;
@@ -46,9 +46,9 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 				CutFlowReportString = "CutFlowReport_" + region + "_PitchUnits_ALCARECO_UL.txt";
                                 break;
 
-                        case 1: GaussianFitsFileName = "GaussianFits_Micrometres_ALCARECO_UL.root"; 
-                                HitResoFileName = "HitResolutionValues_Micrometres_ALCARECO_UL.txt";
-				CutFlowReportString = "CutFlowReport_" + region + "_Micrometres_ALCARECO_UL.txt"; 
+                        case 1: GaussianFitsFileName = "GaussianFits_Centimetres_ALCARECO_UL.root"; 
+                                HitResoFileName = "HitResolutionValues_Centimetres_ALCARECO_UL.txt";
+				CutFlowReportString = "CutFlowReport_" + region + "_Centimetres_ALCARECO_UL.txt"; 
                                 break;
 
                         default: std::cout << "ERROR: UnitInt must be 0 or 1." << std::endl; break;
@@ -197,7 +197,7 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 				       ( (((detID1_input>>2)&0x7) == 3) && (((detID2_input>>2)&0x7) == 3) ) || 
 				       ( (((detID1_input>>0)&0x3) == 1) && (((detID2_input>>0)&0x3) == 1) ) ||
 				       ( (((detID1_input>>0)&0x3) == 2) && (((detID2_input>>0)&0x3) == 2) ) ||
-				       ( (((detID1_input>>0)&0x3) == 3) && (((detID2_input>>0)&0x3) == 3) );
+				       ( (((detID1_input>>0)&0x3) == 3) && (((detID2_input>>0)&0x3) == 3) ); //All TEC
 
 			 break;}
 
