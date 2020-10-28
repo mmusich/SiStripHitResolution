@@ -5,19 +5,20 @@ The hit resolution, $`\sigma_{hit}`$, (in centimetres) can be obtained by using 
 
 $`\sigma_{hit} = \sqrt{\frac{\sigma^{2}_{HitDX-TrackDX} - \sigma^{2}_{TrackDXE}}{2}}`$,
 
-where $`\sigma_{HitDX-TrackDX}`$ is the standard deviation of the distribution of the double difference between the predicted and measured hit positions, and $`\sigma_{TrackDXE}`$ is the mean of the gaussian-fitted distribution of the predicted positions. 
+where $`\sigma_{HitDX-TrackDX}`$ is the standard deviation of the gaussian-fitted distribution of the double difference between the predicted and measured hit positions, and $`\sigma_{TrackDXE}`$ is the mean of the distribution of the predicted positions. 
 
 The following criteria are used:
 
 * The charged particle must have traversed through two sufficiently-overlapping detector modules. 
 * Tracks must have transverse momenta greater than 3 GeV ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/src/HitResol.cc#L324)).
-* Track momentum is > 15 GeV for strips and > 5 GeV for pixels ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L189)).
-* More than six hits must be left in the SST layers and the pixel detector. No more than four of these can have a large cluster width. ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L106)).
-* The track fit must yield a good $`\chi^{2}`$ probability of $`\chi^{2} \geqslant 10^{-2}`$ ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L106)).
-* The predicted path (the distance of propagation of the charged particle from one layer to the next) must be < 7cm in the TIB and TOB ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L182)).
-* The predicted path must be < 2cm for pixels([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L182)).
-* The error in the distance between two hit resolution measurements must be < 0.0025 ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L106)).
-* Clusters in the silicon module under consideration must have the same width ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L135)).
+* Track momentum is > 15 GeV for strips and > 5 GeV for pixels ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L243)).
+* More than six hits must be left in the SST layers and the pixel detector ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L252)). 
+* No more than four of these hits can have a large cluster width ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L254)).
+* The track fit must yield a good $`\chi^{2}`$ probability of $`\chi^{2} \geqslant 10^{-2}`$ ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L251)).
+* The predicted path (the distance of propagation of the charged particle from one layer to the next) must be < 7cm in the TIB and TOB ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L238)).
+* The predicted path must be < 2cm for pixels([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L239)).
+* The error in the distance between two hit resolution measurements must be < 0.0025 ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L235)).
+* Clusters in the silicon module under consideration must have the same width ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L254)).
 * Clusters positioned on the edge of modules are not considered ([permalink](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/src/HitResol.cc#L346))
 
 ## How to run the code ##
@@ -46,3 +47,4 @@ This will produce two output files: GaussianFits_Micrometres.root and HitResolut
 * [Chiochia, V et al. (2005). Track reconstruction in the CMS tracker. CMS Analysis Note. CMS AN 2005/063.](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resources/AN2005_063_v2.pdf)
 * [Gelé, D. (2018). Status of SiStripHitResolution studies.](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resources/PresentationTracker_17072018.pdf)
 * [Ulmer, K. (2009). Tracker Hit Resolution Measurements in 2009 CRAFT Data.](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resources/HitResLPCPhysics_10_15_09.ppt) 
+* [McColl, N. (2013). RecHit Resolution Methods.](https://indico.cern.ch/event/305395/contributions/701396/attachments/580300/798934/nmccoll_3_13_RecHitRes.pdf)
