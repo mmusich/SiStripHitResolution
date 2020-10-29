@@ -35,22 +35,28 @@ void ResolutionPlots_HistoMaker(const std::string& unit){
 	RootFile = "ResolutionComparison_ULAndNonUL_Centimetres.root";
 
   }
-  else if(unit == "pitch unit"){
+  else if(unit == "pitch units"){
 
-        float UL_Array[] = {};
+        float UL_Array[] = {0.172131,  0.143091,  0.161787,   0.126722, 0.17909, 
+			    0.197285,  0.180396,  0.170818,   0.182258, 0.166405, 
+			    0.0844271, 0.0846207, 0.0400775,  0, 	0.120119, 
+			    0.171899,  0.160656,  0.18299,    0.177929, 0.178037};
 
 
-        float NonUL_Array[] = {};
+        float NonUL_Array[] = {0.153758, 0.151801, 0.14859,   0.148245,  0.147986,
+			       0.146962, 0.147919, 0.147431,  0.146219,  0.145619, 
+			       0.14549,  0.147042, 0.147267,  0,         0.146873, 
+			       0.153169, 0.151639, 0.146694,  0.148681,  0.148683};
 
         for(int i = 0; i < 20; i++){UL[i] = UL_Array[i]; NonUL[i] = NonUL_Array[i];}
 
 	YAxisTitle = "Resolution [pitch units]"; 
         HistoTitle = "Resolution values for the UL and non-UL samples in pitch units";
-	OutputFile = "ResolutionComparison_ULAndNonUL_PitchUnit.pdf";
-        RootFile = "ResolutionComparison_ULAndNonUL_PitchUnit.root";
+	OutputFile = "ResolutionComparison_ULAndNonUL_PitchUnits.pdf";
+        RootFile = "ResolutionComparison_ULAndNonUL_PitchUnits.root";
 
   }
-  else{std::cout << "ERROR: Unit must be centimetres or pitch unit" << std::endl;}
+  else{std::cout << "ERROR: Unit must be centimetres or pitch units" << std::endl;}
 
   auto c1 = new TCanvas("c1","c1",800, 600);
 
@@ -121,6 +127,6 @@ void ResolutionPlots_HistoMaker(const std::string& unit){
 void ResolutionPlots(){
 
   ResolutionPlots_HistoMaker("centimetres");
-  //ResolutionPlots_HistoMaker("pitch unit");
+  ResolutionPlots_HistoMaker("pitch units");
 
 }
