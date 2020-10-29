@@ -21,17 +21,29 @@ std::string GaussianFitsFileName;
 void ResolutionsCalculator(const string& region, const int& Unit_Int, const int& UL){
 
   std::string CutFlowReportString;
+  std::string DoubleDiffString;
+  std::string HitDXString;
+  std::string TrackDXString;
+  std::string TrackDXEString;
 
   switch(UL){
 	case 0: switch(Unit_Int){
         		case 0: GaussianFitsFileName = "GaussianFits_PitchUnits_ALCARECO.root"; 
 				HitResoFileName = "HitResolutionValues_PitchUnits_ALCARECO.txt";
 				CutFlowReportString = "CutFlowReport_" + region + "_PitchUnits_ALCARECO.txt";
+				DoubleDiffString = "hitDX_OverPitch-trackDX_OverPitch";
+                                HitDXString = "hitDX_OverPitch";
+                                TrackDXString = "trackDX_OverPitch";
+                                TrackDXEString = "trackDXE_OverPitch";
 				break;
 
         		case 1: GaussianFitsFileName = "GaussianFits_Centimetres_ALCARECO.root"; 
 				HitResoFileName = "HitResolutionValues_Centimetres_ALCARECO.txt";
-				CutFlowReportString = "CutFlowReport_" + region + "_Centimetres_ALCARECO.txt"; 
+				CutFlowReportString = "CutFlowReport_" + region + "_Centimetres_ALCARECO.txt";
+				DoubleDiffString = "hitDX-trackDX";
+				HitDXString = "hitDX";
+				TrackDXString = "trackDX";
+				TrackDXEString = "trackDXE"; 
 				break;
 
         		default: std::cout << "ERROR: UnitInt must be 0 or 1." << std::endl; break;
@@ -44,11 +56,19 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
                         case 0: GaussianFitsFileName = "GaussianFits_PitchUnits_ALCARECO_UL.root"; 
                                 HitResoFileName = "HitResolutionValues_PitchUnits_ALCARECO_UL.txt"; 
 				CutFlowReportString = "CutFlowReport_" + region + "_PitchUnits_ALCARECO_UL.txt";
+				DoubleDiffString = "hitDX_OverPitch-trackDX_OverPitch";
+                                HitDXString = "hitDX_OverPitch";
+                                TrackDXString = "trackDX_OverPitch";
+                                TrackDXEString = "trackDXE_OverPitch";
                                 break;
 
                         case 1: GaussianFitsFileName = "GaussianFits_Centimetres_ALCARECO_UL.root"; 
                                 HitResoFileName = "HitResolutionValues_Centimetres_ALCARECO_UL.txt";
-				CutFlowReportString = "CutFlowReport_" + region + "_Centimetres_ALCARECO_UL.txt"; 
+				CutFlowReportString = "CutFlowReport_" + region + "_Centimetres_ALCARECO_UL.txt";
+				DoubleDiffString = "hitDX-trackDX";
+                                HitDXString = "hitDX";
+                                TrackDXString = "trackDX";
+                                TrackDXEString = "trackDXE"; 
                                 break;
 
                         default: std::cout << "ERROR: UnitInt must be 0 or 1." << std::endl; break;
@@ -216,21 +236,17 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   //Function for expressing the hit resolution in either micrometres or pitch units.
   auto Pitch_Function{[&Unit_Int](const float& pitch, const float& input){
 
-	float InputOverPitch;
-
-	switch(Unit_Int){
-
-		case 0: InputOverPitch = input/pitch; break; 
-		case 1: InputOverPitch = 1.0; break;
-			
-	}
-
-	return InputOverPitch;
+	float InputOverPitch = input/pitch;
+  	return InputOverPitch;
 
   }};
 
-  //Applying the filter for the subdetector
-  auto dataframe = d.Filter(SubDet_Function, {"detID1", "detID2"}, "Subdetector filter");
+
+  //Defining columns needed for the unit conversion into pitch units, and applying the filter for the subdetector
+  auto dataframe = d.Define("hitDX_OverPitch", Pitch_Function, {"pitch1", "hitDX"})
+	 	    .Define("trackDX_OverPitch", Pitch_Function, {"pitch1", "trackDX"})
+		    .Define("trackDXE_OverPitch", Pitch_Function, {"pitch1", "trackDXE"})
+		    .Filter(SubDet_Function, {"detID1", "detID2"}, "Subdetector filter");
 
   //Implementing selection criteria that were not implemented in HitResol.cc
   auto PairPathCriteriaFunction{[&RegionInt](const float& pairPath_input){
@@ -262,21 +278,17 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   auto HistoName_TrackDX = "TrackDX_" + region; 
   auto HistoName_TrackDXE = "TrackDXE_" + region;
 
-  auto h_DoubleDifference = dataframe_filtered.Define(HistoName_DoubleDiff, {"hitDX-trackDX"}).Histo1D({HistoName_DoubleDiff.c_str(), HistoName_DoubleDiff.c_str(), 40, -0.5, 0.5}, HistoName_DoubleDiff); 
-  auto h_hitDX = dataframe_filtered.Define(HistoName_HitDX, {"hitDX"}).Histo1D(HistoName_HitDX);
-  auto h_trackDX = dataframe_filtered.Define(HistoName_TrackDX, {"trackDX"}).Histo1D(HistoName_TrackDX);
-  auto h_trackDXE = dataframe_filtered.Define(HistoName_TrackDXE, {"trackDXE"}).Histo1D(HistoName_TrackDXE);
+  auto h_DoubleDifference = dataframe_filtered.Define(HistoName_DoubleDiff, DoubleDiffString).Histo1D({HistoName_DoubleDiff.c_str(), HistoName_DoubleDiff.c_str(), 40, -0.5, 0.5}, HistoName_DoubleDiff); 
+  auto h_hitDX = dataframe_filtered.Define(HistoName_HitDX, HitDXString).Histo1D(HistoName_HitDX);
+  auto h_trackDX = dataframe_filtered.Define(HistoName_TrackDX, TrackDXString).Histo1D(HistoName_TrackDX);
+  auto h_trackDXE = dataframe_filtered.Define(HistoName_TrackDXE, TrackDXEString).Histo1D(HistoName_TrackDXE);
 
   //Applying gaussian fits, taking the resolutions and squaring them
   h_DoubleDifference->Fit("gaus");
-  //h_hitDX->Fit("gaus");
-  //h_trackDX->Fit("gaus");
-  //h_trackDXE->Fit("gaus");
-
+  
   auto double_diff_StdDev = h_DoubleDifference->GetStdDev();
   auto hitDX_StdDev = h_hitDX->GetStdDev();
   auto trackDX_StdDev = h_trackDX->GetStdDev();
-  //auto trackDXE_StdDev = h_trackDXE->GetStdDev();
   auto trackDXE_Mean = h_trackDXE->GetMean();
 
   auto sigma2_MeasMinusPred = pow(double_diff_StdDev, 2);
@@ -327,8 +339,8 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 
 void Resolutions(){
 
-  int UnitInteger = 1;
-  int ULInteger = 0;
+  int UnitInteger = 0;
+  int ULInteger = 1;
 
 
   vector<std::string> LayerNames = {"TIB_L1",       "TIB_L2",           "TIB_L3",    "TIB_L4",
