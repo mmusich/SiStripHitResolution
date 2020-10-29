@@ -35,7 +35,7 @@ void ResolutionPlots_HistoMaker(const std::string& unit){
 	RootFile = "ResolutionComparison_ULAndNonUL_Centimetres.root";
 
   }
-  else if(unit == "strip unit"){
+  else if(unit == "pitch unit"){
 
         float UL_Array[] = {};
 
@@ -44,13 +44,13 @@ void ResolutionPlots_HistoMaker(const std::string& unit){
 
         for(int i = 0; i < 20; i++){UL[i] = UL_Array[i]; NonUL[i] = NonUL_Array[i];}
 
-	YAxisTitle = "Resolution [strip units]"; 
-        HistoTitle = "Resolution values for the UL and non-UL samples in strip units";
+	YAxisTitle = "Resolution [pitch units]"; 
+        HistoTitle = "Resolution values for the UL and non-UL samples in pitch units";
 	OutputFile = "ResolutionComparison_ULAndNonUL_StripUnit.pdf";
         RootFile = "ResolutionComparison_ULAndNonUL_StripUnit.root";
 
   }
-  else{std::cout << "ERROR: Unit must be micrometres or strip unit" << std::endl;}
+  else{std::cout << "ERROR: Unit must be micrometres or pitch unit" << std::endl;}
 
   auto c1 = new TCanvas("c1","c1",800, 600);
 
@@ -121,6 +121,6 @@ void ResolutionPlots_HistoMaker(const std::string& unit){
 void ResolutionPlots(){
 
   ResolutionPlots_HistoMaker("centimetres");
-  //ResolutionPlots_HistoMaker("strip unit");
+  //ResolutionPlots_HistoMaker("pitch unit");
 
 }
