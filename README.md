@@ -51,7 +51,8 @@ The following scripts are used for the hit resolution study:
 * [src/HitResol.cc](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/src/HitResol.cc) (original author: Denis Gele)
 * [test/SiStripHitResol_testULcosmics.py](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/test/SiStripHitResol_testULcosmics.py) (original author: Pieter David)
 * [Resolutions.cc](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc) (original author: Kathryn Coldham)
- 
+* [ResolutionPlots.cc](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc) (original author: Kathryn Coldham)
+
 The scripts should be run inside CMSSW_11_1_0_pre6. Firstly, the following commands should be used:
 
 * cd CMSSW_11_1_0_pre6/src
@@ -74,6 +75,8 @@ This will produce three output directories: GaussianFits, HitResolutionValues an
 * [CutFlowReports](https://gitlab.cern.ch/coldham/hitresolutionproject/-/tree/master/CutFlowReports) will contain text files with the numbers of events that pass each filter, for each region.
 
 To choose between pitch units or centimetres, [UnitInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L330) must be set as 0 (for pitch units) or 1 (for centimetres). To choose between using output file names that correspond to the UL or non-UL ALCARECO samples, the value of [ULInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L331) must be set as 0 (for non-UL samples) or 1 (for UL samples). 
+
+The plotting script [ResolutionPlots.cc](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc) has been provided for comparing the hit resolution values for UL and non-UL samples. However, the elements of the arrays will need to be edited ([UL_Array](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc#L20) for when the unit has been specified as centimetres, [NonUL_Array](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc#L25) for centimetres, [UL_Array](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc#L40) for pitch units and [NonUL_Array](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc#L43) for pitch units).
 
 
 ## References ##
