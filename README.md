@@ -76,7 +76,11 @@ This will produce three output directories: GaussianFits, HitResolutionValues an
 
 To choose between pitch units or centimetres, [UnitInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L330) must be set as 0 (for pitch units) or 1 (for centimetres). To choose between using output file names that correspond to the UL or non-UL ALCARECO samples, the value of [ULInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L331) must be set as 0 (for non-UL samples) or 1 (for UL samples). 
 
-The plotting script [ResolutionPlots.cc](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc) has been provided for comparing the hit resolution values for UL and non-UL samples. However, the elements of the arrays will need to be edited ([UL_Array](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc#L20) for when the unit has been specified as centimetres, [NonUL_Array](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc#L25) for centimetres, [UL_Array](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc#L40) for pitch units and [NonUL_Array](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc#L43) for pitch units).
+The plotting script [ResolutionPlots.cc](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc) has been provided for comparing the hit resolution values for UL and non-UL samples. However, the elements of the arrays will need to be edited ([UL_Array](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc#L20) for when the unit has been specified as centimetres, [NonUL_Array](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc#L25) for centimetres, [UL_Array](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc#L40) for pitch units and [NonUL_Array](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/ResolutionPlots.cc#L43) for pitch units). The following command should then be used:
+
+* root -l ResolutionPlots.cc
+
+This will produce two output files: ResolutionComparison_ULAndNonUL_Centimetres.pdf and ResolutionComparison_ULAndNonUL_Centimetres.root (for results in centimetres), and ResolutionComparison_ULAndNonUL_PitchUnits.pdf and ResolutionComparison_ULAndNonUL_PitchUnits.root (for results in pitch units).  
 
 
 ## References ##
