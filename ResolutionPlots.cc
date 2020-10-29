@@ -50,7 +50,7 @@ void ResolutionPlots_HistoMaker(const std::string& unit){
         RootFile = "ResolutionComparison_ULAndNonUL_StripUnit.root";
 
   }
-  else{std::cout << "ERROR: Unit must be micrometres or pitch unit" << std::endl;}
+  else{std::cout << "ERROR: Unit must be centimetres or pitch unit" << std::endl;}
 
   auto c1 = new TCanvas("c1","c1",800, 600);
 
