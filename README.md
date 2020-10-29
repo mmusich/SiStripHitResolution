@@ -73,7 +73,7 @@ This will produce three output directories: GaussianFits, HitResolutionValues an
 * [HitResolutionValues](https://gitlab.cern.ch/coldham/hitresolutionproject/-/tree/master/HitResolutionValues) will contain the text files HitResolutionValues_Centimetres.txt or HitResolutionValues_PitchUnits.txt. 
 * [CutFlowReports](https://gitlab.cern.ch/coldham/hitresolutionproject/-/tree/master/CutFlowReports) will contain text files with the numbers of events that pass each filter, for each region.
 
-To choose between pitch units or centimetres, [UnitInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L330) must be set as 0 (for pitch units) or 1 (for centimetres). To choose between using the UL or non-UL ALCARECO samples, the value of [ULInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L331) must be set as 0 (for non-UL samples) or 1 (for UL samples). 
+To choose between pitch units or centimetres, [UnitInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L330) must be set as 0 (for pitch units) or 1 (for centimetres). To choose between using output file names that correspond to the UL or non-UL ALCARECO samples, the value of [ULInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L331) must be set as 0 (for non-UL samples) or 1 (for UL samples). 
 
 
 ## References ##
