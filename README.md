@@ -57,6 +57,9 @@ The scripts should be run inside CMSSW_11_1_0_pre6. Firstly, the following comma
 * cd CMSSW_11_1_0_pre6/src
 * cmsenv
 * cd UserCode/SiStripHitResolution
+
+Next, to specify between running over UL or non-UL samples, the integer [UL](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/test/SiStripHitResol_testULcosmics.py#L11) must be set as 0 (for non-UL) or 1 (for UL). Then, compile and run the python config file using the following commands:
+
 * scram b
 * cmsRun test/SiStripHitResol_testULcosmics.py
 
@@ -70,7 +73,8 @@ This will produce three output directories: GaussianFits, HitResolutionValues an
 * [HitResolutionValues](https://gitlab.cern.ch/coldham/hitresolutionproject/-/tree/master/HitResolutionValues) will contain the text files HitResolutionValues_Centimetres.txt or HitResolutionValues_PitchUnits.txt. 
 * [CutFlowReports](https://gitlab.cern.ch/coldham/hitresolutionproject/-/tree/master/CutFlowReports) will contain text files with the numbers of events that pass each filter, for each region.
 
-To choose between pitch units or centimetres, [UnitInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L330) must be set as 0 (for pitch units) or 1 (for centimetres). To choose between using the UL or non-UL ALCARECO samples, the value of [ULInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L331) must be set as 0 (for non-UL samples) or 1 (for UL samples). Additionally, the integer [UL](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/test/SiStripHitResol_testULcosmics.py#L11) must be set as 0 (for non-UL) or 1 (for UL). 
+To choose between pitch units or centimetres, [UnitInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L330) must be set as 0 (for pitch units) or 1 (for centimetres). To choose between using the UL or non-UL ALCARECO samples, the value of [ULInteger](https://gitlab.cern.ch/coldham/hitresolutionproject/-/blob/master/Resolutions.cc#L331) must be set as 0 (for non-UL samples) or 1 (for UL samples). 
+
 
 ## References ##
 
