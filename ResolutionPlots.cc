@@ -46,8 +46,8 @@ void ResolutionPlots_HistoMaker(const std::string& unit){
 
 	YAxisTitle = "Resolution [pitch units]"; 
         HistoTitle = "Resolution values for the UL and non-UL samples in pitch units";
-	OutputFile = "ResolutionComparison_ULAndNonUL_StripUnit.pdf";
-        RootFile = "ResolutionComparison_ULAndNonUL_StripUnit.root";
+	OutputFile = "ResolutionComparison_ULAndNonUL_PitchUnit.pdf";
+        RootFile = "ResolutionComparison_ULAndNonUL_PitchUnit.root";
 
   }
   else{std::cout << "ERROR: Unit must be centimetres or pitch unit" << std::endl;}
