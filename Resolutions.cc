@@ -25,6 +25,8 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   std::string HitDXString;
   std::string TrackDXString;
   std::string TrackDXEString;
+  std::string ClusterW1String = "clusterW1";
+  std::string ClusterW2String = "clusterW2";
 
   switch(UL){
 	case 0: switch(Unit_Int){
@@ -277,11 +279,17 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   auto HistoName_HitDX = "HitDX_" + region;
   auto HistoName_TrackDX = "TrackDX_" + region; 
   auto HistoName_TrackDXE = "TrackDXE_" + region;
+  auto HistoName_ClusterW1 = "ClusterW1_" + region;
+  auto HistoName_ClusterW2 = "ClusterW2_" + region;
+
 
   auto h_DoubleDifference = dataframe_filtered.Define(HistoName_DoubleDiff, DoubleDiffString).Histo1D({HistoName_DoubleDiff.c_str(), HistoName_DoubleDiff.c_str(), 40, -0.5, 0.5}, HistoName_DoubleDiff); 
   auto h_hitDX = dataframe_filtered.Define(HistoName_HitDX, HitDXString).Histo1D(HistoName_HitDX);
   auto h_trackDX = dataframe_filtered.Define(HistoName_TrackDX, TrackDXString).Histo1D(HistoName_TrackDX);
   auto h_trackDXE = dataframe_filtered.Define(HistoName_TrackDXE, TrackDXEString).Histo1D(HistoName_TrackDXE);
+ 
+  auto h_clusterW1 = dataframe_filtered.Define(HistoName_ClusterW1, ClusterW1String).Histo1D(HistoName_ClusterW1);
+  auto h_clusterW2 = dataframe_filtered.Define(HistoName_ClusterW2, ClusterW2String).Histo1D(HistoName_ClusterW2);
 
   //Applying gaussian fits, taking the resolutions and squaring them
   h_DoubleDifference->Fit("gaus");
@@ -301,6 +309,7 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   TrackDXVector.push_back(sigma2_Pred);
   TrackDXEVector.push_back(sigma2_PredError);
 
+
   //Saving the histograms with gaussian fits applied to an output root file
   TFile * output = new TFile(GaussianFitsFileName.c_str(), "UPDATE");
 
@@ -308,7 +317,9 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
   h_hitDX->Write();
   h_trackDX->Write();
   h_trackDXE->Write();
-
+  h_clusterW1->Write();
+  h_clusterW2->Write();
+ 
   output->Close();
   
   //Calculating the hit resolution;
@@ -340,7 +351,7 @@ void ResolutionsCalculator(const string& region, const int& Unit_Int, const int&
 void Resolutions(){
 
   int UnitInteger = 0;
-  int ULInteger = 1;
+  int ULInteger = 0;
 
 
   vector<std::string> LayerNames = {"TIB_L1",       "TIB_L2",           "TIB_L3",    "TIB_L4",
